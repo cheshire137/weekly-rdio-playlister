@@ -37,19 +37,34 @@ playlister_app.controller 'PlaylistController', ($scope, $http, $routeParams, La
       data: request_data
     ).success(on_success).error(on_error)
 
-  $scope.create_playlist = ->
-    track = $scope.chart.tracks[0]
-    console.log track
-    query = track.artist + ' ' + track.name
-    console.log query
+  on_artist_lookup = (artist_id, track_name) ->
+    console.log 'on_artist_lookup'
     on_success = (data, status, headers, config) =>
       console.log data
       if data.error
-        console.error data.error
+        # TODO: have Sinatra respond with error code
         on_error data.error
       else
         on_track_lookup data.track_id
+    url = "/rdio_track_search?artist_id=#{artist_id}&query=" +
+          encodeURIComponent(track_name)
     $http(
-      url: '/rdio_track_search?query=' + encodeURIComponent(query)
+      url: url
+      method: 'GET'
+    ).success(on_success).error(on_error)
+
+  $scope.create_playlist = ->
+    console.log 'create_playlist'
+    track = $scope.chart.tracks[0]
+    url = "/rdio_artist_search?query=#{track.artist}"
+    on_success = (data, status, headers, config) =>
+      console.log data
+      if data.error
+        # TODO: have Sinatra respond with error code
+        on_error data.error
+      else
+        on_artist_lookup data.artist_id, track.name
+    $http(
+      url: url
       method: 'GET'
     ).success(on_success).error(on_error)

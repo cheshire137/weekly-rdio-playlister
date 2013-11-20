@@ -46,17 +46,34 @@ get '/auth/:name/callback' do
   redirect '/index.html?user=' + session[:user].to_json
 end
 
+get '/rdio_artist_search' do
+  content_type :json
+  client = get_client(session)
+  query = params[:query]
+  response = client.search(query, 'Artist')
+  puts response.inspect
+  if response.count > 0
+    artist = response[0]
+    artist_id = artist.key
+    name = artist.name
+    {artist_id: artist_id, name: name}.to_json
+  else
+    {artist_id: nil, error: "Could not find artist '#{query}'"}.to_json
+  end
+end
+
 get '/rdio_track_search' do
   content_type :json
   client = get_client(session)
-  puts 'Searching for track: ' + params[:query]
-  response = client.search(params[:query], 'Track')
+  query = params[:query]
+  artist_id = params[:artist_id]
+  response = client.getTracksForArtist(artist: artist_id, query: query)
   puts response.inspect
   if response.count > 0
     track_id = response[0].key
     {track_id: track_id}.to_json
   else
-    {track_id: nil, error: 'Track not found'}.to_json
+    {track_id: nil, error: "Could not find track '#{query}'"}.to_json
   end
 end
 
