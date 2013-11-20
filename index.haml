@@ -27,6 +27,9 @@
         %a.pull-right{ng: {click: 'error = false'}}
           %span.glyphicon.glyphicon-remove
         {{error}}
+      %p
+        %a.btn.btn-primary.btn-large{href: '/auth/rdio'}
+          Log In With Rdio
       %form.form-inline{role: 'form', ng: {show: 'weeks.length < 1', submit: 'get_weekly_chart_list()'}}
         .form-group
           %label.sr-only{for: 'lastfm_user'}

@@ -1,38 +1,59 @@
 require 'sinatra'
-require 'rdio_api'
-require 'oauth/consumer'
+require 'omniauth'
+require 'omniauth-rdio'
 require 'json'
-
-OAuth::VERSION = 1
+require './user.rb'
+require 'rdio'
 
 RDIO_API_KEY = ENV['RDIO_API_KEY']
 RDIO_API_SHARED_SECRET = ENV['RDIO_API_SHARED_SECRET']
-DOMAIN = ENV['DOMAIN']
-SITE = 'http://api.rdio.com'
-PATH = '/1/'
 
-puts "Initializing Rdio consumer"
-consumer = OAuth::Consumer.new(RDIO_API_KEY, RDIO_API_SHARED_SECRET,
-                               {site: SITE})
-consumer.http.read_timeout = 600
-puts "Initializing Rdio access token"
-access_token = OAuth::AccessToken.new(consumer)
-puts "Rdio API ready"
-client = RdioApi.new(consumer_key: RDIO_API_KEY,
-                     consumer_secret: RDIO_API_SHARED_SECRET,
-                     access_token: access_token)
+enable :sessions
+
+use OmniAuth::Builder do
+  provider :rdio, RDIO_API_KEY, RDIO_API_SHARED_SECRET
+end
+
+def get_client session
+  client = Rdio::Client.new(RDIO_API_KEY, RDIO_API_SHARED_SECRET)
+  if session[:access_token] && session[:access_secret]
+    client.access_token = session[:access_token]
+    client.secret = session[:access_secret]
+  end
+  puts 'Client:'
+  puts client.inspect
+  client
+end
 
 set :public_dir, File.dirname(__FILE__) + '/public'
 
 get '/' do
-  redirect '/index.html'
+  if session[:user]
+    redirect '/index.html?authenticated=1'
+  else
+    redirect '/index.html'
+  end
+end
+
+get '/auth/:name/callback' do
+  # See https://github.com/nixme/omniauth-rdio for description of object
+  auth = request.env['omniauth.auth']
+  access_token = auth['credentials']['token']
+  access_secret = auth['credentials']['secret']
+  session[:user] = User.new(auth)
+  session[:access_token] = access_token
+  session[:access_secret] = access_secret
+  redirect '/index.html?user=' + session[:user].to_json
 end
 
 get '/rdio_track_search' do
   content_type :json
-  response = client.search(query: params[:query], types: 'Track')
-  if response.results.size > 0
-    track_id = response.results[0]['key']
+  client = get_client(session)
+  puts 'Searching for track: ' + params[:query]
+  response = client.search(params[:query], 'Track')
+  puts response.inspect
+  if response.count > 0
+    track_id = response[0].key
     {track_id: track_id}.to_json
   else
     {track_id: nil, error: 'Track not found'}.to_json
@@ -40,15 +61,14 @@ get '/rdio_track_search' do
 end
 
 post '/rdio_playlist_create' do
+  content_type :json
   json_params = JSON.parse(request.body.read)
   name = json_params['name']
   description = json_params['description']
   tracks = json_params['tracks']
-  puts "Playlist name: #{name}"
-  puts "Playlist description: #{description}"
-  puts "Playlist tracks: #{tracks}"
+  client = get_client(session)
   response = client.createPlaylist(name: name, description: description,
                                    tracks: tracks)
-  puts response.inspect
-  redirect '/index.html'
+  {name: response.name, song_count: response.length, image_url: response.icon,
+   embed_url: response.embedUrl, key: response.key}.to_json
 end
