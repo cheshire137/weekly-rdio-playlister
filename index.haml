@@ -1,5 +1,5 @@
 !!! 5
-%html.no-js{lang: "en"}
+%html.no-js{lang: "en", ng: {app: 'PlaylisterApp'}}
   %head
     %meta{charset: "utf-8"}
     %title Weekly Rdio Playlister
@@ -7,7 +7,7 @@
     %meta{name: "author", content: "Sarah Vessels"}
     %meta{name: "viewport", content: "width=device-width, initial-scale=1"}
     %link{rel: 'stylesheet', href: '//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'}
-    %link{rel: "stylesheet", href: "/css/screen.css"}
+    %link{rel: "stylesheet", href: "css/screen.css"}
     /[if (lt IE 9) & (!IEMobile)]
       %script{src: "//html5shim.googlecode.com/svn/trunk/html5.js"}
   %body
@@ -22,16 +22,21 @@
           %a.navbar-brand{href: '/'} Weekly Rdio Playlister
         .navbar-collapse.collapse
           %ul.nav.navbar-nav
-    .container
-      %form{role: 'form'}
+    .container{ng: {controller: 'PlaylistController'}}
+      %form{role: 'form', ng: {submit: 'get_weeks()'}}
         .form-group
           %label{for: 'lastfm_user'}
             Last.fm user name:
-          %input#lastfm_user.form-control{type: 'text', placeholder: 'Last.fm user name'}
+          %input#lastfm_user.form-control{type: 'text', placeholder: 'Last.fm user name', ng: {model: 'lastfm.user'}}
     %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"}
     %script{src: "//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"}
     %script{src: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js'}
-    %script{src: "/js/app.js"}
+    %script{src: "js/ui-bootstrap-0.6.0.min.js", type: "text/javascript"}
+    %script{src: "js/ui-bootstrap-tpls-0.6.0.min.js", type: "text/javascript"}
+    %script{src: "js/app.js"}
+    %script{src: "js/services/playlister_config_service.js"}
+    %script{src: "js/services/lastfm_service.js"}
+    %script{src: "js/controllers/playlist_controller.js"}
     -# :javascript
       var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
       (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];

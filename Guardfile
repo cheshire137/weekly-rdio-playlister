@@ -14,9 +14,7 @@ guard 'haml', input: '.', output: 'public' do
   watch %r(^.+\.haml$)
 end
 
-guard 'coffeescript', input: '.', output: 'public/js' do
-  watch %r(^.+\.coffee$)
-end
+guard 'coffeescript', input: 'coffee', output: 'public/js'
 
 guard :lessc, in_file: 'screen.less', out_file: 'public/css/screen.css',
               compress: true do
