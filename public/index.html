@@ -7,7 +7,7 @@
     <meta content='Sarah Vessels' name='author'>
     <meta content='width=device-width, initial-scale=1' name='viewport'>
     <link href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css' rel='stylesheet'>
-    <link href='css/screen.css' rel='stylesheet'>
+    <link href='/css/screen.css' rel='stylesheet'>
     <!--[if (lt IE 9) & (!IEMobile)]>
       <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
     <![endif]-->
@@ -29,110 +29,41 @@
         </div>
       </div>
     </div>
-    <div class='container' ng-controller='PlaylistController'>
-      <p class='alert alert-danger clearfix' ng-show='error'>
-        <a class='pull-right' ng-click='error = false'>
-          <span class='glyphicon glyphicon-remove'></span>
-        </a>
-        {{error}}
-      </p>
-      <p class='alert alert-success clearfix' ng-show='notice'>
-        <a class='pull-right' ng-click='notice = false'>
-          <span class='glyphicon glyphicon-remove'></span>
-        </a>
-        {{notice}}
-      </p>
-      <p>
-        <a class='btn btn-primary btn-large' href='/auth/rdio'>
-          Log In With Rdio
-        </a>
-      </p>
-      <form class='form-inline' ng-show='weeks.length &lt; 1' ng-submit='get_weekly_chart_list()' role='form'>
-        <div class='form-group'>
-          <label class='sr-only' for='lastfm_user'>
-            Last.fm user name:
-          </label>
-          <input class='form-control' id='lastfm_user' ng-model='lastfm.user' placeholder='Last.fm user name' type='text'>
-        </div>
-        <button class='btn btn-default' type='submit'>Get Listening History</button>
-      </form>
-      <div ng-show='chart.tracks &amp;&amp; chart.tracks.length &gt; 0'>
-        <h2 class='clearfix'>
-          <a class='pull-right' ng-click='chart.tracks = []'>
+    <div class='container'>
+      <div class='notifications' ng-controller='NotificationsController'>
+        <p class='alert alert-danger clearfix' ng-repeat='error in errors'>
+          <a class='pull-right alert-link' ng-click="remove('error', error.id)">
             <span class='glyphicon glyphicon-remove'></span>
           </a>
-          Tracks for {{chart.to_s()}}
-        </h2>
-        <form class='form-horizontal' ng-submit='create_playlist()'>
-          <div class='form-group'>
-            <label class='col-sm-2 control-label' for='playlist_name'>
-              Playlist name:
-            </label>
-            <div class='col-sm-10'>
-              <input class='form-control' id='playlist_name' ng-model='playlist.name' placeholder='Playlist name' type='text'>
-            </div>
-          </div>
-          <div class='form-group'>
-            <label class='col-sm-2 control-label' for='playlist_description'>
-              Playlist description:
-            </label>
-            <div class='col-sm-10'>
-              <textarea class='form-control' id='playlist_description' ng-model='playlist.description' placeholder='Playlist description' rows='3'></textarea>
-            </div>
-          </div>
-          <div class='form-group'>
-            <div class='col-sm-offset-2 col-sm-10'>
-              <input class='btn btn-primary' type='submit' value='Create Playlist'>
-            </div>
-          </div>
-        </form>
-        <hr>
-        <div ng-repeat='j in chart.track_range()'>
-          <div class='row'>
-            <div class='col-md-3' ng-repeat='track in chart.tracks.slice(j, j+4)'>
-              <a class='track' href='{{track.url}}' target='_blank'>
-                <img ng-src='{{track.large_image}}'>
-                <br>
-                <span class='track-name'>{{track.name}} by {{track.artist}}</span>
-                <span class='play-count'>{{track.play_count}}x</span>
-              </a>
-            </div>
-          </div>
-          <hr>
-        </div>
-      </div>
-      <div ng-show='(!chart.tracks || chart.tracks.length &lt; 1) &amp;&amp; weeks.length &gt; 0'>
-        <h2 class='clearfix'>
-          <a class='pull-right' ng-click='weeks = []'>
+          {{error.message}}
+        </p>
+        <p class='alert alert-success clearfix' ng-repeat='notice in notices'>
+          <a class='pull-right alert-link' ng-click="remove('notice', notice.id)">
             <span class='glyphicon glyphicon-remove'></span>
           </a>
-          Weeks
-        </h2>
-        <div class='row' ng-repeat='i in week_range()'>
-          <div class='col-md-4' ng-repeat='chart in weeks.slice(i, i+3)'>
-            <a ng-click='get_weekly_track_chart(chart)'>
-              {{chart.to_s()}}
-            </a>
-          </div>
-        </div>
+          {{notice.message}}
+        </p>
       </div>
+      <div ng-view=''></div>
     </div>
     <script src='//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
     <script src='//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js'></script>
-    <script src='js/moment.min.js'></script>
-    <script src='js/ui-bootstrap-0.6.0.min.js'></script>
-    <script src='js/ui-bootstrap-tpls-0.6.0.min.js'></script>
-    <script src='js/app.js'></script>
-    <script src='js/services/playlister_config_service.js'></script>
-    <script src='js/services/lastfm_service.js'></script>
-    <script src='js/services/lastfm_charts_service.js'></script>
-    <script src='js/services/rdio_catalog_service.js'></script>
-    <script src='js/services/rdio_playlist_service.js'></script>
-    <script src='js/models/lastfm_chart.js'></script>
-    <script src='js/models/lastfm_track.js'></script>
-    <script src='js/controllers/playlist_controller.js'></script>
-    <script src='js/routes.js'></script>
+    <script src='/js/moment.min.js'></script>
+    <script src='/js/ui-bootstrap-0.6.0.min.js'></script>
+    <script src='/js/ui-bootstrap-tpls-0.6.0.min.js'></script>
+    <script src='/js/app.js'></script>
+    <script src='/js/services/notification_service.js'></script>
+    <script src='/js/services/playlister_config_service.js'></script>
+    <script src='/js/services/lastfm_service.js'></script>
+    <script src='/js/services/lastfm_charts_service.js'></script>
+    <script src='/js/services/rdio_catalog_service.js'></script>
+    <script src='/js/services/rdio_playlist_service.js'></script>
+    <script src='/js/models/lastfm_chart.js'></script>
+    <script src='/js/models/lastfm_track.js'></script>
+    <script src='/js/controllers/playlist_controller.js'></script>
+    <script src='/js/controllers/notifications_controller.js'></script>
+    <script src='/js/routes.js'></script>
   </body>
 </html>

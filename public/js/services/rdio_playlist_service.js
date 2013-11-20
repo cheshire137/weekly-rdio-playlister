@@ -1,5 +1,5 @@
 (function() {
-  playlister_app.factory('RdioPlaylist', function($http) {
+  playlister_app.factory('RdioPlaylist', function($http, Notification) {
     var RdioPlaylist;
     RdioPlaylist = (function() {
       function RdioPlaylist() {}
@@ -8,8 +8,8 @@
         return '/rdio_playlist_create';
       };
 
-      RdioPlaylist.prototype.create = function(name, description, tracks, callback, on_error) {
-        var on_success, request_data,
+      RdioPlaylist.prototype.create = function(name, description, tracks, callback) {
+        var on_error, on_success, request_data,
           _this = this;
         on_success = function(data, status, headers, config) {
           console.log(data);
@@ -19,6 +19,9 @@
           name: name,
           description: description,
           tracks: tracks
+        };
+        on_error = function(data, status, headers, config) {
+          return Notification.error(data);
         };
         return $http({
           url: this.get_playlist_create_url(),

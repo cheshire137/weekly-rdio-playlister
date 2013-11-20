@@ -1,0 +1,29 @@
+%div{ng: {controller: 'PlaylistController', init: 'lastfm_tracks()'}}
+  %h2.clearfix
+    %a.pull-right{ng: {click: 'chart.tracks = []'}}
+      %span.glyphicon.glyphicon-remove
+    Tracks for {{chart.to_s()}}
+  %form.form-horizontal{ng: {submit: 'create_playlist()'}}
+    .form-group
+      %label.col-sm-2.control-label{for: 'playlist_name'}
+        Playlist name:
+      .col-sm-10
+        %input#playlist_name.form-control{type: 'text', placeholder: 'Playlist name', ng: {model: 'playlist.name'}}
+    .form-group
+      %label.col-sm-2.control-label{for: 'playlist_description'}
+        Playlist description:
+      .col-sm-10
+        %textarea#playlist_description.form-control{rows: '3', placeholder: 'Playlist description', ng: {model: 'playlist.description'}}
+    .form-group
+      .col-sm-offset-2.col-sm-10
+        %input.btn.btn-primary{type: 'submit', value: 'Create Playlist'}
+  %hr
+  %div{ng: {repeat: 'j in chart.track_range()'}}
+    .row
+      .col-md-3{ng: {repeat: 'track in chart.tracks.slice(j, j+4)'}}
+        %a.track{href: '{{track.url}}', target: '_blank'}
+          %img{ng: {src: '{{track.large_image}}'}}
+          %br
+          %span.track-name {{track.name}} by {{track.artist}}
+          %span.play-count {{track.play_count}}x
+    %hr

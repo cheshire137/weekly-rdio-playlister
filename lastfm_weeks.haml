@@ -1,0 +1,9 @@
+%div{ng: {controller: 'PlaylistController', init: 'lastfm_weeks()'}}
+  %h2.clearfix
+    %a.pull-right{ng: {click: 'weeks = []'}}
+      %span.glyphicon.glyphicon-remove
+    Weeks
+  .row{ng: {repeat: 'i in week_range()'}}
+    .col-md-4{ng: {repeat: 'chart in weeks.slice(i, i+3)'}}
+      %a{href: '/#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}'}
+        {{chart.to_s()}}

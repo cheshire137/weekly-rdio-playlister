@@ -7,7 +7,7 @@
     %meta{name: "author", content: "Sarah Vessels"}
     %meta{name: "viewport", content: "width=device-width, initial-scale=1"}
     %link{rel: 'stylesheet', href: '//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'}
-    %link{rel: "stylesheet", href: "css/screen.css"}
+    %link{rel: "stylesheet", href: "/css/screen.css"}
     /[if (lt IE 9) & (!IEMobile)]
       %script{src: "//html5shim.googlecode.com/svn/trunk/html5.js"}
   %body
@@ -22,79 +22,36 @@
           %a.navbar-brand{href: '/'} Weekly Rdio Playlister
         .navbar-collapse.collapse
           %ul.nav.navbar-nav
-    .container{ng: {controller: 'PlaylistController'}}
-      %p.alert.alert-danger.clearfix{ng: {show: 'error'}}
-        %a.pull-right{ng: {click: 'error = false'}}
-          %span.glyphicon.glyphicon-remove
-        {{error}}
-      %p.alert.alert-success.clearfix{ng: {show: 'notice'}}
-        %a.pull-right{ng: {click: 'notice = false'}}
-          %span.glyphicon.glyphicon-remove
-        {{notice}}
-      %p
-        %a.btn.btn-primary.btn-large{href: '/auth/rdio'}
-          Log In With Rdio
-      %form.form-inline{role: 'form', ng: {show: 'weeks.length < 1', submit: 'get_weekly_chart_list()'}}
-        .form-group
-          %label.sr-only{for: 'lastfm_user'}
-            Last.fm user name:
-          %input#lastfm_user.form-control{type: 'text', placeholder: 'Last.fm user name', ng: {model: 'lastfm.user'}}
-        %button.btn.btn-default{type: 'submit'} Get Listening History
-      %div{ng: {show: 'chart.tracks && chart.tracks.length > 0'}}
-        %h2.clearfix
-          %a.pull-right{ng: {click: 'chart.tracks = []'}}
+    .container
+      .notifications{ng: {controller: 'NotificationsController'}}
+        %p.alert.alert-danger.clearfix{ng: {repeat: 'error in errors'}}
+          %a.pull-right.alert-link{ng: {click: "remove('error', error.id)"}}
             %span.glyphicon.glyphicon-remove
-          Tracks for {{chart.to_s()}}
-        %form.form-horizontal{ng: {submit: 'create_playlist()'}}
-          .form-group
-            %label.col-sm-2.control-label{for: 'playlist_name'}
-              Playlist name:
-            .col-sm-10
-              %input#playlist_name.form-control{type: 'text', placeholder: 'Playlist name', ng: {model: 'playlist.name'}}
-          .form-group
-            %label.col-sm-2.control-label{for: 'playlist_description'}
-              Playlist description:
-            .col-sm-10
-              %textarea#playlist_description.form-control{rows: '3', placeholder: 'Playlist description', ng: {model: 'playlist.description'}}
-          .form-group
-            .col-sm-offset-2.col-sm-10
-              %input.btn.btn-primary{type: 'submit', value: 'Create Playlist'}
-        %hr
-        %div{ng: {repeat: 'j in chart.track_range()'}}
-          .row
-            .col-md-3{ng: {repeat: 'track in chart.tracks.slice(j, j+4)'}}
-              %a.track{href: '{{track.url}}', target: '_blank'}
-                %img{ng: {src: '{{track.large_image}}'}}
-                %br
-                %span.track-name {{track.name}} by {{track.artist}}
-                %span.play-count {{track.play_count}}x
-          %hr
-      %div{ng: {show: '(!chart.tracks || chart.tracks.length < 1) && weeks.length > 0'}}
-        %h2.clearfix
-          %a.pull-right{ng: {click: 'weeks = []'}}
+          {{error.message}}
+        %p.alert.alert-success.clearfix{ng: {repeat: 'notice in notices'}}
+          %a.pull-right.alert-link{ng: {click: "remove('notice', notice.id)"}}
             %span.glyphicon.glyphicon-remove
-          Weeks
-        .row{ng: {repeat: 'i in week_range()'}}
-          .col-md-4{ng: {repeat: 'chart in weeks.slice(i, i+3)'}}
-            %a{ng: {click: 'get_weekly_track_chart(chart)'}}
-              {{chart.to_s()}}
+          {{notice.message}}
+      %div{ng: {view: ''}}
     %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"}
     %script{src: "//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"}
     %script{src: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js'}
     %script{src: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js'}
-    %script{src: 'js/moment.min.js'}
-    %script{src: "js/ui-bootstrap-0.6.0.min.js"}
-    %script{src: "js/ui-bootstrap-tpls-0.6.0.min.js"}
-    %script{src: "js/app.js"}
-    %script{src: "js/services/playlister_config_service.js"}
-    %script{src: "js/services/lastfm_service.js"}
-    %script{src: "js/services/lastfm_charts_service.js"}
-    %script{src: "js/services/rdio_catalog_service.js"}
-    %script{src: "js/services/rdio_playlist_service.js"}
-    %script{src: "js/models/lastfm_chart.js"}
-    %script{src: "js/models/lastfm_track.js"}
-    %script{src: "js/controllers/playlist_controller.js"}
-    %script{src: "js/routes.js"}
+    %script{src: '/js/moment.min.js'}
+    %script{src: '/js/ui-bootstrap-0.6.0.min.js'}
+    %script{src: '/js/ui-bootstrap-tpls-0.6.0.min.js'}
+    %script{src: '/js/app.js'}
+    %script{src: '/js/services/notification_service.js'}
+    %script{src: '/js/services/playlister_config_service.js'}
+    %script{src: '/js/services/lastfm_service.js'}
+    %script{src: '/js/services/lastfm_charts_service.js'}
+    %script{src: '/js/services/rdio_catalog_service.js'}
+    %script{src: '/js/services/rdio_playlist_service.js'}
+    %script{src: '/js/models/lastfm_chart.js'}
+    %script{src: '/js/models/lastfm_track.js'}
+    %script{src: '/js/controllers/playlist_controller.js'}
+    %script{src: '/js/controllers/notifications_controller.js'}
+    %script{src: '/js/routes.js'}
     -# :javascript
       var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
       (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];

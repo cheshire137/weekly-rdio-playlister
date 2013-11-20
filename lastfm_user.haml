@@ -1,0 +1,6 @@
+%form.form-inline{action: '/#/lastfm/{{lastfm.user}}', method: 'GET'}
+  .form-group
+    %label.sr-only{for: 'lastfm_user'}
+      Last.fm user name:
+    %input#lastfm_user.form-control{type: 'text', placeholder: 'Last.fm user name', ng: {model: 'lastfm.user'}}
+  %button.btn.btn-default{type: 'submit'} Get Listening History

@@ -1,9 +1,9 @@
-playlister_app.factory 'RdioPlaylist', ($http) ->
+playlister_app.factory 'RdioPlaylist', ($http, Notification) ->
   class RdioPlaylist
     get_playlist_create_url: ->
       '/rdio_playlist_create'
 
-    create: (name, description, tracks, callback, on_error) ->
+    create: (name, description, tracks, callback) ->
       on_success = (data, status, headers, config) =>
         console.log data
         callback data
@@ -11,6 +11,8 @@ playlister_app.factory 'RdioPlaylist', ($http) ->
         name: name
         description: description
         tracks: tracks
+      on_error = (data, status, headers, config) =>
+        Notification.error data
       $http(
         url: @get_playlist_create_url()
         method: 'POST'
