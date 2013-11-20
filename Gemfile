@@ -6,6 +6,10 @@ gem 'rack'
 gem 'therubyracer'
 gem 'less'
 gem 'thin'
+gem 'sinatra'
+gem 'oauth'
+gem 'json'
+gem 'rdio_api'
 
 group :compiler do
   gem 'guard'
