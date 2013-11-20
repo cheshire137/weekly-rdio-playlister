@@ -36,36 +36,42 @@
         </a>
         {{error}}
       </p>
-      <form ng-submit='get_weekly_chart_list()' role='form'>
+      <form class='form-inline' ng-show='weeks.length &lt; 1' ng-submit='get_weekly_chart_list()' role='form'>
         <div class='form-group'>
-          <label for='lastfm_user'>
+          <label class='sr-only' for='lastfm_user'>
             Last.fm user name:
           </label>
           <input class='form-control' id='lastfm_user' ng-model='lastfm.user' placeholder='Last.fm user name' type='text'>
         </div>
+        <button class='btn btn-default' type='submit'>Get Listening History</button>
       </form>
       <div ng-show='chart.tracks &amp;&amp; chart.tracks.length &gt; 0'>
-        <div class='page-header clearfix'>
-          <a class='pull-right' ng-click='chart.tracks = []' tooltip='Choose a different week'>
+        <h2 class='clearfix'>
+          <a class='pull-right' ng-click='chart.tracks = []'>
             <span class='glyphicon glyphicon-remove'></span>
           </a>
-          <h2>
-            Tracks for {{chart.to_s()}}
-          </h2>
-        </div>
-        <div class='row' ng-repeat='j in chart.track_range()'>
-          <div class='col-md-3' ng-repeat='track in chart.tracks.slice(j, j+4)'>
-            <a class='track' href='{{track.url}}' target='_blank'>
-              <img ng-src='{{track.large_image}}'>
-              <br>
-              <span>{{track.name}} by {{track.artist}}</span>
-            </a>
+          Tracks for {{chart.to_s()}}
+        </h2>
+        <div ng-repeat='j in chart.track_range()'>
+          <div class='row'>
+            <div class='col-md-3' ng-repeat='track in chart.tracks.slice(j, j+4)'>
+              <a class='track' href='{{track.url}}' target='_blank'>
+                <img ng-src='{{track.large_image}}'>
+                <br>
+                <span>{{track.name}} by {{track.artist}}</span>
+              </a>
+            </div>
           </div>
+          <hr>
         </div>
-        <hr>
       </div>
       <div ng-show='(!chart.tracks || chart.tracks.length &lt; 1) &amp;&amp; weeks.length &gt; 0'>
-        <h2>Weeks</h2>
+        <h2 class='clearfix'>
+          <a class='pull-right' ng-click='weeks = []'>
+            <span class='glyphicon glyphicon-remove'></span>
+          </a>
+          Weeks
+        </h2>
         <div class='row' ng-repeat='i in week_range()'>
           <div class='col-md-4' ng-repeat='chart in weeks.slice(i, i+3)'>
             <a ng-click='get_weekly_track_chart(chart)'>

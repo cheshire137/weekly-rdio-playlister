@@ -25,26 +25,28 @@
       return new Date(1000 * this.to);
     };
 
+    LastfmChart.prototype.same_year = function() {
+      return this.from_date().getFullYear() === this.to_date().getFullYear();
+    };
+
+    LastfmChart.prototype.same_month = function() {
+      var same_month;
+      return same_month = this.from_date().getMonth() === this.to_date().getMonth();
+    };
+
     LastfmChart.prototype.from_date_str = function() {
-      var date;
-      date = this.from_date();
-      if (date.getFullYear() === this.to_date().getFullYear()) {
-        return moment(date).format('MMMM D');
+      if (this.same_year()) {
+        return moment(this.from_date()).format('MMMM D');
       } else {
-        return moment(date).format('MMMM D, YYYY');
+        return moment(this.from_date()).format('MMMM D, YYYY');
       }
     };
 
     LastfmChart.prototype.to_date_str = function() {
-      var from_date, same_month, same_year, to_date;
-      from_date = this.from_date();
-      to_date = this.to_date();
-      same_year = from_date.getFullYear() === to_date.getFullYear();
-      same_month = from_date.getMonth() === to_date.getMonth();
-      if (same_year && same_month) {
-        return moment(to_date).format('D, YYYY');
+      if (this.same_year() && this.same_month()) {
+        return moment(this.to_date()).format('D, YYYY');
       } else {
-        return moment(to_date).format('MMMM D, YYYY');
+        return moment(this.to_date()).format('MMMM D, YYYY');
       }
     };
 
@@ -57,7 +59,11 @@
     };
 
     LastfmChart.prototype.to_s = function() {
-      return "" + (this.from_date_str()) + " to " + (this.to_date_str());
+      if (this.same_year() && this.same_month()) {
+        return "" + (this.from_date_str()) + "-" + (this.to_date_str());
+      } else {
+        return "" + (this.from_date_str()) + " to " + (this.to_date_str());
+      }
     };
 
     return LastfmChart;

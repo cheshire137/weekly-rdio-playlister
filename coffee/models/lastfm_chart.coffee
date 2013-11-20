@@ -16,22 +16,23 @@ class LastfmChart
   to_date: ->
     new Date(1000 * @to)
 
+  same_year: ->
+    @from_date().getFullYear() == @to_date().getFullYear()
+
+  same_month: ->
+    same_month = @from_date().getMonth() == @to_date().getMonth()
+
   from_date_str: ->
-    date = @from_date()
-    if date.getFullYear() == @to_date().getFullYear()
-      moment(date).format('MMMM D')
+    if @same_year()
+      moment(@from_date()).format('MMMM D')
     else
-      moment(date).format('MMMM D, YYYY')
+      moment(@from_date()).format('MMMM D, YYYY')
 
   to_date_str: ->
-    from_date = @from_date()
-    to_date = @to_date()
-    same_year = from_date.getFullYear() == to_date.getFullYear()
-    same_month = from_date.getMonth() == to_date.getMonth()
-    if same_year && same_month
-      moment(to_date).format('D, YYYY')
+    if @same_year() && @same_month()
+      moment(@to_date()).format('D, YYYY')
     else
-      moment(to_date).format('MMMM D, YYYY')
+      moment(@to_date()).format('MMMM D, YYYY')
 
   from_date_utc_str: ->
     @from_date().toUTCString()
@@ -40,6 +41,9 @@ class LastfmChart
     @to_date().toUTCString()
 
   to_s: ->
-    "#{@from_date_str()} to #{@to_date_str()}"
+    if @same_year() && @same_month()
+      "#{@from_date_str()}-#{@to_date_str()}"
+    else
+      "#{@from_date_str()} to #{@to_date_str()}"
 
 (exports ? this).LastfmChart = LastfmChart

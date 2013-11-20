@@ -1,4 +1,5 @@
 a[ng-click]{cursor:pointer}
 body{padding-top:60px}
-.track{display:block}.track img{margin-bottom:5px;border:1px solid #444}
+.page-header h2 a.pull-right{display:block;line-height:33px}
+.track{margin-bottom:10px;text-align:center;display:block}.track img{margin-left:auto;margin-right:auto;display:block;border-radius:100px;border:1px solid #444}
 .track span{display:block}
