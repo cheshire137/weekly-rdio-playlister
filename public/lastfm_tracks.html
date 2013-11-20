@@ -1,7 +1,7 @@
 <div ng-controller='PlaylistController' ng-init='lastfm_tracks()'>
   <h2 class='clearfix'>
-    <a class='pull-right' ng-click='chart.tracks = []'>
-      <span class='glyphicon glyphicon-remove'></span>
+    <a class='back-link' href='/#/lastfm/{{lastfm.user}}'>
+      <span class='glyphicon glyphicon-chevron-left'></span>
     </a>
     Tracks for {{chart.to_s()}}
   </h2>

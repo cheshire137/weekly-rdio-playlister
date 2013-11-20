@@ -1,6 +1,9 @@
 a[ng-click]{cursor:pointer}
 body{padding-top:60px}
+footer{padding-top:40px;padding-bottom:30px;margin-top:100px;color:#777;border-top:1px solid #e5e5e5}
 form{margin-bottom:20px}
-.page-header h2 a.pull-right{display:block;line-height:33px}
+h1,h2,h3{font-weight:300}
+h2 a.back-link{line-height:33px;display:inline-block;font-size:16px;margin-right:5px;vertical-align:top}
+h2 .divider{color:#999}
 .track{margin-bottom:10px;text-align:center;display:block}.track img{margin-left:auto;margin-right:auto;display:block;border-radius:100px;border:1px solid #444}
 .track span{display:block}.track span.play-count{font-size:12px;color:#999;font-style:italic}

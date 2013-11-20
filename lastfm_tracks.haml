@@ -1,7 +1,7 @@
 %div{ng: {controller: 'PlaylistController', init: 'lastfm_tracks()'}}
   %h2.clearfix
-    %a.pull-right{ng: {click: 'chart.tracks = []'}}
-      %span.glyphicon.glyphicon-remove
+    %a.back-link{href: '/#/lastfm/{{lastfm.user}}'}
+      %span.glyphicon.glyphicon-chevron-left
     Tracks for {{chart.to_s()}}
   %form.form-horizontal{ng: {submit: 'create_playlist()'}}
     .form-group

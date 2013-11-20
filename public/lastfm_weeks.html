@@ -1,8 +1,10 @@
 <div ng-controller='PlaylistController' ng-init='lastfm_weeks()'>
   <h2 class='clearfix'>
-    <a class='pull-right' ng-click='weeks = []'>
-      <span class='glyphicon glyphicon-remove'></span>
+    <a class='back-link' href='/#/'>
+      <span class='glyphicon glyphicon-chevron-left'></span>
     </a>
+    Last.fm {{lastfm.user}}
+    <span class='divider'>/</span>
     Weeks
   </h2>
   <div class='row' ng-repeat='i in week_range()'>

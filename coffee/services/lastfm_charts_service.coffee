@@ -5,7 +5,7 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
 
     get_weekly_chart_list: (user) ->
       on_success = (data, status, headers, config) =>
-        for chart_data in data.weeklychartlist.chart
+        for chart_data in data.weeklychartlist.chart.slice(0).reverse()
           @weeks.push(new LastfmChart(chart_data))
       on_error = (data, status, headers, config) =>
         Notification.error data

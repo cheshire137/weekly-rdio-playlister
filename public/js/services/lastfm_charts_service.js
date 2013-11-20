@@ -11,7 +11,7 @@
           _this = this;
         on_success = function(data, status, headers, config) {
           var chart_data, _i, _len, _ref, _results;
-          _ref = data.weeklychartlist.chart;
+          _ref = data.weeklychartlist.chart.slice(0).reverse();
           _results = [];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             chart_data = _ref[_i];
