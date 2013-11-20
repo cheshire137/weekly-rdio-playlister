@@ -2,12 +2,25 @@
   playlister_app.factory('Lastfm', function(PlaylisterConfig) {
     var Lastfm;
     Lastfm = (function() {
-      function Lastfm() {}
+      function Lastfm() {
+        this.api_url = 'http://ws.audioscrobbler.com/2.0/';
+      }
+
+      Lastfm.prototype.get_api_url = function(method, params) {
+        var key, url, value;
+        url = this.api_url + '?method=' + method;
+        url += '&api_key=' + PlaylisterConfig.api_key + '&format=json';
+        for (key in params) {
+          value = params[key];
+          url += "&" + key + "=" + (encodeURIComponent(value));
+        }
+        return url;
+      };
 
       Lastfm.prototype.get_weekly_chart_list_url = function(user) {
-        var user_param;
-        user_param = encodeURIComponent(user);
-        return 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklychartlist&user=' + user_param + '&api_key=' + PlaylisterConfig.api_key + '&format=json';
+        return this.get_api_url('user.getweeklychartlist', {
+          user: user
+        });
       };
 
       return Lastfm;

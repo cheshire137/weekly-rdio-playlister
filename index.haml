@@ -11,7 +11,7 @@
     /[if (lt IE 9) & (!IEMobile)]
       %script{src: "//html5shim.googlecode.com/svn/trunk/html5.js"}
   %body
-    .navbar.navbar-fixed-top{role: 'navigation'}
+    .navbar.navbar-default.navbar-fixed-top{role: 'navigation'}
       .container
         .navbar-header
           %button.navbar-toggle{type: 'button', data: {toggle: 'collapse', target: '.navbar-collapse'}}
@@ -23,11 +23,17 @@
         .navbar-collapse.collapse
           %ul.nav.navbar-nav
     .container{ng: {controller: 'PlaylistController'}}
-      %form{role: 'form', ng: {submit: 'get_weeks()'}}
+      %form{role: 'form', ng: {submit: 'get_weekly_chart_list()'}}
         .form-group
           %label{for: 'lastfm_user'}
             Last.fm user name:
           %input#lastfm_user.form-control{type: 'text', placeholder: 'Last.fm user name', ng: {model: 'lastfm.user'}}
+      %div{ng: {if: 'weeks.length > 0'}}
+        %h2 Weeks
+        %ul
+          %li{ng: {repeat: 'chart in weeks'}}
+            %a{ng: {click: 'get_weekly_track_chart(chart)'}}
+              {{chart.to_s()}}
     %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"}
     %script{src: "//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"}
     %script{src: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js'}
@@ -36,6 +42,8 @@
     %script{src: "js/app.js"}
     %script{src: "js/services/playlister_config_service.js"}
     %script{src: "js/services/lastfm_service.js"}
+    %script{src: "js/services/lastfm_charts_service.js"}
+    %script{src: "js/models/lastfm_chart.js"}
     %script{src: "js/controllers/playlist_controller.js"}
     -# :javascript
       var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];

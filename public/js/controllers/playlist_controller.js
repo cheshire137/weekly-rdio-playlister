@@ -1,10 +1,13 @@
 (function() {
-  playlister_app.controller('PlaylistController', function($scope, Lastfm, PlaylisterConfig) {
+  playlister_app.controller('PlaylistController', function($scope, Lastfm, LastfmCharts, PlaylisterConfig) {
+    var on_error;
     $scope.lastfm = {};
-    return $scope.get_weeks = function() {
-      var url;
-      url = Lastfm.get_weekly_chart_list_url($scope.lastfm.user);
-      return console.log(url);
+    $scope.weeks = LastfmCharts.weeks;
+    on_error = function(response) {
+      return console.error(response);
+    };
+    return $scope.get_weekly_chart_list = function() {
+      return LastfmCharts.update($scope.lastfm.user, on_error);
     };
   });
 

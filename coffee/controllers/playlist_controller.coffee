@@ -1,6 +1,9 @@
-playlister_app.controller 'PlaylistController', ($scope, Lastfm, PlaylisterConfig) ->
+playlister_app.controller 'PlaylistController', ($scope, Lastfm, LastfmCharts, PlaylisterConfig) ->
   $scope.lastfm = {}
+  $scope.weeks = LastfmCharts.weeks
 
-  $scope.get_weeks = ->
-    url = Lastfm.get_weekly_chart_list_url($scope.lastfm.user)
-    console.log url
+  on_error = (response) ->
+    console.error response
+
+  $scope.get_weekly_chart_list = ->
+    LastfmCharts.update($scope.lastfm.user, on_error)
