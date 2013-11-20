@@ -38,6 +38,12 @@
           %a.pull-right{ng: {click: 'chart.tracks = []'}}
             %span.glyphicon.glyphicon-remove
           Tracks for {{chart.to_s()}}
+        %form.form-inline{ng: {submit: 'create_playlist()'}}
+          .form-group
+            %label.sr-only{for: 'playlist_name'}
+              Playlist name:
+            %input#playlist_name.form-control{type: 'text', placeholder: 'Playlist name', ng: {model: 'playlist.name'}}
+          %input.btn.btn-primary{type: 'submit', value: 'Create Playlist'}
         %div{ng: {repeat: 'j in chart.track_range()'}}
           .row
             .col-md-3{ng: {repeat: 'track in chart.tracks.slice(j, j+4)'}}
@@ -58,6 +64,7 @@
     %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"}
     %script{src: "//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"}
     %script{src: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js'}
+    %script{src: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js'}
     %script{src: 'js/moment.min.js'}
     %script{src: "js/ui-bootstrap-0.6.0.min.js"}
     %script{src: "js/ui-bootstrap-tpls-0.6.0.min.js"}
@@ -68,6 +75,7 @@
     %script{src: "js/models/lastfm_chart.js"}
     %script{src: "js/models/lastfm_track.js"}
     %script{src: "js/controllers/playlist_controller.js"}
+    %script{src: "js/routes.js"}
     -# :javascript
       var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
       (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];

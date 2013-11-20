@@ -3,6 +3,7 @@
 
   LastfmTrack = (function() {
     function LastfmTrack(data) {
+      console.log(data);
       this.name = data.name;
       this.mbid = data.mbid;
       this.artist = data.artist['#text'];
