@@ -30,6 +30,12 @@
       </div>
     </div>
     <div class='container' ng-controller='PlaylistController'>
+      <p class='alert alert-danger clearfix' ng-show='error'>
+        <a class='pull-right' ng-click='error = false'>
+          <span class='glyphicon glyphicon-remove'></span>
+        </a>
+        {{error}}
+      </p>
       <form ng-submit='get_weekly_chart_list()' role='form'>
         <div class='form-group'>
           <label for='lastfm_user'>
@@ -38,27 +44,35 @@
           <input class='form-control' id='lastfm_user' ng-model='lastfm.user' placeholder='Last.fm user name' type='text'>
         </div>
       </form>
-      <div ng-show='weeks.length &gt; 0'>
+      <div ng-show='chart.tracks &amp;&amp; chart.tracks.length &gt; 0'>
+        <div class='page-header clearfix'>
+          <a class='pull-right' ng-click='chart.tracks = []' tooltip='Choose a different week'>
+            <span class='glyphicon glyphicon-remove'></span>
+          </a>
+          <h2>
+            Tracks for {{chart.to_s()}}
+          </h2>
+        </div>
+        <div class='row' ng-repeat='j in chart.track_range()'>
+          <div class='col-md-3' ng-repeat='track in chart.tracks.slice(j, j+4)'>
+            <a class='track' href='{{track.url}}' target='_blank'>
+              <img ng-src='{{track.large_image}}'>
+              <br>
+              <span>{{track.name}} by {{track.artist}}</span>
+            </a>
+          </div>
+        </div>
+        <hr>
+      </div>
+      <div ng-show='(!chart.tracks || chart.tracks.length &lt; 1) &amp;&amp; weeks.length &gt; 0'>
         <h2>Weeks</h2>
-        <ul>
-          <li ng-repeat='chart in weeks'>
+        <div class='row' ng-repeat='i in week_range()'>
+          <div class='col-md-4' ng-repeat='chart in weeks.slice(i, i+3)'>
             <a ng-click='get_weekly_track_chart(chart)'>
               {{chart.to_s()}}
             </a>
-            <div ng-show='chart.tracks.length &gt; 0'>
-              <h3>Tracks</h3>
-              <div class='row' ng-repeat='i in chart.track_range()'>
-                <div class='col-md-4' ng-repeat='track in chart.tracks.slice(i, i+3)'>
-                  <a class='btn btn-default track' href='{{track.url}}' target='_blank'>
-                    <img ng-src='{{track.large_image}}'>
-                    <br>
-                    {{track.name}} by {{track.artist}}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
     <script src='//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>

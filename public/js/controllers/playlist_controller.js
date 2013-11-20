@@ -3,14 +3,24 @@
     var on_error;
     $scope.lastfm = {};
     $scope.weeks = LastfmCharts.weeks;
-    on_error = function(response) {
-      return console.error(response);
+    $scope.chart = {};
+    on_error = function(message) {
+      return $scope.error = message;
+    };
+    $scope.week_range = function() {
+      var i, range, _i, _ref;
+      range = [];
+      for (i = _i = 0, _ref = $scope.weeks.length; _i < _ref; i = _i += 3) {
+        range.push(i);
+      }
+      return range;
     };
     $scope.get_weekly_chart_list = function() {
       return LastfmCharts.get_weekly_chart_list($scope.lastfm.user, on_error);
     };
     return $scope.get_weekly_track_chart = function(chart) {
-      return LastfmCharts.get_weekly_track_chart($scope.lastfm.user, chart, on_error);
+      $scope.chart = chart;
+      return LastfmCharts.get_weekly_track_chart($scope.lastfm.user, $scope.chart, on_error);
     };
   });
 

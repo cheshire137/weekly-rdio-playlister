@@ -29,14 +29,18 @@
         var on_success,
           _this = this;
         on_success = function(data, status, headers, config) {
-          var track_data, _i, _len, _ref;
-          console.log(data);
-          _ref = data.weeklytrackchart.track;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            track_data = _ref[_i];
-            chart.tracks.push(new LastfmTrack(track_data));
+          var track_data, _i, _len, _ref, _results;
+          if (data.weeklytrackchart.track) {
+            _ref = data.weeklytrackchart.track;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              track_data = _ref[_i];
+              _results.push(chart.tracks.push(new LastfmTrack(track_data)));
+            }
+            return _results;
+          } else {
+            return on_error("No tracks for the week of " + (chart.to_s()) + ".");
           }
-          return console.log(chart.tracks);
         };
         return $http({
           url: Lastfm.get_weekly_track_chart_url(user, chart),

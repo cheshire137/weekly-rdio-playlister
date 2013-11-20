@@ -1,3 +1,4 @@
 a[ng-click]{cursor:pointer}
 body{padding-top:60px}
-.track{display:block}.track img{margin-bottom:5px}
+.track{display:block}.track img{margin-bottom:5px;border:1px solid #444}
+.track span{display:block}

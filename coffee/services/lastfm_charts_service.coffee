@@ -14,10 +14,11 @@ playlister_app.factory 'LastfmCharts', ($http, Lastfm) ->
 
     get_weekly_track_chart: (user, chart, on_error) ->
       on_success = (data, status, headers, config) =>
-        console.log data
-        for track_data in data.weeklytrackchart.track
-          chart.tracks.push(new LastfmTrack(track_data))
-        console.log chart.tracks
+        if data.weeklytrackchart.track
+          for track_data in data.weeklytrackchart.track
+            chart.tracks.push(new LastfmTrack(track_data))
+        else
+          on_error "No tracks for the week of #{chart.to_s()}."
       $http(
         url: Lastfm.get_weekly_track_chart_url(user, chart)
         method: 'GET'

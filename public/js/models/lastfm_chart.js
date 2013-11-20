@@ -11,7 +11,7 @@
     LastfmChart.prototype.track_range = function() {
       var i, range, _i, _ref;
       range = [];
-      for (i = _i = 0, _ref = this.tracks.length; _i < _ref; i = _i += 3) {
+      for (i = _i = 0, _ref = this.tracks.length; _i < _ref; i = _i += 4) {
         range.push(i);
       }
       return range;
@@ -26,11 +26,26 @@
     };
 
     LastfmChart.prototype.from_date_str = function() {
-      return moment(this.from_date()).format('MMMM D, YYYY');
+      var date;
+      date = this.from_date();
+      if (date.getFullYear() === this.to_date().getFullYear()) {
+        return moment(date).format('MMMM D');
+      } else {
+        return moment(date).format('MMMM D, YYYY');
+      }
     };
 
     LastfmChart.prototype.to_date_str = function() {
-      return moment(this.to_date()).format('MMMM D, YYYY');
+      var from_date, same_month, same_year, to_date;
+      from_date = this.from_date();
+      to_date = this.to_date();
+      same_year = from_date.getFullYear() === to_date.getFullYear();
+      same_month = from_date.getMonth() === to_date.getMonth();
+      if (same_year && same_month) {
+        return moment(to_date).format('D, YYYY');
+      } else {
+        return moment(to_date).format('MMMM D, YYYY');
+      }
     };
 
     LastfmChart.prototype.from_date_utc_str = function() {

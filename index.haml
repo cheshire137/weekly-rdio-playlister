@@ -23,25 +23,34 @@
         .navbar-collapse.collapse
           %ul.nav.navbar-nav
     .container{ng: {controller: 'PlaylistController'}}
+      %p.alert.alert-danger.clearfix{ng: {show: 'error'}}
+        %a.pull-right{ng: {click: 'error = false'}}
+          %span.glyphicon.glyphicon-remove
+        {{error}}
       %form{role: 'form', ng: {submit: 'get_weekly_chart_list()'}}
         .form-group
           %label{for: 'lastfm_user'}
             Last.fm user name:
           %input#lastfm_user.form-control{type: 'text', placeholder: 'Last.fm user name', ng: {model: 'lastfm.user'}}
-      %div{ng: {show: 'weeks.length > 0'}}
+      %div{ng: {show: 'chart.tracks && chart.tracks.length > 0'}}
+        .page-header.clearfix
+          %a.pull-right{tooltip: 'Choose a different week', ng: {click: 'chart.tracks = []'}}
+            %span.glyphicon.glyphicon-remove
+          %h2
+            Tracks for {{chart.to_s()}}
+        .row{ng: {repeat: 'j in chart.track_range()'}}
+          .col-md-3{ng: {repeat: 'track in chart.tracks.slice(j, j+4)'}}
+            %a.track{href: '{{track.url}}', target: '_blank'}
+              %img{ng: {src: '{{track.large_image}}'}}
+              %br
+              %span {{track.name}} by {{track.artist}}
+        %hr
+      %div{ng: {show: '(!chart.tracks || chart.tracks.length < 1) && weeks.length > 0'}}
         %h2 Weeks
-        %ul
-          %li{ng: {repeat: 'chart in weeks'}}
+        .row{ng: {repeat: 'i in week_range()'}}
+          .col-md-4{ng: {repeat: 'chart in weeks.slice(i, i+3)'}}
             %a{ng: {click: 'get_weekly_track_chart(chart)'}}
               {{chart.to_s()}}
-            %div{ng: {show: 'chart.tracks.length > 0'}}
-              %h3 Tracks
-              .row{ng: {repeat: 'i in chart.track_range()'}}
-                .col-md-4{ng: {repeat: 'track in chart.tracks.slice(i, i+3)'}}
-                  %a.btn.btn-default.track{href: '{{track.url}}', target: '_blank'}
-                    %img{ng: {src: '{{track.large_image}}'}}
-                    %br
-                    {{track.name}} by {{track.artist}}
     %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"}
     %script{src: "//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"}
     %script{src: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js'}

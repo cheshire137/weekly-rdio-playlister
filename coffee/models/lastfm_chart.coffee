@@ -6,7 +6,7 @@ class LastfmChart
 
   track_range: ->
     range = []
-    for i in [0...@tracks.length] by 3
+    for i in [0...@tracks.length] by 4
       range.push i
     range
 
@@ -17,10 +17,21 @@ class LastfmChart
     new Date(1000 * @to)
 
   from_date_str: ->
-    moment(@from_date()).format('MMMM D, YYYY')
+    date = @from_date()
+    if date.getFullYear() == @to_date().getFullYear()
+      moment(date).format('MMMM D')
+    else
+      moment(date).format('MMMM D, YYYY')
 
   to_date_str: ->
-    moment(@to_date()).format('MMMM D, YYYY')
+    from_date = @from_date()
+    to_date = @to_date()
+    same_year = from_date.getFullYear() == to_date.getFullYear()
+    same_month = from_date.getMonth() == to_date.getMonth()
+    if same_year && same_month
+      moment(to_date).format('D, YYYY')
+    else
+      moment(to_date).format('MMMM D, YYYY')
 
   from_date_utc_str: ->
     @from_date().toUTCString()
