@@ -23,6 +23,14 @@
         });
       };
 
+      Lastfm.prototype.get_weekly_track_chart_url = function(user, chart) {
+        return this.get_api_url('user.getweeklytrackchart', {
+          user: user,
+          from: chart.from,
+          to: chart.to
+        });
+      };
+
       return Lastfm;
 
     })();

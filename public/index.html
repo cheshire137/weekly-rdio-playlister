@@ -38,13 +38,25 @@
           <input class='form-control' id='lastfm_user' ng-model='lastfm.user' placeholder='Last.fm user name' type='text'>
         </div>
       </form>
-      <div ng-if='weeks.length &gt; 0'>
+      <div ng-show='weeks.length &gt; 0'>
         <h2>Weeks</h2>
         <ul>
           <li ng-repeat='chart in weeks'>
             <a ng-click='get_weekly_track_chart(chart)'>
               {{chart.to_s()}}
             </a>
+            <div ng-show='chart.tracks.length &gt; 0'>
+              <h3>Tracks</h3>
+              <div class='row' ng-repeat='i in chart.track_range()'>
+                <div class='col-md-4' ng-repeat='track in chart.tracks.slice(i, i+3)'>
+                  <a class='btn btn-default track' href='{{track.url}}' target='_blank'>
+                    <img ng-src='{{track.large_image}}'>
+                    <br>
+                    {{track.name}} by {{track.artist}}
+                  </a>
+                </div>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
@@ -52,13 +64,15 @@
     <script src='//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
     <script src='//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js'></script>
-    <script src='js/ui-bootstrap-0.6.0.min.js' type='text/javascript'></script>
-    <script src='js/ui-bootstrap-tpls-0.6.0.min.js' type='text/javascript'></script>
+    <script src='js/moment.min.js'></script>
+    <script src='js/ui-bootstrap-0.6.0.min.js'></script>
+    <script src='js/ui-bootstrap-tpls-0.6.0.min.js'></script>
     <script src='js/app.js'></script>
     <script src='js/services/playlister_config_service.js'></script>
     <script src='js/services/lastfm_service.js'></script>
     <script src='js/services/lastfm_charts_service.js'></script>
     <script src='js/models/lastfm_chart.js'></script>
+    <script src='js/models/lastfm_track.js'></script>
     <script src='js/controllers/playlist_controller.js'></script>
   </body>
 </html>

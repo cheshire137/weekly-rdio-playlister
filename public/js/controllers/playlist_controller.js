@@ -6,8 +6,11 @@
     on_error = function(response) {
       return console.error(response);
     };
-    return $scope.get_weekly_chart_list = function() {
-      return LastfmCharts.update($scope.lastfm.user, on_error);
+    $scope.get_weekly_chart_list = function() {
+      return LastfmCharts.get_weekly_chart_list($scope.lastfm.user, on_error);
+    };
+    return $scope.get_weekly_track_chart = function(chart) {
+      return LastfmCharts.get_weekly_track_chart($scope.lastfm.user, chart, on_error);
     };
   });
 

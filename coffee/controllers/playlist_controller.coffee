@@ -6,4 +6,7 @@ playlister_app.controller 'PlaylistController', ($scope, Lastfm, LastfmCharts, P
     console.error response
 
   $scope.get_weekly_chart_list = ->
-    LastfmCharts.update($scope.lastfm.user, on_error)
+    LastfmCharts.get_weekly_chart_list($scope.lastfm.user, on_error)
+
+  $scope.get_weekly_track_chart = (chart) ->
+    LastfmCharts.get_weekly_track_chart($scope.lastfm.user, chart, on_error)
