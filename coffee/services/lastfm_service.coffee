@@ -5,7 +5,7 @@ playlister_app.factory 'Lastfm', (PlaylisterConfig) ->
 
     get_api_url: (method, params) ->
       url = @api_url + '?method=' + method
-      url += '&api_key=' + PlaylisterConfig.api_key + '&format=json'
+      url += '&api_key=' + PlaylisterConfig.lastfm_api_key + '&format=json'
       for key, value of params
         url += "&#{key}=#{encodeURIComponent(value)}"
       url

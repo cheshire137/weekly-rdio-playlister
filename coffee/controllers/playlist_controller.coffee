@@ -1,4 +1,4 @@
-playlister_app.controller 'PlaylistController', ($scope, Lastfm, LastfmCharts, PlaylisterConfig) ->
+playlister_app.controller 'PlaylistController', ($scope, LastfmCharts, PlaylisterConfig) ->
   $scope.lastfm = {}
   $scope.weeks = LastfmCharts.weeks
   $scope.chart = {}

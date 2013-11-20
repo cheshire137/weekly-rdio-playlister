@@ -9,7 +9,7 @@
       Lastfm.prototype.get_api_url = function(method, params) {
         var key, url, value;
         url = this.api_url + '?method=' + method;
-        url += '&api_key=' + PlaylisterConfig.api_key + '&format=json';
+        url += '&api_key=' + PlaylisterConfig.lastfm_api_key + '&format=json';
         for (key in params) {
           value = params[key];
           url += "&" + key + "=" + (encodeURIComponent(value));

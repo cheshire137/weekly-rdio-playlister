@@ -1,5 +1,5 @@
 (function() {
-  playlister_app.controller('PlaylistController', function($scope, Lastfm, LastfmCharts, PlaylisterConfig) {
+  playlister_app.controller('PlaylistController', function($scope, LastfmCharts, PlaylisterConfig) {
     var on_error;
     $scope.lastfm = {};
     $scope.weeks = LastfmCharts.weeks;
