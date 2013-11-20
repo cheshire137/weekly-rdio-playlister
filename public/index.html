@@ -36,6 +36,12 @@
         </a>
         {{error}}
       </p>
+      <p class='alert alert-success clearfix' ng-show='notice'>
+        <a class='pull-right' ng-click='notice = false'>
+          <span class='glyphicon glyphicon-remove'></span>
+        </a>
+        {{notice}}
+      </p>
       <p>
         <a class='btn btn-primary btn-large' href='/auth/rdio'>
           Log In With Rdio
@@ -57,22 +63,38 @@
           </a>
           Tracks for {{chart.to_s()}}
         </h2>
-        <form class='form-inline' ng-submit='create_playlist()'>
+        <form class='form-horizontal' ng-submit='create_playlist()'>
           <div class='form-group'>
-            <label class='sr-only' for='playlist_name'>
+            <label class='col-sm-2 control-label' for='playlist_name'>
               Playlist name:
             </label>
-            <input class='form-control' id='playlist_name' ng-model='playlist.name' placeholder='Playlist name' type='text'>
+            <div class='col-sm-10'>
+              <input class='form-control' id='playlist_name' ng-model='playlist.name' placeholder='Playlist name' type='text'>
+            </div>
           </div>
-          <input class='btn btn-primary' type='submit' value='Create Playlist'>
+          <div class='form-group'>
+            <label class='col-sm-2 control-label' for='playlist_description'>
+              Playlist description:
+            </label>
+            <div class='col-sm-10'>
+              <textarea class='form-control' id='playlist_description' ng-model='playlist.description' placeholder='Playlist description' rows='3'></textarea>
+            </div>
+          </div>
+          <div class='form-group'>
+            <div class='col-sm-offset-2 col-sm-10'>
+              <input class='btn btn-primary' type='submit' value='Create Playlist'>
+            </div>
+          </div>
         </form>
+        <hr>
         <div ng-repeat='j in chart.track_range()'>
           <div class='row'>
             <div class='col-md-3' ng-repeat='track in chart.tracks.slice(j, j+4)'>
               <a class='track' href='{{track.url}}' target='_blank'>
                 <img ng-src='{{track.large_image}}'>
                 <br>
-                <span>{{track.name}} by {{track.artist}}</span>
+                <span class='track-name'>{{track.name}} by {{track.artist}}</span>
+                <span class='play-count'>{{track.play_count}}x</span>
               </a>
             </div>
           </div>
@@ -106,6 +128,8 @@
     <script src='js/services/playlister_config_service.js'></script>
     <script src='js/services/lastfm_service.js'></script>
     <script src='js/services/lastfm_charts_service.js'></script>
+    <script src='js/services/rdio_catalog_service.js'></script>
+    <script src='js/services/rdio_playlist_service.js'></script>
     <script src='js/models/lastfm_chart.js'></script>
     <script src='js/models/lastfm_track.js'></script>
     <script src='js/controllers/playlist_controller.js'></script>

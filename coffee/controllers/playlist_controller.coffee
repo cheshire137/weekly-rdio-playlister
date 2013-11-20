@@ -1,4 +1,4 @@
-playlister_app.controller 'PlaylistController', ($scope, $http, $routeParams, LastfmCharts, PlaylisterConfig) ->
+playlister_app.controller 'PlaylistController', ($scope, $http, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, PlaylisterConfig) ->
   $scope.lastfm = {}
   $scope.weeks = LastfmCharts.weeks
   $scope.chart = {}
@@ -21,50 +21,24 @@ playlister_app.controller 'PlaylistController', ($scope, $http, $routeParams, La
     LastfmCharts.get_weekly_track_chart($scope.lastfm.user, $scope.chart,
                                         on_error)
     $scope.playlist.name = chart.to_s()
-
-  on_track_lookup = (track_id) ->
-    console.log 'on_track_lookup'
-    on_success = (data, status, headers, config) =>
-      console.log data
-    request_data =
-      name: $scope.playlist.name
-      description: 'test playlist please ignore'
-      tracks: track_id
-    console.log request_data
-    $http(
-      url: '/rdio_playlist_create'
-      method: 'POST'
-      data: request_data
-    ).success(on_success).error(on_error)
-
-  on_artist_lookup = (artist_id, track_name) ->
-    console.log 'on_artist_lookup'
-    on_success = (data, status, headers, config) =>
-      console.log data
-      if data.error
-        # TODO: have Sinatra respond with error code
-        on_error data.error
-      else
-        on_track_lookup data.track_id
-    url = "/rdio_track_search?artist_id=#{artist_id}&query=" +
-          encodeURIComponent(track_name)
-    $http(
-      url: url
-      method: 'GET'
-    ).success(on_success).error(on_error)
+    $scope.playlist.description = 'Last.fm track chart for user ' +
+                                  "#{$scope.lastfm.user} for #{chart.to_s()}."
 
   $scope.create_playlist = ->
     console.log 'create_playlist'
     track = $scope.chart.tracks[0]
-    url = "/rdio_artist_search?query=#{track.artist}"
-    on_success = (data, status, headers, config) =>
-      console.log data
-      if data.error
-        # TODO: have Sinatra respond with error code
-        on_error data.error
-      else
-        on_artist_lookup data.artist_id, track.name
-    $http(
-      url: url
-      method: 'GET'
-    ).success(on_success).error(on_error)
+    on_artist_lookup = (artist) ->
+      console.log artist
+      console.log artist.id
+      on_track_lookup = (track) ->
+        console.log track
+        console.log track.id
+        on_playlist_create = (playlist) ->
+          plural = if playlist.song_count == 1 then '' else 's'
+          $scope.notice = 'Successfully created playlist with ' +
+                          "#{playlist.song_count} track#{plural}!"
+        RdioPlaylist.create($scope.playlist.name, $scope.playlist.description,
+                            track.id, on_playlist_create, on_error)
+      RdioCatalog.search_tracks_by_artist(artist.id, track.name,
+                                          on_track_lookup, on_error)
+    RdioCatalog.search_artists(track.artist, on_artist_lookup, on_error)

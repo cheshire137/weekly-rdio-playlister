@@ -1,6 +1,6 @@
 (function() {
-  playlister_app.controller('PlaylistController', function($scope, $http, $routeParams, LastfmCharts, PlaylisterConfig) {
-    var on_artist_lookup, on_error, on_track_lookup;
+  playlister_app.controller('PlaylistController', function($scope, $http, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, PlaylisterConfig) {
+    var on_error;
     $scope.lastfm = {};
     $scope.weeks = LastfmCharts.weeks;
     $scope.chart = {};
@@ -22,63 +22,31 @@
     $scope.get_weekly_track_chart = function(chart) {
       $scope.chart = chart;
       LastfmCharts.get_weekly_track_chart($scope.lastfm.user, $scope.chart, on_error);
-      return $scope.playlist.name = chart.to_s();
-    };
-    on_track_lookup = function(track_id) {
-      var on_success, request_data,
-        _this = this;
-      console.log('on_track_lookup');
-      on_success = function(data, status, headers, config) {
-        return console.log(data);
-      };
-      request_data = {
-        name: $scope.playlist.name,
-        description: 'test playlist please ignore',
-        tracks: track_id
-      };
-      console.log(request_data);
-      return $http({
-        url: '/rdio_playlist_create',
-        method: 'POST',
-        data: request_data
-      }).success(on_success).error(on_error);
-    };
-    on_artist_lookup = function(artist_id, track_name) {
-      var on_success, url,
-        _this = this;
-      console.log('on_artist_lookup');
-      on_success = function(data, status, headers, config) {
-        console.log(data);
-        if (data.error) {
-          return on_error(data.error);
-        } else {
-          return on_track_lookup(data.track_id);
-        }
-      };
-      url = ("/rdio_track_search?artist_id=" + artist_id + "&query=") + encodeURIComponent(track_name);
-      return $http({
-        url: url,
-        method: 'GET'
-      }).success(on_success).error(on_error);
+      $scope.playlist.name = chart.to_s();
+      return $scope.playlist.description = 'Last.fm track chart for user ' + ("" + $scope.lastfm.user + " for " + (chart.to_s()) + ".");
     };
     return $scope.create_playlist = function() {
-      var on_success, track, url,
-        _this = this;
+      var on_artist_lookup, track;
       console.log('create_playlist');
       track = $scope.chart.tracks[0];
-      url = "/rdio_artist_search?query=" + track.artist;
-      on_success = function(data, status, headers, config) {
-        console.log(data);
-        if (data.error) {
-          return on_error(data.error);
-        } else {
-          return on_artist_lookup(data.artist_id, track.name);
-        }
+      on_artist_lookup = function(artist) {
+        var on_track_lookup;
+        console.log(artist);
+        console.log(artist.id);
+        on_track_lookup = function(track) {
+          var on_playlist_create;
+          console.log(track);
+          console.log(track.id);
+          on_playlist_create = function(playlist) {
+            var plural;
+            plural = playlist.song_count === 1 ? '' : 's';
+            return $scope.notice = 'Successfully created playlist with ' + ("" + playlist.song_count + " track" + plural + "!");
+          };
+          return RdioPlaylist.create($scope.playlist.name, $scope.playlist.description, track.id, on_playlist_create, on_error);
+        };
+        return RdioCatalog.search_tracks_by_artist(artist.id, track.name, on_track_lookup, on_error);
       };
-      return $http({
-        url: url,
-        method: 'GET'
-      }).success(on_success).error(on_error);
+      return RdioCatalog.search_artists(track.artist, on_artist_lookup, on_error);
     };
   });
 

@@ -50,15 +50,12 @@ get '/rdio_artist_search' do
   content_type :json
   client = get_client(session)
   query = params[:query]
-  response = client.search(query, 'Artist')
-  puts response.inspect
-  if response.count > 0
-    artist = response[0]
-    artist_id = artist.key
-    name = artist.name
-    {artist_id: artist_id, name: name}.to_json
+  artists = client.search(query, 'Artist')
+  if artists.count > 0
+    artist = artists[0]
+    {id: artist.key, name: artist.name}.to_json
   else
-    {artist_id: nil, error: "Could not find artist '#{query}'"}.to_json
+    {id: nil, error: "Could not find artist '#{query}'"}.to_json
   end
 end
 
@@ -67,13 +64,14 @@ get '/rdio_track_search' do
   client = get_client(session)
   query = params[:query]
   artist_id = params[:artist_id]
-  response = client.getTracksForArtist(artist: artist_id, query: query)
-  puts response.inspect
-  if response.count > 0
-    track_id = response[0].key
-    {track_id: track_id}.to_json
+  puts 'Artist ID: ' + artist_id.to_s
+  puts 'Query: ' + query.to_s
+  tracks = client.getTracksForArtist(artist: artist_id, query: query)
+  if tracks.count > 0
+    track = tracks[0]
+    {id: track.key}.to_json
   else
-    {track_id: nil, error: "Could not find track '#{query}'"}.to_json
+    {id: nil, error: "Could not find track '#{query}'"}.to_json
   end
 end
 

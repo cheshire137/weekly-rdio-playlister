@@ -1,6 +1,5 @@
 class LastfmTrack
   constructor: (data) ->
-    console.log data
     @name = data.name
     @mbid = data.mbid
     @artist = data.artist['#text']
