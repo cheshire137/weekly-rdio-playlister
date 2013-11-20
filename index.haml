@@ -1,0 +1,19 @@
+!!! 5
+%html.no-js{lang: "en"}
+  %head
+    %meta{charset: "utf-8"}
+    %title Weekly Rdio Playlister
+    %meta{name: "description", content: "Turn your weekly Last.fm listening charts into Rdio playlists."}
+    %meta{name: "author", content: "Sarah Vessels"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1"}
+    %link{rel: "stylesheet", href: "/css/screen.css"}
+    /[if (lt IE 9) & (!IEMobile)]
+      %script{src: "//html5shim.googlecode.com/svn/trunk/html5.js"}
+  %body
+    %script{src: "//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"}
+    %script{src: "/js/app.js"}
+    -# :javascript
+      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
