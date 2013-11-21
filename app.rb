@@ -1,3 +1,4 @@
+# encoding=utf-8
 require 'sinatra'
 require 'omniauth'
 require 'omniauth-rdio'
@@ -23,6 +24,10 @@ def get_client session
   puts 'Client:'
   puts client.inspect
   client
+end
+
+def strip_smart_quotes str
+  str.gsub(/[‘’]/, "'").gsub(/[”“]/, '"')
 end
 
 root_path = File.join(Dir.pwd, 'public')
@@ -52,7 +57,7 @@ end
 get '/rdio_artist_search' do
   content_type :json
   client = get_client(session)
-  query = params[:query]
+  query = strip_smart_quotes(params[:query])
   artists = client.search(query, 'Artist')
   if artists.count > 0
     artist = artists[0]
@@ -65,7 +70,7 @@ end
 get '/rdio_track_search' do
   content_type :json
   client = get_client(session)
-  query = params[:query]
+  query = strip_smart_quotes(params[:query])
   artist_id = params[:artist_id]
   puts 'Artist ID: ' + artist_id.to_s
   puts 'Query: ' + query.to_s

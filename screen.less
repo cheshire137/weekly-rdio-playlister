@@ -69,9 +69,18 @@ h2 {
   -o-transition: background 0.5s ease-in-out;
   transition: background 0.5s ease-in-out;
 
+  &:hover, &:focus {
+    text-decoration: none;
+    background-color: #e5e3e9;
+  }
+
   &.missing {
     background-color: #f2dede;
     color: #b94a48;
+
+    &:hover, &:focus {
+      background-color: #e8baba;
+    }
 
     .track-artist-divider, .play-count {
       color: #cf6d6b;
@@ -82,6 +91,10 @@ h2 {
     background-color: #d9edf7;
     color: #3a87ad;
 
+    &:hover, &:focus {
+      background-color: #a5d2e8;
+    }
+
     .track-artist-divider, .play-count {
       color: #62aacc;
     }
@@ -90,6 +103,10 @@ h2 {
   &.matched {
     background-color: #0091d4;
     color: white;
+
+    &:hover, &:focus {
+      background-color: #007fb5;
+    }
 
     .track-artist-divider, .play-count {
       color: #efefef;
@@ -124,7 +141,7 @@ h2 {
   }
 
   .artist-name, .track-name {
-    width: 100%;
+    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -132,6 +149,7 @@ h2 {
 
   .artist-name {
     display: inline-block;
+    vertical-align: middle;
   }
 
   .track-name {

@@ -14,18 +14,15 @@ playlister_app.factory 'RdioCatalog', ($http, Notification) ->
         lastfm_track.matching = false
         if rdio_track
           lastfm_track.matched = true
-          console.log "got Rdio track ##{index}: ", rdio_track
           rdio_tracks.push rdio_track
         else
           lastfm_track.missing = true
         if index < lastfm_tracks.length - 1
           @match_lastfm_track index+1, lastfm_tracks, rdio_tracks, callback
         else
-          console.log 'finished matching!'
           callback(rdio_tracks)
       @search_artists lastfm_track.artist, (artist) =>
         if artist
-          console.log "found Rdio artist: ", artist
           @search_tracks_by_artist artist.id, lastfm_track.name, on_rdio_track
 
     match_lastfm_tracks: (lastfm_tracks, on_matched_all) ->

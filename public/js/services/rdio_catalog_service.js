@@ -23,7 +23,6 @@
           lastfm_track.matching = false;
           if (rdio_track) {
             lastfm_track.matched = true;
-            console.log("got Rdio track #" + index + ": ", rdio_track);
             rdio_tracks.push(rdio_track);
           } else {
             lastfm_track.missing = true;
@@ -31,13 +30,11 @@
           if (index < lastfm_tracks.length - 1) {
             return _this.match_lastfm_track(index + 1, lastfm_tracks, rdio_tracks, callback);
           } else {
-            console.log('finished matching!');
             return callback(rdio_tracks);
           }
         };
         return this.search_artists(lastfm_track.artist, function(artist) {
           if (artist) {
-            console.log("found Rdio artist: ", artist);
             return _this.search_tracks_by_artist(artist.id, lastfm_track.name, on_rdio_track);
           }
         });

@@ -6,14 +6,18 @@ h1,h2,h3{font-weight:300}
 h2 a.back-link{line-height:33px;display:inline-block;font-size:16px;margin-right:5px;vertical-align:top}
 h2 .divider{color:#999}
 h2 .subtitle{color:#999;font-size:16px}h2 .subtitle form{display:inline-block}
-.track{width:23%;margin:0 1.8% 10px 0;padding:10px;box-sizing:border-box;text-align:center;display:inline-block;overflow:hidden;border-radius:10px;-webkit-transition:background .5s ease-in-out;-moz-transition:background .5s ease-in-out;-ms-transition:background .5s ease-in-out;-o-transition:background .5s ease-in-out;transition:background .5s ease-in-out}.track.missing{background-color:#f2dede;color:#b94a48}.track.missing .track-artist-divider,.track.missing .play-count{color:#cf6d6b}
-.track.matching{background-color:#d9edf7;color:#3a87ad}.track.matching .track-artist-divider,.track.matching .play-count{color:#62aacc}
-.track.matched{background-color:#0091d4;color:white}.track.matched .track-artist-divider,.track.matched .play-count{color:#efefef}
+.track{width:23%;margin:0 1.8% 10px 0;padding:10px;box-sizing:border-box;text-align:center;display:inline-block;overflow:hidden;border-radius:10px;-webkit-transition:background .5s ease-in-out;-moz-transition:background .5s ease-in-out;-ms-transition:background .5s ease-in-out;-o-transition:background .5s ease-in-out;transition:background .5s ease-in-out}.track:hover,.track:focus{text-decoration:none;background-color:#e5e3e9}
+.track.missing{background-color:#f2dede;color:#b94a48}.track.missing:hover,.track.missing:focus{background-color:#e8baba}
+.track.missing .track-artist-divider,.track.missing .play-count{color:#cf6d6b}
+.track.matching{background-color:#d9edf7;color:#3a87ad}.track.matching:hover,.track.matching:focus{background-color:#a5d2e8}
+.track.matching .track-artist-divider,.track.matching .play-count{color:#62aacc}
+.track.matched{background-color:#0091d4;color:white}.track.matched:hover,.track.matched:focus{background-color:#007fb5}
+.track.matched .track-artist-divider,.track.matched .play-count{color:#efefef}
 .track img{height:73px;margin-left:auto;margin-right:auto;display:block;border-radius:10px}
 .track .play-count{font-size:12px;color:#999;font-style:italic}.track .play-count:before{content:'('}
 .track .play-count:after{content:')'}
 .track .track-artist-divider{font-style:italic;color:#999}
-.track .artist-name,.track .track-name{width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.track .artist-name{display:inline-block}
+.track .artist-name,.track .track-name{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.track .artist-name{display:inline-block;vertical-align:middle}
 .track .track-name{display:block}
 #track_filters_min_play_count{width:5em}
