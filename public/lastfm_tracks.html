@@ -25,12 +25,12 @@
   </h2>
   <div class='row'>
     <div class='col-md-8'>
-      <a class='track' href='{{track.url}}' ng-repeat='track in filtered_tracks = (chart.tracks | filter:play_count_filter)' target='_blank'>
+      <a class='track' href='{{track.url}}' ng-class='{matching: track.matching, matched: track.matched, missing: track.missing}' ng-repeat='track in filtered_tracks = (chart.tracks | filter:play_count_filter)' target='_blank'>
         <img ng-src='{{track.large_image}}'>
         <div class='track-info'>
-          <span class='track-name'>{{track.name}}</span>
+          <span class='track-name' tooltip='{{track.name}}'>{{track.name}}</span>
           <span class='track-artist-divider'>by</span>
-          <span class='artist-name'>{{track.artist}}</span>
+          <span class='artist-name' tooltip='{{track.artist}}'>{{track.artist}}</span>
           <span class='play-count'>{{track.play_count}}x</span>
         </div>
       </a>

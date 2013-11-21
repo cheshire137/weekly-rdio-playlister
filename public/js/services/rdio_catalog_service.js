@@ -18,10 +18,15 @@
         var lastfm_track, on_rdio_track,
           _this = this;
         lastfm_track = lastfm_tracks[index];
+        lastfm_track.matching = true;
         on_rdio_track = function(rdio_track) {
+          lastfm_track.matching = false;
           if (rdio_track) {
+            lastfm_track.matched = true;
             console.log("got Rdio track #" + index + ": ", rdio_track);
             rdio_tracks.push(rdio_track);
+          } else {
+            lastfm_track.missing = true;
           }
           if (index < lastfm_tracks.length - 1) {
             return _this.match_lastfm_track(index + 1, lastfm_tracks, rdio_tracks, callback);

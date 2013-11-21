@@ -57,16 +57,51 @@ h2 {
 .track {
   width: 23%;
   margin: 0 1.8% 10px 0;
+  padding: 10px;
+  box-sizing: border-box;
   text-align: center;
   display: inline-block;
+  overflow: hidden;
+  border-radius: 10px;
+  -webkit-transition: background 0.5s ease-in-out;
+  -moz-transition: background 0.5s ease-in-out;
+  -ms-transition: background 0.5s ease-in-out;
+  -o-transition: background 0.5s ease-in-out;
+  transition: background 0.5s ease-in-out;
+
+  &.missing {
+    background-color: #f2dede;
+    color: #b94a48;
+
+    .track-artist-divider, .play-count {
+      color: #cf6d6b;
+    }
+  }
+
+  &.matching {
+    background-color: #d9edf7;
+    color: #3a87ad;
+
+    .track-artist-divider, .play-count {
+      color: #62aacc;
+    }
+  }
+
+  &.matched {
+    background-color: #0091d4;
+    color: white;
+
+    .track-artist-divider, .play-count {
+      color: #efefef;
+    }
+  }
 
   img {
     height: 73px;
     margin-left: auto;
     margin-right: auto;
     display: block;
-    border-radius: 100px;
-    border: 1px solid #444;
+    border-radius: 10px;
   }
 
   .play-count {
@@ -95,7 +130,9 @@ h2 {
     white-space: nowrap;
   }
 
-  .artist-name {}
+  .artist-name {
+    display: inline-block;
+  }
 
   .track-name {
     display: block;

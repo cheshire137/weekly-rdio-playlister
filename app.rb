@@ -25,7 +25,10 @@ def get_client session
   client
 end
 
-set :public_dir, File.dirname(__FILE__) + '/public'
+root_path = File.join(Dir.pwd, 'public')
+set :public_dir, root_path
+use Rack::Static, urls: ['/css', '/img', '/js'], root: root_path,
+                  index: 'index.html'
 
 get '/' do
   if session[:user]

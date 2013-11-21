@@ -21,6 +21,9 @@
       this.large_image = data.image.filter(function(i) {
         return i.size === 'large';
       })[0]['#text'];
+      if (!this.large_image) {
+        this.large_image = '/img/missing-track-image.png';
+      }
     }
 
     return LastfmTrack;

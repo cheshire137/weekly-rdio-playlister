@@ -18,12 +18,12 @@
         %input#track_filters_min_play_count.input-sm.form-control{type: 'number', ng: {model: 'track_filters.min_play_count'}}
   .row
     .col-md-8
-      %a.track{href: '{{track.url}}', target: '_blank', ng: {repeat: 'track in filtered_tracks = (chart.tracks | filter:play_count_filter)'}}
+      %a.track{href: '{{track.url}}', target: '_blank', ng: {repeat: 'track in filtered_tracks = (chart.tracks | filter:play_count_filter)', class: "{matching: track.matching, matched: track.matched, missing: track.missing}"}}
         %img{ng: {src: '{{track.large_image}}'}}
         %div.track-info
-          %span.track-name {{track.name}}
+          %span.track-name{tooltip: '{{track.name}}'} {{track.name}}
           %span.track-artist-divider by
-          %span.artist-name {{track.artist}}
+          %span.artist-name{tooltip: '{{track.artist}}'} {{track.artist}}
           %span.play-count {{track.play_count}}x
     .col-md-4
       %form{ng: {submit: 'create_playlist()'}}
