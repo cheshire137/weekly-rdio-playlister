@@ -57,24 +57,26 @@
         </div>
         <hr>
       </div>
-      <form ng-submit='create_playlist()'>
-        <h3>Create an Rdio Playlist</h3>
-        <div class='form-group'>
-          <label class='control-label' for='playlist_name'>
-            Name:
-          </label>
-          <input class='form-control' id='playlist_name' ng-model='playlist.name' placeholder='Playlist name' type='text'>
-        </div>
-        <div class='form-group'>
-          <label class='control-label' for='playlist_description'>
-            Description:
-          </label>
-          <textarea class='form-control' id='playlist_description' ng-model='playlist.description' placeholder='Playlist description' rows='3'></textarea>
-        </div>
-        <div class='form-group'>
-          <input class='btn btn-primary' type='submit' value='Create Playlist'>
-        </div>
-      </form>
+      <div ng-show='filtered_tracks.length &gt; 0'>
+        <form ng-submit='create_playlist()'>
+          <h3>Create an Rdio Playlist</h3>
+          <div class='form-group'>
+            <label class='control-label' for='playlist_name'>
+              Name:
+            </label>
+            <input class='form-control' id='playlist_name' ng-model='playlist.name' placeholder='Playlist name' type='text'>
+          </div>
+          <div class='form-group'>
+            <label class='control-label' for='playlist_description'>
+              Description:
+            </label>
+            <textarea class='form-control' id='playlist_description' ng-model='playlist.description' placeholder='Playlist description' rows='3'></textarea>
+          </div>
+          <div class='form-group'>
+            <input class='btn btn-primary' type='submit' value='Create Playlist'>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>

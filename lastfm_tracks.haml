@@ -40,15 +40,16 @@
                 %span{ng: {show: 'playlist.song_count !== 1'}}
                   tracks
         %hr
-      %form{ng: {submit: 'create_playlist()'}}
-        %h3 Create an Rdio Playlist
-        .form-group
-          %label.control-label{for: 'playlist_name'}
-            Name:
-          %input#playlist_name.form-control{type: 'text', placeholder: 'Playlist name', ng: {model: 'playlist.name'}}
-        .form-group
-          %label.control-label{for: 'playlist_description'}
-            Description:
-          %textarea#playlist_description.form-control{rows: '3', placeholder: 'Playlist description', ng: {model: 'playlist.description'}}
-        .form-group
-          %input.btn.btn-primary{type: 'submit', value: 'Create Playlist'}
+      %div{ng: {show: 'filtered_tracks.length > 0'}}
+        %form{ng: {submit: 'create_playlist()'}}
+          %h3 Create an Rdio Playlist
+          .form-group
+            %label.control-label{for: 'playlist_name'}
+              Name:
+            %input#playlist_name.form-control{type: 'text', placeholder: 'Playlist name', ng: {model: 'playlist.name'}}
+          .form-group
+            %label.control-label{for: 'playlist_description'}
+              Description:
+            %textarea#playlist_description.form-control{rows: '3', placeholder: 'Playlist description', ng: {model: 'playlist.description'}}
+          .form-group
+            %input.btn.btn-primary{type: 'submit', value: 'Create Playlist'}

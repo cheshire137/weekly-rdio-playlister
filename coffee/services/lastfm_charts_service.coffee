@@ -22,12 +22,11 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
       on_success = (data, status, headers, config) =>
         for chart_data in data.weeklychartlist.chart.slice(0).reverse()
           @weeks.push(new LastfmChart(chart_data))
-      on_error = (data, status, headers, config) =>
-        Notification.error data
       $http(
         url: Lastfm.get_weekly_chart_list_url(user)
         method: 'GET'
-      ).success(on_success).error(on_error)
+      ).success(on_success).error (data, status, headers, config) =>
+        Notification.error data
 
     get_weekly_track_chart: (user, chart) ->
       on_success = (data, status, headers, config) =>
@@ -35,12 +34,11 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
           for track_data in data.weeklytrackchart.track
             chart.tracks.push(new LastfmTrack(track_data))
         else
-          on_error "No tracks for the week of #{chart.to_s()}."
-      on_error = (data, status, headers, config) =>
-        Notification.error data
+          Notification.error "No tracks for the week of #{chart.to_s()}."
       $http(
         url: Lastfm.get_weekly_track_chart_url(user, chart)
         method: 'GET'
-      ).success(on_success).error(on_error)
+      ).success(on_success).error (data, status, headers, config) =>
+        Notification.error data
 
   new LastfmCharts()
