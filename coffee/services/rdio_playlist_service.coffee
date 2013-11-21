@@ -20,7 +20,6 @@ playlister_app.factory 'RdioPlaylist', ($http, Notification) ->
 
     create: (name, description, tracks, callback) ->
       on_success = (data, status, headers, config) =>
-        console.log data
         callback data
       request_data =
         name: name

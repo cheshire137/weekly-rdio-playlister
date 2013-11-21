@@ -12,7 +12,6 @@
         var on_error, on_success, request_data,
           _this = this;
         on_success = function(data, status, headers, config) {
-          console.log(data);
           return callback(data);
         };
         request_data = {
