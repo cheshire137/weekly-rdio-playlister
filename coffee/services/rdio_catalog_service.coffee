@@ -14,7 +14,7 @@ playlister_app.factory 'RdioCatalog', ($http, Notification) ->
           console.log "got rdio track ##{index}: ", rdio_track
           rdio_tracks.push rdio_track
           console.log "there are now #{rdio_tracks.length} matched track(s)"
-        if index < lastfm_tracks.length
+        if index < lastfm_tracks.length - 1
           console.log 'continuing to match...'
           @match_lastfm_track index+1, lastfm_tracks, rdio_tracks, callback
         else

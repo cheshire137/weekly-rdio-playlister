@@ -33,10 +33,8 @@
       return $scope.playlist.description = 'Last.fm track chart for user ' + ("" + $scope.lastfm.user + " for ") + ("" + ($scope.chart.to_s()) + ".");
     };
     return $scope.create_playlist = function() {
-      console.log('create_playlist');
-      return RdioCatalog.match_lastfm_tracks($scope.chart.tracks, function(rdio_tracks) {
+      return RdioCatalog.match_lastfm_tracks($scope.filtered_tracks, function(rdio_tracks) {
         var on_playlist_create, track, track_ids, track_ids_str;
-        console.log(rdio_tracks);
         track_ids = (function() {
           var _i, _len, _results;
           _results = [];
@@ -46,7 +44,6 @@
           }
           return _results;
         })();
-        console.log(track_ids);
         track_ids_str = track_ids.join(',');
         console.log(track_ids_str);
         on_playlist_create = function(playlist) {

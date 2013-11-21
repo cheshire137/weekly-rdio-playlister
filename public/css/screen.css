@@ -1,14 +1,15 @@
 a[ng-click]{cursor:pointer}
 body{padding-top:60px}
 footer{padding-top:40px;padding-bottom:30px;margin-top:100px;color:#777;border-top:1px solid #e5e5e5}
-form{margin-bottom:20px}
+form{margin-bottom:20px}form.subtle legend{margin-bottom:5px;border-bottom:none;font-weight:700;font-size:14px}
 h1,h2,h3{font-weight:300}
 h2 a.back-link{line-height:33px;display:inline-block;font-size:16px;margin-right:5px;vertical-align:top}
 h2 .divider{color:#999}
-h3.subtitle{color:#999;font-size:12px}
+h2 .subtitle{color:#999;font-size:16px}h2 .subtitle form{display:inline-block}
 .track{width:23%;margin:0 1.8% 10px 0;text-align:center;display:inline-block}.track img{height:73px;margin-left:auto;margin-right:auto;display:block;border-radius:100px;border:1px solid #444}
 .track .play-count{font-size:12px;color:#999;font-style:italic}.track .play-count:before{content:'('}
 .track .play-count:after{content:')'}
 .track .track-artist-divider{font-style:italic;color:#999}
 .track .artist-name,.track .track-name{width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .track .track-name{display:block}
+#track_filters_min_play_count{width:5em}

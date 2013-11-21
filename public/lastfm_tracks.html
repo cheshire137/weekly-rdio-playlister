@@ -4,30 +4,27 @@
       <span class='glyphicon glyphicon-chevron-left'></span>
     </a>
     Tracks for {{chart.to_s()}}
+    <br>
+    <span class='subtitle'>
+      Showing {{filtered_tracks.length}} of
+      {{chart.track_count()}}
+      <span ng-show='chart.track_count() === 1'>
+        track
+      </span>
+      <span ng-show='chart.track_count() !== 1'>
+        tracks
+      </span>
+      <form class='form-inline'>
+        /
+        <label class='control-label input-sm' for='track_filters_min_play_count'>
+          Minimum play count:
+        </label>
+        <input class='input-sm form-control' id='track_filters_min_play_count' ng-model='track_filters.min_play_count' type='number'>
+      </form>
+    </span>
   </h2>
-  <h3 class='subtitle'>
-    Showing {{filtered_tracks.length}} of
-    {{chart.track_count()}}
-    <span ng-show='chart.track_count() === 1'>
-      track
-    </span>
-    <span ng-show='chart.track_count() !== 1'>
-      tracks
-    </span>
-  </h3>
   <div class='row'>
     <div class='col-md-8'>
-      <form class='form-horizontal'>
-        <legend>Filters</legend>
-        <div class='form-group'>
-          <label class='control-label col-sm-3' for='track_filters_min_play_count'>
-            Minimum play count:
-          </label>
-          <div class='col-sm-9'>
-            <input class='form-control' id='track_filters_min_play_count' ng-model='track_filters.min_play_count' type='number'>
-          </div>
-        </div>
-      </form>
       <a class='track' href='{{track.url}}' ng-repeat='track in filtered_tracks = (chart.tracks | filter:play_count_filter)' target='_blank'>
         <img ng-src='{{track.large_image}}'>
         <div class='track-info'>

@@ -3,22 +3,21 @@
     %a.back-link{href: '/#/lastfm/{{lastfm.user}}'}
       %span.glyphicon.glyphicon-chevron-left
     Tracks for {{chart.to_s()}}
-  %h3.subtitle
-    Showing {{filtered_tracks.length}} of
-    {{chart.track_count()}}
-    %span{ng: {show: 'chart.track_count() === 1'}}
-      track
-    %span{ng: {show: 'chart.track_count() !== 1'}}
-      tracks
+    %br
+    %span.subtitle
+      Showing {{filtered_tracks.length}} of
+      {{chart.track_count()}}
+      %span{ng: {show: 'chart.track_count() === 1'}}
+        track
+      %span{ng: {show: 'chart.track_count() !== 1'}}
+        tracks
+      %form.form-inline
+        \/
+        %label.control-label.input-sm{for: 'track_filters_min_play_count'}
+          Minimum play count:
+        %input#track_filters_min_play_count.input-sm.form-control{type: 'number', ng: {model: 'track_filters.min_play_count'}}
   .row
     .col-md-8
-      %form.form-horizontal
-        %legend Filters
-        .form-group
-          %label.control-label.col-sm-3{for: 'track_filters_min_play_count'}
-            Minimum play count:
-          .col-sm-9
-            %input#track_filters_min_play_count.form-control{type: 'number', ng: {model: 'track_filters.min_play_count'}}
       %a.track{href: '{{track.url}}', target: '_blank', ng: {repeat: 'track in filtered_tracks = (chart.tracks | filter:play_count_filter)'}}
         %img{ng: {src: '{{track.large_image}}'}}
         %div.track-info

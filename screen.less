@@ -16,6 +16,15 @@ footer {
 
 form {
   margin-bottom: 20px;
+
+  &.subtle {
+    legend {
+      margin-bottom: 5px;
+      border-bottom: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+  }
 }
 
 h1, h2, h3 {
@@ -34,11 +43,15 @@ h2 {
   .divider {
     color: #999;
   }
-}
 
-h3.subtitle {
-  color: #999;
-  font-size: 12px;
+  .subtitle {
+    color: #999;
+    font-size: 16px;
+
+    form {
+      display: inline-block;
+    }
+  }
 }
 
 .track {
@@ -87,4 +100,8 @@ h3.subtitle {
   .track-name {
     display: block;
   }
+}
+
+#track_filters_min_play_count {
+  width: 5em;
 }

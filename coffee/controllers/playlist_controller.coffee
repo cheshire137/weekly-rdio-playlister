@@ -30,11 +30,8 @@ playlister_app.controller 'PlaylistController', ($scope, $http, $routeParams, $l
                                   "#{$scope.chart.to_s()}."
 
   $scope.create_playlist = ->
-    console.log 'create_playlist'
-    RdioCatalog.match_lastfm_tracks $scope.chart.tracks, (rdio_tracks) ->
-      console.log rdio_tracks
+    RdioCatalog.match_lastfm_tracks $scope.filtered_tracks, (rdio_tracks) ->
       track_ids = (track.id for track in rdio_tracks)
-      console.log track_ids
       track_ids_str = track_ids.join(',')
       console.log track_ids_str
       on_playlist_create = (playlist) ->
@@ -44,15 +41,3 @@ playlister_app.controller 'PlaylistController', ($scope, $http, $routeParams, $l
         $location.path("/lastfm/#{$scope.lastfm.user}")
       RdioPlaylist.create($scope.playlist.name, $scope.playlist.description,
                           track_ids_str, on_playlist_create)
-    # track = $scope.chart.tracks[0]
-    # on_artist_lookup = (artist) ->
-    #   on_track_lookup = (track) ->
-    #     on_playlist_create = (playlist) ->
-    #       plural = if playlist.song_count == 1 then '' else 's'
-    #       $scope.notice = 'Successfully created playlist with ' +
-    #                       "#{playlist.song_count} track#{plural}!"
-    #     RdioPlaylist.create($scope.playlist.name, $scope.playlist.description,
-    #                         track.id, on_playlist_create)
-    #   RdioCatalog.search_tracks_by_artist(artist.id, track.name,
-    #                                       on_track_lookup)
-    # RdioCatalog.search_artists(track.artist, on_artist_lookup)
