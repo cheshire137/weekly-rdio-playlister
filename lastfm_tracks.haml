@@ -2,33 +2,39 @@
   %h2.clearfix
     %a.back-link{href: '/#/lastfm/{{lastfm.user}}'}
       %span.glyphicon.glyphicon-chevron-left
+    Tracks for {{chart.to_s()}}
+  %h3.subtitle
+    Showing {{filtered_tracks.length}} of
     {{chart.track_count()}}
     %span{ng: {show: 'chart.track_count() === 1'}}
-      Track
+      track
     %span{ng: {show: 'chart.track_count() !== 1'}}
-      Tracks
-    for {{chart.to_s()}}
-  %form.form-horizontal{ng: {submit: 'create_playlist()'}}
-    .form-group
-      %label.col-sm-2.control-label{for: 'playlist_name'}
-        Playlist name:
-      .col-sm-10
-        %input#playlist_name.form-control{type: 'text', placeholder: 'Playlist name', ng: {model: 'playlist.name'}}
-    .form-group
-      %label.col-sm-2.control-label{for: 'playlist_description'}
-        Playlist description:
-      .col-sm-10
-        %textarea#playlist_description.form-control{rows: '3', placeholder: 'Playlist description', ng: {model: 'playlist.description'}}
-    .form-group
-      .col-sm-offset-2.col-sm-10
-        %input.btn.btn-primary{type: 'submit', value: 'Create Playlist'}
-  %hr
-  %div{ng: {repeat: 'j in chart.track_range()'}}
-    .row
-      .col-md-3{ng: {repeat: 'track in chart.tracks.slice(j, j+4)'}}
-        %a.track{href: '{{track.url}}', target: '_blank'}
-          %img{ng: {src: '{{track.large_image}}'}}
-          %br
-          %span.track-name {{track.name}} by {{track.artist}}
+      tracks
+  .row
+    .col-md-8
+      %form.form-horizontal
+        %legend Filters
+        .form-group
+          %label.control-label.col-sm-3{for: 'track_filters_min_play_count'}
+            Minimum play count:
+          .col-sm-9
+            %input#track_filters_min_play_count.form-control{type: 'number', ng: {model: 'track_filters.min_play_count'}}
+      %a.track{href: '{{track.url}}', target: '_blank', ng: {repeat: 'track in filtered_tracks = (chart.tracks | filter:play_count_filter)'}}
+        %img{ng: {src: '{{track.large_image}}'}}
+        %div.track-info
+          %span.track-name {{track.name}}
+          %span.track-artist-divider by
+          %span.artist-name {{track.artist}}
           %span.play-count {{track.play_count}}x
-    %hr
+    .col-md-4
+      %form{ng: {submit: 'create_playlist()'}}
+        .form-group
+          %label.control-label{for: 'playlist_name'}
+            Playlist name:
+          %input#playlist_name.form-control{type: 'text', placeholder: 'Playlist name', ng: {model: 'playlist.name'}}
+        .form-group
+          %label.control-label{for: 'playlist_description'}
+            Playlist description:
+          %textarea#playlist_description.form-control{rows: '3', placeholder: 'Playlist description', ng: {model: 'playlist.description'}}
+        .form-group
+          %input.btn.btn-primary{type: 'submit', value: 'Create Playlist'}

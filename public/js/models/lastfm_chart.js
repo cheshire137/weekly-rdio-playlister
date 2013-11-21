@@ -12,15 +12,6 @@
       return this.tracks.length;
     };
 
-    LastfmChart.prototype.track_range = function() {
-      var i, range, _i, _ref;
-      range = [];
-      for (i = _i = 0, _ref = this.tracks.length; _i < _ref; i = _i += 4) {
-        range.push(i);
-      }
-      return range;
-    };
-
     LastfmChart.prototype.from_date = function() {
       return new Date(1000 * this.from);
     };

@@ -7,12 +7,6 @@ class LastfmChart
   track_count: ->
     @tracks.length
 
-  track_range: ->
-    range = []
-    for i in [0...@tracks.length] by 4
-      range.push i
-    range
-
   from_date: ->
     new Date(1000 * @from)
 

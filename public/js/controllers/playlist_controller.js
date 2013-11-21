@@ -4,6 +4,9 @@
     $scope.weeks = LastfmCharts.weeks;
     $scope.chart = {};
     $scope.playlist = {};
+    $scope.track_filters = {
+      min_play_count: 2
+    };
     $scope.week_range = function() {
       var i, range, _i, _ref;
       range = [];
@@ -11,6 +14,9 @@
         range.push(i);
       }
       return range;
+    };
+    $scope.play_count_filter = function(track) {
+      return track.play_count >= $scope.track_filters.min_play_count;
     };
     $scope.lastfm_weeks = function() {
       $scope.lastfm.user = $routeParams.user;

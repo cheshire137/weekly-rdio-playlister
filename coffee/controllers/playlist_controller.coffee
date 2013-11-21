@@ -3,12 +3,16 @@ playlister_app.controller 'PlaylistController', ($scope, $http, $routeParams, $l
   $scope.weeks = LastfmCharts.weeks
   $scope.chart = {}
   $scope.playlist = {}
+  $scope.track_filters = {min_play_count: 2}
 
   $scope.week_range = ->
     range = []
     for i in [0...$scope.weeks.length] by 3
       range.push i
     range
+
+  $scope.play_count_filter = (track) ->
+    track.play_count >= $scope.track_filters.min_play_count
 
   $scope.lastfm_weeks = ->
     $scope.lastfm.user = $routeParams.user

@@ -3,50 +3,59 @@
     <a class='back-link' href='/#/lastfm/{{lastfm.user}}'>
       <span class='glyphicon glyphicon-chevron-left'></span>
     </a>
+    Tracks for {{chart.to_s()}}
+  </h2>
+  <h3 class='subtitle'>
+    Showing {{filtered_tracks.length}} of
     {{chart.track_count()}}
     <span ng-show='chart.track_count() === 1'>
-      Track
+      track
     </span>
     <span ng-show='chart.track_count() !== 1'>
-      Tracks
+      tracks
     </span>
-    for {{chart.to_s()}}
-  </h2>
-  <form class='form-horizontal' ng-submit='create_playlist()'>
-    <div class='form-group'>
-      <label class='col-sm-2 control-label' for='playlist_name'>
-        Playlist name:
-      </label>
-      <div class='col-sm-10'>
-        <input class='form-control' id='playlist_name' ng-model='playlist.name' placeholder='Playlist name' type='text'>
-      </div>
-    </div>
-    <div class='form-group'>
-      <label class='col-sm-2 control-label' for='playlist_description'>
-        Playlist description:
-      </label>
-      <div class='col-sm-10'>
-        <textarea class='form-control' id='playlist_description' ng-model='playlist.description' placeholder='Playlist description' rows='3'></textarea>
-      </div>
-    </div>
-    <div class='form-group'>
-      <div class='col-sm-offset-2 col-sm-10'>
-        <input class='btn btn-primary' type='submit' value='Create Playlist'>
-      </div>
-    </div>
-  </form>
-  <hr>
-  <div ng-repeat='j in chart.track_range()'>
-    <div class='row'>
-      <div class='col-md-3' ng-repeat='track in chart.tracks.slice(j, j+4)'>
-        <a class='track' href='{{track.url}}' target='_blank'>
-          <img ng-src='{{track.large_image}}'>
-          <br>
-          <span class='track-name'>{{track.name}} by {{track.artist}}</span>
+  </h3>
+  <div class='row'>
+    <div class='col-md-8'>
+      <form class='form-horizontal'>
+        <legend>Filters</legend>
+        <div class='form-group'>
+          <label class='control-label col-sm-3' for='track_filters_min_play_count'>
+            Minimum play count:
+          </label>
+          <div class='col-sm-9'>
+            <input class='form-control' id='track_filters_min_play_count' ng-model='track_filters.min_play_count' type='number'>
+          </div>
+        </div>
+      </form>
+      <a class='track' href='{{track.url}}' ng-repeat='track in filtered_tracks = (chart.tracks | filter:play_count_filter)' target='_blank'>
+        <img ng-src='{{track.large_image}}'>
+        <div class='track-info'>
+          <span class='track-name'>{{track.name}}</span>
+          <span class='track-artist-divider'>by</span>
+          <span class='artist-name'>{{track.artist}}</span>
           <span class='play-count'>{{track.play_count}}x</span>
-        </a>
-      </div>
+        </div>
+      </a>
     </div>
-    <hr>
+    <div class='col-md-4'>
+      <form ng-submit='create_playlist()'>
+        <div class='form-group'>
+          <label class='control-label' for='playlist_name'>
+            Playlist name:
+          </label>
+          <input class='form-control' id='playlist_name' ng-model='playlist.name' placeholder='Playlist name' type='text'>
+        </div>
+        <div class='form-group'>
+          <label class='control-label' for='playlist_description'>
+            Playlist description:
+          </label>
+          <textarea class='form-control' id='playlist_description' ng-model='playlist.description' placeholder='Playlist description' rows='3'></textarea>
+        </div>
+        <div class='form-group'>
+          <input class='btn btn-primary' type='submit' value='Create Playlist'>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
