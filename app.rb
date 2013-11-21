@@ -21,8 +21,6 @@ def get_client session
     client.access_token = session[:access_token]
     client.secret = session[:access_secret]
   end
-  puts 'Client:'
-  puts client.inspect
   client
 end
 
@@ -51,7 +49,7 @@ get '/auth/:name/callback' do
   session[:user] = User.new(auth)
   session[:access_token] = access_token
   session[:access_secret] = access_secret
-  redirect '/index.html?user=' + session[:user].to_json
+  redirect '/index.html'
 end
 
 get '/rdio_artist_search' do
@@ -61,9 +59,10 @@ get '/rdio_artist_search' do
   artists = client.search(query, 'Artist')
   if artists.count > 0
     artist = artists[0]
+    puts artist.inspect
     {id: artist.key, name: artist.name}.to_json
   else
-    {id: nil, error: "Could not find artist '#{query}'"}.to_json
+    {id: nil, error: "Could not find artist '#{query}' on Rdio."}.to_json
   end
 end
 
@@ -72,14 +71,13 @@ get '/rdio_track_search' do
   client = get_client(session)
   query = strip_smart_quotes(params[:query])
   artist_id = params[:artist_id]
-  puts 'Artist ID: ' + artist_id.to_s
-  puts 'Query: ' + query.to_s
   tracks = client.getTracksForArtist(artist: artist_id, query: query)
   if tracks.count > 0
     track = tracks[0]
+    puts track.inspect
     {id: track.key}.to_json
   else
-    {id: nil, error: "Could not find track '#{query}'"}.to_json
+    {id: nil, error: "Could not find track '#{query}' on Rdio."}.to_json
   end
 end
 
@@ -90,8 +88,9 @@ post '/rdio_playlist_create' do
   description = json_params['description']
   tracks = json_params['tracks']
   client = get_client(session)
-  response = client.createPlaylist(name: name, description: description,
+  playlist = client.createPlaylist(name: name, description: description,
                                    tracks: tracks)
-  {name: response.name, song_count: response.length, image_url: response.icon,
-   embed_url: response.embedUrl, key: response.key}.to_json
+  puts playlist.inspect
+  {name: playlist.name, song_count: playlist.length, image_url: playlist.icon,
+   id: playlist.key, url: playlist.shortUrl}.to_json
 end

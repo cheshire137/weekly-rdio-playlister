@@ -35,6 +35,9 @@ playlister_app.controller 'PlaylistController', ($scope, $http, $routeParams, La
       track_ids_str = track_ids.join(',')
       on_playlist_create = (playlist) ->
         plural = if playlist.song_count == 1 then '' else 's'
+        for key, value of playlist
+          $scope.playlist[key] = value
+        console.log 'scope playlist is now: ', $scope.playlist
         Notification.notice 'Successfully created playlist with ' +
                             "#{playlist.song_count} track#{plural}!"
       RdioPlaylist.create($scope.playlist.name, $scope.playlist.description,

@@ -1,30 +1,30 @@
 <div ng-controller='PlaylistController' ng-init='lastfm_tracks()'>
-  <h2 class='clearfix'>
-    <a class='back-link' href='/#/lastfm/{{lastfm.user}}'>
-      <span class='glyphicon glyphicon-chevron-left'></span>
-    </a>
-    Tracks for {{chart.to_s()}}
-    <br>
-    <span class='subtitle'>
-      Showing {{filtered_tracks.length}} of
-      {{chart.track_count()}}
-      <span ng-show='chart.track_count() === 1'>
-        track
-      </span>
-      <span ng-show='chart.track_count() !== 1'>
-        tracks
-      </span>
-      <form class='form-inline'>
-        /
-        <label class='control-label input-sm' for='track_filters_min_play_count'>
-          Minimum play count:
-        </label>
-        <input class='input-sm form-control' id='track_filters_min_play_count' ng-model='track_filters.min_play_count' type='number'>
-      </form>
-    </span>
-  </h2>
   <div class='row'>
     <div class='col-md-8'>
+      <h2 class='clearfix'>
+        <a class='back-link' href='/#/lastfm/{{lastfm.user}}'>
+          <span class='glyphicon glyphicon-chevron-left'></span>
+        </a>
+        Tracks for {{chart.to_s()}}
+        <br>
+        <span class='subtitle'>
+          Showing {{filtered_tracks.length}} of
+          {{chart.track_count()}}
+          <span ng-show='chart.track_count() === 1'>
+            track
+          </span>
+          <span ng-show='chart.track_count() !== 1'>
+            tracks
+          </span>
+          <form class='form-inline'>
+            /
+            <label class='control-label input-sm' for='track_filters_min_play_count'>
+              Minimum play count:
+            </label>
+            <input class='input-sm form-control' id='track_filters_min_play_count' ng-model='track_filters.min_play_count' type='number'>
+          </form>
+        </span>
+      </h2>
       <a class='track' href='{{track.url}}' ng-class='{matching: track.matching, matched: track.matched, missing: track.missing}' ng-repeat='track in filtered_tracks = (chart.tracks | filter:play_count_filter)' target='_blank'>
         <img ng-src='{{track.large_image}}'>
         <div class='track-info'>
@@ -36,16 +36,36 @@
       </a>
     </div>
     <div class='col-md-4'>
+      <div class='created-playlist clearfix' ng-show='playlist.id'>
+        <h3>Your Playlist</h3>
+        <p>
+          <a class='playlist' href='{{playlist.url}}' target='_blank'>
+            <img ng-src='{{playlist.image_url}}'>
+            <span class='playlist-name'>{{playlist.name}}</span>
+            <span class='track-count'>
+              {{playlist.song_count}}
+              <span ng-show='playlist.song_count === 1'>
+                track
+              </span>
+              <span ng-show='playlist.song_count !== 1'>
+                tracks
+              </span>
+            </span>
+          </a>
+        </p>
+        <hr>
+      </div>
       <form ng-submit='create_playlist()'>
+        <h3>Create an Rdio Playlist</h3>
         <div class='form-group'>
           <label class='control-label' for='playlist_name'>
-            Playlist name:
+            Name:
           </label>
           <input class='form-control' id='playlist_name' ng-model='playlist.name' placeholder='Playlist name' type='text'>
         </div>
         <div class='form-group'>
           <label class='control-label' for='playlist_description'>
-            Playlist description:
+            Description:
           </label>
           <textarea class='form-control' id='playlist_description' ng-model='playlist.description' placeholder='Playlist description' rows='3'></textarea>
         </div>

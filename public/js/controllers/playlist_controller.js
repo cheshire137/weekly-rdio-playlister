@@ -46,8 +46,13 @@
         })();
         track_ids_str = track_ids.join(',');
         on_playlist_create = function(playlist) {
-          var plural;
+          var key, plural, value;
           plural = playlist.song_count === 1 ? '' : 's';
+          for (key in playlist) {
+            value = playlist[key];
+            $scope.playlist[key] = value;
+          }
+          console.log('scope playlist is now: ', $scope.playlist);
           return Notification.notice('Successfully created playlist with ' + ("" + playlist.song_count + " track" + plural + "!"));
         };
         return RdioPlaylist.create($scope.playlist.name, $scope.playlist.description, track_ids_str, on_playlist_create);

@@ -24,6 +24,10 @@ playlister_app.factory 'RdioCatalog', ($http, Notification) ->
       @search_artists lastfm_track.artist, (artist) =>
         if artist
           @search_tracks_by_artist artist.id, lastfm_track.name, on_rdio_track
+        else
+          lastfm_track.matching = false
+          lastfm_track.missing = true
+          @match_lastfm_track index+1, lastfm_tracks, rdio_tracks, callback
 
     match_lastfm_tracks: (lastfm_tracks, on_matched_all) ->
       @match_lastfm_track 0, lastfm_tracks, [], on_matched_all

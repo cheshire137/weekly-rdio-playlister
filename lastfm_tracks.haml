@@ -1,23 +1,23 @@
 %div{ng: {controller: 'PlaylistController', init: 'lastfm_tracks()'}}
-  %h2.clearfix
-    %a.back-link{href: '/#/lastfm/{{lastfm.user}}'}
-      %span.glyphicon.glyphicon-chevron-left
-    Tracks for {{chart.to_s()}}
-    %br
-    %span.subtitle
-      Showing {{filtered_tracks.length}} of
-      {{chart.track_count()}}
-      %span{ng: {show: 'chart.track_count() === 1'}}
-        track
-      %span{ng: {show: 'chart.track_count() !== 1'}}
-        tracks
-      %form.form-inline
-        \/
-        %label.control-label.input-sm{for: 'track_filters_min_play_count'}
-          Minimum play count:
-        %input#track_filters_min_play_count.input-sm.form-control{type: 'number', ng: {model: 'track_filters.min_play_count'}}
   .row
     .col-md-8
+      %h2.clearfix
+        %a.back-link{href: '/#/lastfm/{{lastfm.user}}'}
+          %span.glyphicon.glyphicon-chevron-left
+        Tracks for {{chart.to_s()}}
+        %br
+        %span.subtitle
+          Showing {{filtered_tracks.length}} of
+          {{chart.track_count()}}
+          %span{ng: {show: 'chart.track_count() === 1'}}
+            track
+          %span{ng: {show: 'chart.track_count() !== 1'}}
+            tracks
+          %form.form-inline
+            \/
+            %label.control-label.input-sm{for: 'track_filters_min_play_count'}
+              Minimum play count:
+            %input#track_filters_min_play_count.input-sm.form-control{type: 'number', ng: {model: 'track_filters.min_play_count'}}
       %a.track{href: '{{track.url}}', target: '_blank', ng: {repeat: 'track in filtered_tracks = (chart.tracks | filter:play_count_filter)', class: "{matching: track.matching, matched: track.matched, missing: track.missing}"}}
         %img{ng: {src: '{{track.large_image}}'}}
         %div.track-info
@@ -26,14 +26,28 @@
           %span.artist-name{tooltip: '{{track.artist}}'} {{track.artist}}
           %span.play-count {{track.play_count}}x
     .col-md-4
+      .created-playlist.clearfix{ng: {show: 'playlist.id'}}
+        %h3 Your Playlist
+        %p
+          %a.playlist{href: '{{playlist.url}}', target: '_blank'}
+            %img{ng: {src: '{{playlist.image_url}}'}}
+            %span.playlist-name {{playlist.name}}
+            %span.track-count
+              {{playlist.song_count}}
+              %span{ng: {show: 'playlist.song_count === 1'}}
+                track
+              %span{ng: {show: 'playlist.song_count !== 1'}}
+                tracks
+        %hr
       %form{ng: {submit: 'create_playlist()'}}
+        %h3 Create an Rdio Playlist
         .form-group
           %label.control-label{for: 'playlist_name'}
-            Playlist name:
+            Name:
           %input#playlist_name.form-control{type: 'text', placeholder: 'Playlist name', ng: {model: 'playlist.name'}}
         .form-group
           %label.control-label{for: 'playlist_description'}
-            Playlist description:
+            Description:
           %textarea#playlist_description.form-control{rows: '3', placeholder: 'Playlist description', ng: {model: 'playlist.description'}}
         .form-group
           %input.btn.btn-primary{type: 'submit', value: 'Create Playlist'}

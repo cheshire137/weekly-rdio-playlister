@@ -57,7 +57,6 @@
         if (!message) {
           return;
         }
-        console.log(message);
         id = this.notices.length + 1;
         self_remove = function() {
           return _this.remove('notice', id);

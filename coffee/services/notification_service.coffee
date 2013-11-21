@@ -24,7 +24,6 @@ playlister_app.factory 'Notification', ($timeout) ->
 
     notice: (message) ->
       return unless message
-      console.log message
       id = @notices.length + 1
       self_remove = =>
         @remove('notice', id)

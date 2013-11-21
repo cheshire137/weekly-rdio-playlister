@@ -54,6 +54,30 @@ h2 {
   }
 }
 
+.playlist {
+  img {
+    display: block;
+    margin-right: 10px;
+    border-radius: 10px;
+    float: left;
+    max-width: 33%;
+  }
+
+  .playlist-name {
+    display: block;
+  }
+
+  .track-count {
+    font-size: 12px;
+    color: #999;
+    font-style: italic;
+  }
+
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+}
+
 .track {
   width: 23%;
   margin: 0 1.8% 10px 0;
@@ -141,18 +165,19 @@ h2 {
   }
 
   .artist-name, .track-name {
-    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
   .artist-name {
+    max-width: 70%;
     display: inline-block;
     vertical-align: middle;
   }
 
   .track-name {
+    max-width: 100%;
     display: block;
   }
 }
