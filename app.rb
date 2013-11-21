@@ -37,6 +37,7 @@ def get_client session
     client.access_token = session[:access_token]
     client.secret = session[:access_secret]
   end
+  puts client.inspect
   client
 end
 
@@ -50,6 +51,9 @@ use Rack::Static, urls: ['/css', '/img', '/js'], root: root_path,
                   index: 'index.html'
 
 get '/' do
+  puts session[:user]
+  puts session[:access_token]
+  puts session[:access_secret]
   if session[:user]
     redirect '/index.html'
   else
