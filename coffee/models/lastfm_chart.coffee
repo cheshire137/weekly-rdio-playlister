@@ -4,6 +4,9 @@ class LastfmChart
     @to = data.to
     @tracks = []
 
+  track_count: ->
+    @tracks.length
+
   track_range: ->
     range = []
     for i in [0...@tracks.length] by 4

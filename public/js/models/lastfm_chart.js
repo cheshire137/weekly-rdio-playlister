@@ -8,6 +8,10 @@
       this.tracks = [];
     }
 
+    LastfmChart.prototype.track_count = function() {
+      return this.tracks.length;
+    };
+
     LastfmChart.prototype.track_range = function() {
       var i, range, _i, _ref;
       range = [];

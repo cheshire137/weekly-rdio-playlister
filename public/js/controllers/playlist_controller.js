@@ -1,5 +1,5 @@
 (function() {
-  playlister_app.controller('PlaylistController', function($scope, $http, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, PlaylisterConfig) {
+  playlister_app.controller('PlaylistController', function($scope, $http, $routeParams, $location, LastfmCharts, RdioPlaylist, RdioCatalog, PlaylisterConfig) {
     $scope.lastfm = {};
     $scope.weeks = LastfmCharts.weeks;
     $scope.chart = {};
@@ -27,23 +27,30 @@
       return $scope.playlist.description = 'Last.fm track chart for user ' + ("" + $scope.lastfm.user + " for ") + ("" + ($scope.chart.to_s()) + ".");
     };
     return $scope.create_playlist = function() {
-      var on_artist_lookup, track;
       console.log('create_playlist');
-      track = $scope.chart.tracks[0];
-      on_artist_lookup = function(artist) {
-        var on_track_lookup;
-        on_track_lookup = function(track) {
-          var on_playlist_create;
-          on_playlist_create = function(playlist) {
-            var plural;
-            plural = playlist.song_count === 1 ? '' : 's';
-            return $scope.notice = 'Successfully created playlist with ' + ("" + playlist.song_count + " track" + plural + "!");
-          };
-          return RdioPlaylist.create($scope.playlist.name, $scope.playlist.description, track.id, on_playlist_create);
+      return RdioCatalog.match_lastfm_tracks($scope.chart.tracks, function(rdio_tracks) {
+        var on_playlist_create, track, track_ids, track_ids_str;
+        console.log(rdio_tracks);
+        track_ids = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = rdio_tracks.length; _i < _len; _i++) {
+            track = rdio_tracks[_i];
+            _results.push(track.id);
+          }
+          return _results;
+        })();
+        console.log(track_ids);
+        track_ids_str = track_ids.join(',');
+        console.log(track_ids_str);
+        on_playlist_create = function(playlist) {
+          var plural;
+          plural = playlist.song_count === 1 ? '' : 's';
+          Notification.notice('Successfully created playlist with ' + ("" + playlist.song_count + " track" + plural + "!"));
+          return $location.path("/lastfm/" + $scope.lastfm.user);
         };
-        return RdioCatalog.search_tracks_by_artist(artist.id, track.name, on_track_lookup);
-      };
-      return RdioCatalog.search_artists(track.artist, on_artist_lookup);
+        return RdioPlaylist.create($scope.playlist.name, $scope.playlist.description, track_ids_str, on_playlist_create);
+      });
     };
   });
 

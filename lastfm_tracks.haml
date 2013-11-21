@@ -2,7 +2,12 @@
   %h2.clearfix
     %a.back-link{href: '/#/lastfm/{{lastfm.user}}'}
       %span.glyphicon.glyphicon-chevron-left
-    Tracks for {{chart.to_s()}}
+    {{chart.track_count()}}
+    %span{ng: {show: 'chart.track_count() === 1'}}
+      Track
+    %span{ng: {show: 'chart.track_count() !== 1'}}
+      Tracks
+    for {{chart.to_s()}}
   %form.form-horizontal{ng: {submit: 'create_playlist()'}}
     .form-group
       %label.col-sm-2.control-label{for: 'playlist_name'}
