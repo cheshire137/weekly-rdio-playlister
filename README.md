@@ -1,12 +1,16 @@
 # Weekly Rdio Playlister
 
-If you use Last.fm for scrobbling the music you listen to, you have
+If you use Last.fm for scrobbling the music you listen to, you have access to
 [weekly charts](http://www.last.fm/api/show/user.getWeeklyTrackChart) of tracks
 that you listened to. I wanted a way to turn those charts into Rdio playlists
 so I could look back and remember, through music, what kind of mood I was in,
 what artists I had just discovered, and what I was into during a particular
 time. "That was the winter of Blue Foundation", "I had just found SBTRKT", and
 "Wow, lots of game soundtracks" come to mind.
+
+## Try It Out
+
+**[Try Weekly Rdio Playlister on Heroku](http://weekly-rdio-playlister.herokuapp.com/)**
 
 ## How to Run It Yourself
 
