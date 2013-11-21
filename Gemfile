@@ -7,11 +7,9 @@ gem 'therubyracer'
 gem 'less'
 gem 'thin'
 gem 'sinatra'
-# gem 'oauth'
 gem 'json'
 gem 'multi_json'
 gem 'omniauth-rdio'
-# gem 'rdio_api'
 gem 'rdio-ruby', git: 'https://github.com/nixme/rdio-ruby.git'
 
 group :compiler do
