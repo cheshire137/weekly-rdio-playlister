@@ -1,4 +1,4 @@
-playlister_app.controller 'PlaylistController', ($scope, $http, $routeParams, $location, LastfmCharts, RdioPlaylist, RdioCatalog, PlaylisterConfig) ->
+playlister_app.controller 'PlaylistController', ($scope, $http, $routeParams, $location, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) ->
   $scope.lastfm = {}
   $scope.weeks = LastfmCharts.weeks
   $scope.chart = {}
@@ -33,7 +33,6 @@ playlister_app.controller 'PlaylistController', ($scope, $http, $routeParams, $l
     RdioCatalog.match_lastfm_tracks $scope.filtered_tracks, (rdio_tracks) ->
       track_ids = (track.id for track in rdio_tracks)
       track_ids_str = track_ids.join(',')
-      console.log track_ids_str
       on_playlist_create = (playlist) ->
         plural = if playlist.song_count == 1 then '' else 's'
         Notification.notice 'Successfully created playlist with ' +

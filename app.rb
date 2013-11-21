@@ -29,9 +29,9 @@ set :public_dir, File.dirname(__FILE__) + '/public'
 
 get '/' do
   if session[:user]
-    redirect '/index.html?authenticated=1'
-  else
     redirect '/index.html'
+  else
+    redirect '/index.html/#/login'
   end
 end
 

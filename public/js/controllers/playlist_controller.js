@@ -1,5 +1,5 @@
 (function() {
-  playlister_app.controller('PlaylistController', function($scope, $http, $routeParams, $location, LastfmCharts, RdioPlaylist, RdioCatalog, PlaylisterConfig) {
+  playlister_app.controller('PlaylistController', function($scope, $http, $routeParams, $location, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) {
     $scope.lastfm = {};
     $scope.weeks = LastfmCharts.weeks;
     $scope.chart = {};
@@ -45,7 +45,6 @@
           return _results;
         })();
         track_ids_str = track_ids.join(',');
-        console.log(track_ids_str);
         on_playlist_create = function(playlist) {
           var plural;
           plural = playlist.song_count === 1 ? '' : 's';
