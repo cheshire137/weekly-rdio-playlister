@@ -36,23 +36,25 @@
       </a>
     </div>
     <div class='col-md-4'>
-      <div class='created-playlist clearfix' ng-show='playlist.id'>
-        <h3>Your Playlist</h3>
-        <p>
-          <a class='playlist' href='{{playlist.url}}' target='_blank'>
-            <img ng-src='{{playlist.image_url}}'>
-            <span class='playlist-name'>{{playlist.name}}</span>
-            <span class='track-count'>
-              {{playlist.song_count}}
-              <span ng-show='playlist.song_count === 1'>
-                track
+      <div class='created-playlist' ng-show='playlist.id'>
+        <div class='clearfix'>
+          <h3>Your Playlist</h3>
+          <p>
+            <a class='playlist' href='{{playlist.url}}' target='_blank'>
+              <img ng-src='{{playlist.image_url}}'>
+              <span class='playlist-name'>{{playlist.name}}</span>
+              <span class='track-count'>
+                {{playlist.song_count}}
+                <span ng-show='playlist.song_count === 1'>
+                  track
+                </span>
+                <span ng-show='playlist.song_count !== 1'>
+                  tracks
+                </span>
               </span>
-              <span ng-show='playlist.song_count !== 1'>
-                tracks
-              </span>
-            </span>
-          </a>
-        </p>
+            </a>
+          </p>
+        </div>
         <hr>
       </div>
       <form ng-submit='create_playlist()'>

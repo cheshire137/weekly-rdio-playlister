@@ -26,18 +26,19 @@
           %span.artist-name{tooltip: '{{track.artist}}'} {{track.artist}}
           %span.play-count {{track.play_count}}x
     .col-md-4
-      .created-playlist.clearfix{ng: {show: 'playlist.id'}}
-        %h3 Your Playlist
-        %p
-          %a.playlist{href: '{{playlist.url}}', target: '_blank'}
-            %img{ng: {src: '{{playlist.image_url}}'}}
-            %span.playlist-name {{playlist.name}}
-            %span.track-count
-              {{playlist.song_count}}
-              %span{ng: {show: 'playlist.song_count === 1'}}
-                track
-              %span{ng: {show: 'playlist.song_count !== 1'}}
-                tracks
+      .created-playlist{ng: {show: 'playlist.id'}}
+        .clearfix
+          %h3 Your Playlist
+          %p
+            %a.playlist{href: '{{playlist.url}}', target: '_blank'}
+              %img{ng: {src: '{{playlist.image_url}}'}}
+              %span.playlist-name {{playlist.name}}
+              %span.track-count
+                {{playlist.song_count}}
+                %span{ng: {show: 'playlist.song_count === 1'}}
+                  track
+                %span{ng: {show: 'playlist.song_count !== 1'}}
+                  tracks
         %hr
       %form{ng: {submit: 'create_playlist()'}}
         %h3 Create an Rdio Playlist
