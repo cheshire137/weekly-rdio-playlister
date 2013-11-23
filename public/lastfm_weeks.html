@@ -1,7 +1,7 @@
 <div ng-controller='PlaylistController' ng-init='lastfm_weeks()'>
   <div class='page-header'>
     <h1 class='clearfix'>
-      <a class='back-link' href='#/' tooltip='Choose a different Last.fm user'>
+      <a class='back-link' href='#/' ng-click='wipe_notifications()' tooltip='Choose a different Last.fm user'>
         <span class='glyphicon glyphicon-chevron-left'></span>
       </a>
       Weekly Listening History for

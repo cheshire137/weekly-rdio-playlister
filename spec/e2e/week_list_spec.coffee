@@ -37,3 +37,8 @@ describe 'week list', ->
 
     it 'has a link back to the Last.fm user form', ->
       expect(element('a[href="#/"]').count()).toBeGreaterThan 0
+
+    describe 'return to user form', ->
+      it 'no longer has error message', ->
+        element('.page-header a[href="#/"]').click()
+        expect(element('.notifications .alert-danger').count()).toBe 0

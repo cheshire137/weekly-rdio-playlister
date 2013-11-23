@@ -7,6 +7,33 @@
         this.errors = [];
       }
 
+      Notification.prototype.wipe_notices = function() {
+        var notice, _i, _len, _ref, _results;
+        _ref = this.notices;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          notice = _ref[_i];
+          _results.push(this.remove('notice', notice.id));
+        }
+        return _results;
+      };
+
+      Notification.prototype.wipe_errors = function() {
+        var error, _i, _len, _ref, _results;
+        _ref = this.errors;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          error = _ref[_i];
+          _results.push(this.remove('error', error.id));
+        }
+        return _results;
+      };
+
+      Notification.prototype.wipe_notifications = function() {
+        this.wipe_notices();
+        return this.wipe_errors();
+      };
+
       Notification.prototype.remove = function(type, id) {
         var error, idx, notice, _ref, _ref1, _results, _results1;
         if (type === 'error') {

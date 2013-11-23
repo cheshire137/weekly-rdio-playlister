@@ -23,6 +23,9 @@ playlister_app.controller 'PlaylistController', ($scope, $http, $location, $rout
   $scope.go_to_weeks_list = ->
     $location.path("/lastfm/#{$scope.lastfm.user}")
 
+  $scope.wipe_notifications = ->
+    Notification.wipe_notifications()
+
   $scope.week_range = ->
     range = []
     if $scope.weeks.length > 0

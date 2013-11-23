@@ -1,7 +1,7 @@
 %div{ng: {controller: 'PlaylistController', init: 'lastfm_weeks()'}}
   .page-header
     %h1.clearfix
-      %a.back-link{href: '#/', tooltip: 'Choose a different Last.fm user'}
+      %a.back-link{href: '#/', tooltip: 'Choose a different Last.fm user', ng: {click: 'wipe_notifications()'}}
         %span.glyphicon.glyphicon-chevron-left
       Weekly Listening History for
       %span.lastfm-user {{lastfm.user}}
@@ -9,7 +9,7 @@
     %p
       There is no weekly listening history for Last.fm user {{lastfm.user}}.
     %p
-      %a{href: '#/'}
+      %a{href: '#/', ng: {click: 'wipe_notifications()'}
         &larr; Choose a different Last.fm user
   .row{ng: {repeat: 'i in week_range()'}}
     .col-md-4{ng: {repeat: 'chart in weeks.slice(i, i+3)'}}

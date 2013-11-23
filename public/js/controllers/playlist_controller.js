@@ -10,6 +10,9 @@
     $scope.go_to_weeks_list = function() {
       return $location.path("/lastfm/" + $scope.lastfm.user);
     };
+    $scope.wipe_notifications = function() {
+      return Notification.wipe_notifications();
+    };
     $scope.week_range = function() {
       var i, range, _i, _ref;
       range = [];

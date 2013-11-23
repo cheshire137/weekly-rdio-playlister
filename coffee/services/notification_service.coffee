@@ -19,6 +19,16 @@ playlister_app.factory 'Notification', ->
       @notices = []
       @errors = []
 
+    wipe_notices: ->
+      @remove('notice', notice.id) for notice in @notices
+
+    wipe_errors: ->
+      @remove('error', error.id) for error in @errors
+
+    wipe_notifications: ->
+      @wipe_notices()
+      @wipe_errors()
+
     remove: (type, id) ->
       if type == 'error'
         @errors.splice(idx, 1) for idx, error of @errors when error.id == id
