@@ -10,9 +10,7 @@
 # run_at_start: true                 compile files when guard starts
 # notifications: true                send notifictions to Growl/libnotify/Notifu
 # haml_options: { ugly: true }    pass options to the Haml engine
-guard 'haml', input: '.', output: 'public' do
-  watch %r(^.+\.haml$)
-end
+guard 'haml', input: 'haml', output: 'public'
 
 guard 'coffeescript', input: 'coffee', output: 'public/js'
 
