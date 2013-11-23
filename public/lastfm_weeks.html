@@ -8,6 +8,16 @@
       <span class='lastfm-user'>{{lastfm.user}}</span>
     </h1>
   </div>
+  <div ng-if='weeks.length &lt; 1'>
+    <p>
+      There is no weekly listening history for Last.fm user {{lastfm.user}}.
+    </p>
+    <p>
+      <a href='#/'>
+        &larr; Choose a different Last.fm user
+      </a>
+    </p>
+  </div>
   <div class='row' ng-repeat='i in week_range()'>
     <div class='col-md-4' ng-repeat='chart in weeks.slice(i, i+3)'>
       <a class='week-link' href='#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}'>

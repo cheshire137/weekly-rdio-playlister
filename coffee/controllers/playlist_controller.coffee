@@ -25,8 +25,9 @@ playlister_app.controller 'PlaylistController', ($scope, $http, $location, $rout
 
   $scope.week_range = ->
     range = []
-    for i in [0...$scope.weeks.length] by 3
-      range.push i
+    if $scope.weeks.length > 0
+      for i in [0...$scope.weeks.length] by 3
+        range.push i
     range
 
   $scope.play_count_filter = (track) ->

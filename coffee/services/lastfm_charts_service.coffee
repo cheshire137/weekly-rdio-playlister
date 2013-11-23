@@ -18,10 +18,18 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
     constructor: ->
       @weeks = []
 
+    reset_weeks: ->
+      for i in [0...@weeks.length] by 1
+        delete @weeks[i]
+
     get_weekly_chart_list: (user) ->
+      @reset_weeks()
       on_success = (data, status, headers, config) =>
-        for chart_data in data.weeklychartlist.chart.slice(0).reverse()
-          @weeks.push(new LastfmChart(chart_data))
+        if data.weeklychartlist
+          for chart_data in data.weeklychartlist.chart.slice(0).reverse()
+            @weeks.push(new LastfmChart(chart_data))
+        else if data.error
+          Notification.error data.message
       $http(
         url: Lastfm.get_weekly_chart_list_url(user)
         method: 'GET'

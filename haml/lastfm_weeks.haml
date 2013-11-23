@@ -5,6 +5,12 @@
         %span.glyphicon.glyphicon-chevron-left
       Weekly Listening History for
       %span.lastfm-user {{lastfm.user}}
+  %div{ng: {if: 'weeks.length < 1'}}
+    %p
+      There is no weekly listening history for Last.fm user {{lastfm.user}}.
+    %p
+      %a{href: '#/'}
+        &larr; Choose a different Last.fm user
   .row{ng: {repeat: 'i in week_range()'}}
     .col-md-4{ng: {repeat: 'chart in weeks.slice(i, i+3)'}}
       %a.week-link{href: '#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}'}

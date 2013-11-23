@@ -13,8 +13,10 @@
     $scope.week_range = function() {
       var i, range, _i, _ref;
       range = [];
-      for (i = _i = 0, _ref = $scope.weeks.length; _i < _ref; i = _i += 3) {
-        range.push(i);
+      if ($scope.weeks.length > 0) {
+        for (i = _i = 0, _ref = $scope.weeks.length; _i < _ref; i = _i += 3) {
+          range.push(i);
+        }
       }
       return range;
     };

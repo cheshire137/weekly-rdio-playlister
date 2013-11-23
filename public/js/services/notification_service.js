@@ -1,11 +1,10 @@
 (function() {
-  playlister_app.factory('Notification', function($timeout) {
+  playlister_app.factory('Notification', function() {
     var Notification;
     Notification = (function() {
       function Notification() {
         this.notices = [];
         this.errors = [];
-        this.delay = 5000;
       }
 
       Notification.prototype.remove = function(type, id) {
@@ -34,17 +33,12 @@
       };
 
       Notification.prototype.error = function(message) {
-        var id, self_remove,
-          _this = this;
+        var id;
         if (!message) {
           return;
         }
         console.error(message);
         id = this.errors.length + 1;
-        self_remove = function() {
-          return _this.remove('error', id);
-        };
-        $timeout(self_remove, this.delay);
         return this.errors.push({
           message: message,
           id: id
@@ -52,16 +46,11 @@
       };
 
       Notification.prototype.notice = function(message) {
-        var id, self_remove,
-          _this = this;
+        var id;
         if (!message) {
           return;
         }
         id = this.notices.length + 1;
-        self_remove = function() {
-          return _this.remove('notice', id);
-        };
-        $timeout(self_remove, this.delay);
         return this.notices.push({
           message: message,
           id: id

@@ -14,6 +14,11 @@ http_backend_mocker =
         "@attr":
           user: "cheshire137"
 
+    http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklychartlist&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=baduser').respond
+      error: 6
+      message: "No user with that name was found"
+      links: []
+
     http_backend.when('GET', 'http://localhost:3000/rdio_artist_search?query=Ladytron').respond
       id: "r168074"
       name: "Ladytron"
