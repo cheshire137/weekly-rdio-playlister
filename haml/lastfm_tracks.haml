@@ -9,8 +9,7 @@
           %h1
             Tracks for {{chart.to_s()}}
           %h2.subtitle{ng: {if: 'chart.tracks.length > 0'}}
-            Showing {{filtered_tracks.length}} of
-            {{chart.track_count()}}
+            Showing {{filtered_tracks.length}} of {{chart.track_count()}}
             %span{ng: {show: 'chart.track_count() === 1'}}
               track
             %span{ng: {show: 'chart.track_count() !== 1'}}
@@ -28,7 +27,7 @@
         %p
           %a{href: '#/lastfm/{{lastfm.user}}', ng: {click: 'wipe_notifications()'}}
             &larr; Choose a different time span
-      %a.track{href: '{{track.url}}', target: '_blank', ng: {repeat: 'track in filtered_tracks = (chart.tracks | filter:play_count_filter)', class: "{matching: track.matching, matched: track.matched, missing: track.missing}"}}
+      %a.track{href: '{{track.url}}', id: '{{track.mbid}}', target: '_blank', ng: {repeat: 'track in filtered_tracks = (chart.tracks | filter:play_count_filter)', class: "{matching: track.matching, matched: track.matched, missing: track.missing}"}}
         %img{ng: {src: '{{track.large_image}}'}}
         %div.track-info
           %span.track-name{tooltip: '{{track.name}}'} {{track.name}}

@@ -12,8 +12,7 @@
             Tracks for {{chart.to_s()}}
           </h1>
           <h2 class='subtitle' ng-if='chart.tracks.length &gt; 0'>
-            Showing {{filtered_tracks.length}} of
-            {{chart.track_count()}}
+            Showing {{filtered_tracks.length}} of {{chart.track_count()}}
             <span ng-show='chart.track_count() === 1'>
               track
             </span>
@@ -42,7 +41,7 @@
           </a>
         </p>
       </div>
-      <a class='track' href='{{track.url}}' ng-class='{matching: track.matching, matched: track.matched, missing: track.missing}' ng-repeat='track in filtered_tracks = (chart.tracks | filter:play_count_filter)' target='_blank'>
+      <a class='track' href='{{track.url}}' id='{{track.mbid}}' ng-class='{matching: track.matching, matched: track.matched, missing: track.missing}' ng-repeat='track in filtered_tracks = (chart.tracks | filter:play_count_filter)' target='_blank'>
         <img ng-src='{{track.large_image}}'>
         <div class='track-info'>
           <span class='track-name' tooltip='{{track.name}}'>{{track.name}}</span>
