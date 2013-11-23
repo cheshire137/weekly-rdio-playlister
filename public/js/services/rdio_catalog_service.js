@@ -103,7 +103,7 @@
           } else {
             lastfm_track.matching = false;
             lastfm_track.missing = true;
-            return _this.match_lastfm_track(index + 1, lastfm_tracks, rdio_tracks, callback);
+            return proceed();
           }
         });
       };

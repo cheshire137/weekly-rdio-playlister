@@ -91,7 +91,7 @@ playlister_app.factory 'RdioCatalog', ($http, Notification) ->
         else
           lastfm_track.matching = false
           lastfm_track.missing = true
-          @match_lastfm_track index + 1, lastfm_tracks, rdio_tracks, callback
+          proceed()
 
     match_lastfm_tracks: (lastfm_tracks, on_matched_all) ->
       @match_lastfm_track 0, lastfm_tracks, [], on_matched_all
