@@ -9,7 +9,9 @@
       }
 
       RdioCatalog.prototype.get_artist_search_url = function(artist_name) {
-        return "/rdio_artist_search?query=" + artist_name;
+        var query;
+        query = encodeURIComponent(artist_name);
+        return "/rdio_artist_search?query=" + query;
       };
 
       RdioCatalog.prototype.get_track_search_url = function(artist_id, track_name) {
@@ -137,7 +139,6 @@
           _this = this;
         on_success = function(data, status, headers, config) {
           if (data.error) {
-            Notification.error(data.error);
             return callback(void 0);
           } else {
             return callback(data);

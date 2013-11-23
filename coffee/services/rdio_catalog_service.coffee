@@ -16,7 +16,8 @@
 playlister_app.factory 'RdioCatalog', ($http, Notification) ->
   class RdioCatalog
     get_artist_search_url: (artist_name) ->
-      "/rdio_artist_search?query=#{artist_name}"
+      query = encodeURIComponent(artist_name)
+      "/rdio_artist_search?query=#{query}"
 
     get_track_search_url: (artist_id, track_name) ->
       query = encodeURIComponent(track_name)
@@ -113,7 +114,6 @@ playlister_app.factory 'RdioCatalog', ($http, Notification) ->
     search_artists: (artist_name, callback) ->
       on_success = (data, status, headers, config) =>
         if data.error
-          Notification.error data.error
           callback undefined
         else
           callback data

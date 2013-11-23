@@ -52,7 +52,7 @@
       </a>
     </div>
     <div class='col-md-4'>
-      <div class='created-playlist' ng-show='playlist.id'>
+      <div class='created-playlist' ng-if='playlist.id'>
         <div class='clearfix'>
           <h3>Your Playlist</h3>
           <p>
@@ -61,10 +61,10 @@
               <span class='playlist-name'>{{playlist.name}}</span>
               <span class='track-count'>
                 {{playlist.song_count}}
-                <span ng-show='playlist.song_count === 1'>
+                <span ng-if='playlist.song_count === 1'>
                   track
                 </span>
-                <span ng-show='playlist.song_count !== 1'>
+                <span ng-if='playlist.song_count !== 1'>
                   tracks
                 </span>
               </span>
@@ -73,8 +73,8 @@
         </div>
         <hr>
       </div>
-      <div ng-show='filtered_tracks.length &gt; 0'>
-        <form ng-submit='create_playlist()'>
+      <div ng-if='filtered_tracks.length &gt; 0'>
+        <form class='create-playlist' ng-submit='create_playlist()'>
           <h3>Create an Rdio Playlist</h3>
           <div class='form-group'>
             <label class='control-label' for='playlist_name'>

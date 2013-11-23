@@ -28,16 +28,20 @@ http_backend_mocker =
       message: "No user with that name was found"
       links: []
 
-    http_backend.when('GET', 'http://localhost:3000/rdio_artist_search?query=Ladytron').respond
+    http_backend.when('GET', '/rdio_artist_search?query=Ladytron').respond
       id: "r168074"
       name: "Ladytron"
 
-    http_backend.when('GET', 'http://localhost:3000/rdio_track_search?artist_id=r168074&query=International%20Dateline').respond
+    http_backend.when('GET', '/rdio_artist_search?query=Tegan%20and%20Sara').respond
+      id: undefined
+      error: "Could not find artist 'Tegan and Sara' on Rdio."
+
+    http_backend.when('GET', '/rdio_track_search?artist_id=r168074&query=International%20Dateline').respond
       id: "t8201449"
 
-    http_backend.when('POST', 'http://localhost:3000/rdio_playlist_create').respond
+    http_backend.when('POST', '/rdio_playlist_create').respond
       name: "October 13-20, 2013"
-      song_count: 44
+      song_count: 2
       image_url: "http://m.rdio.com/_is/?aid=184311-0,192425-5,339960-0,417075-0,686933-3,689094-0,689097-0,953300-1,1154602-4&w=200&h=200"
       id: "p7255039"
       url: "http://rd.io/x/QRZlQDMx4b4/"

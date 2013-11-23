@@ -35,7 +35,7 @@
           %span.artist-name{tooltip: '{{track.artist}}'} {{track.artist}}
           %span.play-count {{track.play_count}}x
     .col-md-4
-      .created-playlist{ng: {show: 'playlist.id'}}
+      .created-playlist{ng: {if: 'playlist.id'}}
         .clearfix
           %h3 Your Playlist
           %p
@@ -44,13 +44,13 @@
               %span.playlist-name {{playlist.name}}
               %span.track-count
                 {{playlist.song_count}}
-                %span{ng: {show: 'playlist.song_count === 1'}}
+                %span{ng: {if: 'playlist.song_count === 1'}}
                   track
-                %span{ng: {show: 'playlist.song_count !== 1'}}
+                %span{ng: {if: 'playlist.song_count !== 1'}}
                   tracks
         %hr
-      %div{ng: {show: 'filtered_tracks.length > 0'}}
-        %form{ng: {submit: 'create_playlist()'}}
+      %div{ng: {if: 'filtered_tracks.length > 0'}}
+        %form.create-playlist{ng: {submit: 'create_playlist()'}}
           %h3 Create an Rdio Playlist
           .form-group
             %label.control-label{for: 'playlist_name'}
