@@ -50,6 +50,10 @@ form {
 
 h1, h2, h3 {
   font-weight: 300;
+
+  a:hover, a:focus {
+    text-decoration: none;
+  }
 }
 
 h1 {
@@ -57,17 +61,14 @@ h1 {
     font-size: 24px;
   }
 
-  .divider {
-    color: #999;
+  &.pull-left {
+    .back-link {
+      margin-right: 5px;
+    }
   }
 
-  .subtitle {
+  .divider {
     color: #999;
-    font-size: 16px;
-
-    form {
-      display: inline-block;
-    }
   }
 }
 
@@ -78,6 +79,10 @@ h1 {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
+}
+
+.page-header {
+  margin-top: 0;
 }
 
 .playlist {
@@ -101,6 +106,28 @@ h1 {
 
   &:hover, &:focus {
     text-decoration: none;
+  }
+}
+
+.subtitle {
+  color: #999;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 0;
+
+  form {
+    display: inline-block;
+    margin-left: 10px;
+
+    label {
+      font-weight: 300;
+      padding-left: 10px;
+    }
+
+    .form-control {
+      padding: 3px 7px;
+      height: auto;
+    }
   }
 }
 
@@ -209,5 +236,5 @@ h1 {
 }
 
 #track_filters_min_play_count {
-  width: 5em;
+  width: 4.5em;
 }

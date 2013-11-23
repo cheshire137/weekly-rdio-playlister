@@ -1,30 +1,35 @@
 <div ng-controller='PlaylistController' ng-init='lastfm_tracks()'>
   <div class='row'>
     <div class='col-md-8'>
-      <h2 class='clearfix'>
-        <a class='back-link' href='/#/lastfm/{{lastfm.user}}'>
-          <span class='glyphicon glyphicon-chevron-left'></span>
-        </a>
-        Tracks for {{chart.to_s()}}
-        <br>
-        <span class='subtitle'>
-          Showing {{filtered_tracks.length}} of
-          {{chart.track_count()}}
-          <span ng-show='chart.track_count() === 1'>
-            track
-          </span>
-          <span ng-show='chart.track_count() !== 1'>
-            tracks
-          </span>
-          <form class='form-inline'>
-            /
-            <label class='control-label input-sm' for='track_filters_min_play_count'>
-              Minimum play count:
-            </label>
-            <input class='input-sm form-control' id='track_filters_min_play_count' ng-model='track_filters.min_play_count' type='number'>
-          </form>
-        </span>
-      </h2>
+      <div class='page-header clearfix'>
+        <h1 class='pull-left'>
+          <a class='back-link' href='/#/lastfm/{{lastfm.user}}' tooltip='Choose a different time span'>
+            <span class='glyphicon glyphicon-chevron-left'></span>
+          </a>
+        </h1>
+        <div class='pull-left'>
+          <h1>
+            Tracks for {{chart.to_s()}}
+          </h1>
+          <h2 class='subtitle'>
+            Showing {{filtered_tracks.length}} of
+            {{chart.track_count()}}
+            <span ng-show='chart.track_count() === 1'>
+              track
+            </span>
+            <span ng-show='chart.track_count() !== 1'>
+              tracks
+            </span>
+            <form class='form-inline'>
+              /
+              <label class='control-label' for='track_filters_min_play_count'>
+                Minimum play count:
+              </label>
+              <input class='form-control' id='track_filters_min_play_count' ng-model='track_filters.min_play_count' type='number'>
+            </form>
+          </h2>
+        </div>
+      </div>
       <a class='track' href='{{track.url}}' ng-class='{matching: track.matching, matched: track.matched, missing: track.missing}' ng-repeat='track in filtered_tracks = (chart.tracks | filter:play_count_filter)' target='_blank'>
         <img ng-src='{{track.large_image}}'>
         <div class='track-info'>
