@@ -9,6 +9,6 @@ describe 'Last.fm form', ->
     expect(element('form').count()).toBe 1
 
   it 'takes you to weeks list upon submission', ->
-    input('lastfm.user').enter('cheshire137')
+    input('lastfm.user').enter('validuser')
     element('button[type="submit"]').click()
-    expect(browser().location().url()).toBe "/lastfm/cheshire137"
+    expect(browser().location().url()).toBe "/lastfm/validuser"

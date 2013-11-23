@@ -28,6 +28,7 @@
     };
     $scope.lastfm_weeks = function() {
       $scope.lastfm.user = $routeParams.user;
+      LastfmCharts.reset_weeks();
       return LastfmCharts.get_weekly_chart_list($scope.lastfm.user);
     };
     $scope.lastfm_tracks = function() {

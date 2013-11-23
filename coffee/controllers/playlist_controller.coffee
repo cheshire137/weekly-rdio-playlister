@@ -38,6 +38,7 @@ playlister_app.controller 'PlaylistController', ($scope, $http, $location, $rout
 
   $scope.lastfm_weeks = ->
     $scope.lastfm.user = $routeParams.user
+    LastfmCharts.reset_weeks()
     LastfmCharts.get_weekly_chart_list($scope.lastfm.user)
 
   $scope.lastfm_tracks = ->

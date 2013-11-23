@@ -6,13 +6,21 @@ http_backend_mocker =
     http_backend.when('GET', '/lastfm_weeks.html').passThrough()
 
   mock_shared_routes: (http_backend) ->
-    http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklychartlist&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=cheshire137').respond
+    http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklychartlist&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=validuser').respond
       weeklychartlist:
         chart: [
           {"#text": "", from: "1381665600", to: "1382270400"}
         ]
         "@attr":
-          user: "cheshire137"
+          user: "validuser"
+
+    http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklychartlist&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=otheruser').respond
+      weeklychartlist:
+        chart: [
+          {"#text": "", from: "1362312000", to: "1362916800"}
+        ]
+        "@attr":
+          user: "otheruser"
 
     http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklychartlist&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=baduser').respond
       error: 6
@@ -33,10 +41,10 @@ http_backend_mocker =
       id: "p7255039"
       url: "http://rd.io/x/QRZlQDMx4b4/"
 
-    http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklytrackchart&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=cheshire137&from=1381665600&to=1382270400').respond
+    http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklytrackchart&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=validuser&from=1381665600&to=1382270400').respond
       weeklytrackchart:
         "@attr":
-          user: "cheshire137"
+          user: "validuser"
           from: "1381665600"
           to: "1382270400"
         track: [

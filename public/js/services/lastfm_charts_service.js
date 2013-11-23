@@ -7,10 +7,19 @@
       }
 
       LastfmCharts.prototype.reset_weeks = function() {
-        var i, _i, _ref, _results;
+        var i, idx, week, _i, _ref, _results;
         _results = [];
         for (i = _i = 0, _ref = this.weeks.length; _i < _ref; i = _i += 1) {
-          _results.push(delete this.weeks[i]);
+          _results.push((function() {
+            var _ref1, _results1;
+            _ref1 = this.weeks;
+            _results1 = [];
+            for (idx in _ref1) {
+              week = _ref1[idx];
+              _results1.push(this.weeks.splice(idx, 1));
+            }
+            return _results1;
+          }).call(this));
         }
         return _results;
       };
@@ -18,7 +27,6 @@
       LastfmCharts.prototype.get_weekly_chart_list = function(user) {
         var on_success,
           _this = this;
-        this.reset_weeks();
         on_success = function(data, status, headers, config) {
           var chart_data, _i, _len, _ref, _results;
           if (data.weeklychartlist) {

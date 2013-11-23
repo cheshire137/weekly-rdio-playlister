@@ -20,10 +20,9 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
 
     reset_weeks: ->
       for i in [0...@weeks.length] by 1
-        delete @weeks[i]
+        @weeks.splice(idx, 1) for idx, week of @weeks
 
     get_weekly_chart_list: (user) ->
-      @reset_weeks()
       on_success = (data, status, headers, config) =>
         if data.weeklychartlist
           for chart_data in data.weeklychartlist.chart.slice(0).reverse()
