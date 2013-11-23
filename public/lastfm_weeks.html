@@ -1,6 +1,6 @@
 <div ng-controller='PlaylistController' ng-init='lastfm_weeks()'>
   <h2 class='clearfix'>
-    <a class='back-link' href='/#/'>
+    <a class='back-link' href='#/'>
       <span class='glyphicon glyphicon-chevron-left'></span>
     </a>
     Last.fm {{lastfm.user}}
@@ -9,7 +9,7 @@
   </h2>
   <div class='row' ng-repeat='i in week_range()'>
     <div class='col-md-4' ng-repeat='chart in weeks.slice(i, i+3)'>
-      <a class='week-link' href='/#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}'>
+      <a class='week-link' href='#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}'>
         {{chart.to_s()}}
       </a>
     </div>

@@ -1,11 +1,11 @@
 %div{ng: {controller: 'PlaylistController', init: 'lastfm_weeks()'}}
   %h2.clearfix
-    %a.back-link{href: '/#/'}
+    %a.back-link{href: '#/'}
       %span.glyphicon.glyphicon-chevron-left
     Last.fm {{lastfm.user}}
     %span.divider /
     Weeks
   .row{ng: {repeat: 'i in week_range()'}}
     .col-md-4{ng: {repeat: 'chart in weeks.slice(i, i+3)'}}
-      %a.week-link{href: '/#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}'}
+      %a.week-link{href: '#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}'}
         {{chart.to_s()}}
