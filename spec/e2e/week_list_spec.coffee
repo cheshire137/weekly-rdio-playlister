@@ -4,6 +4,9 @@ describe 'week list', ->
   beforeEach ->
     browser().navigateTo '/base/spec/test-index.html#/lastfm/cheshire137'
 
+  it 'has a list of weeks', ->
+    expect(element('.week-link').count()).toBe 1
+
   it 'includes the Last.fm user name', ->
     expect(element('.lastfm-user').text()).toEqual 'cheshire137'
 

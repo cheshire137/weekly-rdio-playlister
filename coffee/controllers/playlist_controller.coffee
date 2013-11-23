@@ -13,12 +13,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-playlister_app.controller 'PlaylistController', ($scope, $http, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) ->
+playlister_app.controller 'PlaylistController', ($scope, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) ->
   $scope.lastfm = {}
   $scope.weeks = LastfmCharts.weeks
   $scope.chart = {}
   $scope.playlist = {}
   $scope.track_filters = {min_play_count: 2}
+
+  $scope.go_to_weeks_list = ->
+    $location.path("/lastfm/#{$scope.lastfm.user}")
 
   $scope.week_range = ->
     range = []

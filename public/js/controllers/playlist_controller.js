@@ -1,11 +1,14 @@
 (function() {
-  playlister_app.controller('PlaylistController', function($scope, $http, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) {
+  playlister_app.controller('PlaylistController', function($scope, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) {
     $scope.lastfm = {};
     $scope.weeks = LastfmCharts.weeks;
     $scope.chart = {};
     $scope.playlist = {};
     $scope.track_filters = {
       min_play_count: 2
+    };
+    $scope.go_to_weeks_list = function() {
+      return $location.path("/lastfm/" + $scope.lastfm.user);
     };
     $scope.week_range = function() {
       var i, range, _i, _ref;

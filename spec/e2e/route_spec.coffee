@@ -2,21 +2,21 @@
 
 describe 'route', ->
   describe '/login', ->
-    it 'shows the Rdio login button', ->
+    it 'exists', ->
       browser().navigateTo '/base/spec/test-index.html#/login'
-      expect(element('a[href="/auth/rdio"]').count()).toBe 1
+      expect(browser().location().url()).toBe "/login"
 
   describe '/', ->
-    it 'has a Last.fm form', ->
+    it 'exists', ->
       browser().navigateTo '/base/spec/test-index.html#/'
-      expect(element('form[action="#/lastfm/"]').count()).toBe 1
+      expect(browser().location().url()).toBe "/"
 
   describe '/lastfm/:user', ->
-    it 'has a list of weeks', ->
+    it 'exists', ->
       browser().navigateTo '/base/spec/test-index.html#/lastfm/cheshire137'
-      expect(element('.week-link').count()).toBe 1
+      expect(browser().location().url()).toBe "/lastfm/cheshire137"
 
   describe '/lastfm/:user/chart/:from/:to', ->
-    it 'has a list of tracks', ->
+    it 'exists', ->
       browser().navigateTo '/base/spec/test-index.html#/lastfm/cheshire137/chart/1381665600/1382270400'
-      expect(element('.track').count()).toBe 2
+      expect(browser().location().url()).toBe "/lastfm/cheshire137/chart/1381665600/1382270400"
