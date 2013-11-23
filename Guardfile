@@ -14,7 +14,5 @@ guard 'haml', input: 'haml', output: 'public'
 
 guard 'coffeescript', input: 'coffee', output: 'public/js'
 
-guard :lessc, in_file: 'screen.less', out_file: 'public/css/screen.css',
-              compress: true do
-  watch %r(^.+\.less$)
-end
+guard :lessc, in_file: 'less/screen.less', out_file: 'public/css/screen.css',
+              compress: true
