@@ -1,13 +1,15 @@
 <div ng-controller='PlaylistController' ng-init='lastfm_weeks()'>
-  <h2 class='clearfix'>
-    <a class='back-link' href='#/'>
-      <span class='glyphicon glyphicon-chevron-left'></span>
-    </a>
-    Last.fm
-    <span class='lastfm-user'>{{lastfm.user}}</span>
-    <span class='divider'>/</span>
-    Weeks
-  </h2>
+  <div class='page-header'>
+    <h1 class='clearfix'>
+      <a class='back-link' href='#/' tooltip='Pick a different Last.fm user'>
+        <span class='glyphicon glyphicon-chevron-left'></span>
+      </a>
+      Last.fm
+      <span class='lastfm-user'>{{lastfm.user}}</span>
+      <span class='divider'>/</span>
+      Weeks
+    </h1>
+  </div>
   <div class='row' ng-repeat='i in week_range()'>
     <div class='col-md-4' ng-repeat='chart in weeks.slice(i, i+3)'>
       <a class='week-link' href='#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}'>
