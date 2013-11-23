@@ -21,7 +21,7 @@
                 Minimum play count:
               %input#track_filters_min_play_count.form-control{type: 'number', ng: {model: 'track_filters.min_play_count'}}
       %div{ng: {if: 'chart.tracks.length < 1'}}
-        %p
+        %p.no-tracks-message
           There is no listening history for Last.fm user
           %strong {{lastfm.user}}
           during {{chart.to_s()}}.

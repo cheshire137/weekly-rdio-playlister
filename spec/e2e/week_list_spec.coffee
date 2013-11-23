@@ -5,17 +5,20 @@ describe 'week list', ->
     beforeEach ->
       browser().navigateTo '/base/spec/test-index.html#/lastfm/validuser'
 
-    it 'has a list of weeks', ->
-      expect(element('.week-link').count()).toBe 1
+    it 'has two weeks', ->
+      expect(element('.week-link').count()).toBe 2
 
     it 'includes the Last.fm user name', ->
       expect(element('.lastfm-user').text()).toEqual 'validuser'
 
-    it 'has nicely formatted date for week', ->
+    it 'has nicely formatted dates for weeks', ->
       expect(element('.week-link').text()).toContain 'October 13-20, 2013'
+      expect(element('.week-link').text()).toContain 'November 3-10, 2013'
 
-    it 'has a link to view tracks in week chart', ->
+    it 'has links to view tracks in each week chart', ->
       url = '#/lastfm/validuser/chart/1381665600/1382270400'
+      expect(element('a[href="' + url + '"]').count()).toBe 1
+      url = '#/lastfm/validuser/chart/1383480000/1384084800'
       expect(element('a[href="' + url + '"]').count()).toBe 1
 
     it 'has a link back to the Last.fm user form', ->
@@ -30,10 +33,10 @@ describe 'week list', ->
           input('lastfm.user').enter('otheruser')
           element('button[type="submit"]').click()
 
-        it 'has a list of weeks', ->
+        it 'has only one week', ->
           expect(element('.week-link').count()).toBe 1
 
-        it "displays only the new user's week history", ->
+        it "displays the new user's week history", ->
           expect(element('.week-link').text()).toContain 'March 3-10, 2013'
 
   describe 'for invalid Last.fm user', ->

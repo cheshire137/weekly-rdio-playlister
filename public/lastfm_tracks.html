@@ -31,7 +31,7 @@
         </div>
       </div>
       <div ng-if='chart.tracks.length &lt; 1'>
-        <p>
+        <p class='no-tracks-message'>
           There is no listening history for Last.fm user
           <strong>{{lastfm.user}}</strong>
           during {{chart.to_s()}}.
