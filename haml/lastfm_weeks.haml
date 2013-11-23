@@ -7,5 +7,5 @@
     Weeks
   .row{ng: {repeat: 'i in week_range()'}}
     .col-md-4{ng: {repeat: 'chart in weeks.slice(i, i+3)'}}
-      %a{href: '/#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}'}
+      %a.week-link{href: '/#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}'}
         {{chart.to_s()}}
