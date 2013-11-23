@@ -22,6 +22,14 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
       for i in [0...@weeks.length] by 1
         @weeks.splice(idx, 1) for idx, week of @weeks
 
+    get_chart: (from, to) ->
+      chart = @weeks.filter((chart) -> chart.from == from && chart.to == to)[0]
+      unless chart
+        chart = new LastfmChart
+          from: from
+          to: to
+      chart
+
     get_weekly_chart_list: (user) ->
       on_success = (data, status, headers, config) =>
         if data.weeklychartlist
@@ -41,7 +49,7 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
           for track_data in data.weeklytrackchart.track
             chart.tracks.push(new LastfmTrack(track_data))
         else
-          Notification.error "No tracks for the week of #{chart.to_s()}."
+          chart.no_tracks = true
       $http(
         url: Lastfm.get_weekly_track_chart_url(user, chart)
         method: 'GET'

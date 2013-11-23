@@ -3,12 +3,12 @@
     .col-md-8
       .page-header.clearfix
         %h1.pull-left
-          %a.back-link{href: '/#/lastfm/{{lastfm.user}}', tooltip: 'Choose a different time span'}
+          %a.back-link{href: '#/lastfm/{{lastfm.user}}', tooltip: 'Choose a different time span', ng: {click: 'wipe_notifications()'}}
             %span.glyphicon.glyphicon-chevron-left
         .pull-left
           %h1
             Tracks for {{chart.to_s()}}
-          %h2.subtitle
+          %h2.subtitle{ng: {if: 'chart.tracks.length > 0'}}
             Showing {{filtered_tracks.length}} of
             {{chart.track_count()}}
             %span{ng: {show: 'chart.track_count() === 1'}}
@@ -20,6 +20,14 @@
               %label.control-label{for: 'track_filters_min_play_count'}
                 Minimum play count:
               %input#track_filters_min_play_count.form-control{type: 'number', ng: {model: 'track_filters.min_play_count'}}
+      %div{ng: {if: 'chart.tracks.length < 1'}}
+        %p
+          There is no listening history for Last.fm user
+          %strong {{lastfm.user}}
+          during {{chart.to_s()}}.
+        %p
+          %a{href: '#/lastfm/{{lastfm.user}}', ng: {click: 'wipe_notifications()'}}
+            &larr; Choose a different time span
       %a.track{href: '{{track.url}}', target: '_blank', ng: {repeat: 'track in filtered_tracks = (chart.tracks | filter:play_count_filter)', class: "{matching: track.matching, matched: track.matched, missing: track.missing}"}}
         %img{ng: {src: '{{track.large_image}}'}}
         %div.track-info

@@ -9,9 +9,9 @@
     %p
       There is no weekly listening history for Last.fm user {{lastfm.user}}.
     %p
-      %a{href: '#/', ng: {click: 'wipe_notifications()'}
+      %a{href: '#/', ng: {click: 'wipe_notifications()'}}
         &larr; Choose a different Last.fm user
   .row{ng: {repeat: 'i in week_range()'}}
     .col-md-4{ng: {repeat: 'chart in weeks.slice(i, i+3)'}}
-      %a.week-link{href: '#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}'}
+      %a.week-link{href: '#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}', ng: {class: "{trackless: chart.no_tracks}"}}
         {{chart.to_s()}}

@@ -13,12 +13,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-playlister_app.controller 'PlaylistController', ($scope, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) ->
+playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) ->
   $scope.lastfm = {}
   $scope.weeks = LastfmCharts.weeks
   $scope.chart = {}
   $scope.playlist = {}
   $scope.track_filters = {min_play_count: 2}
+
+  update_lastfm_user_from_url = ->
+    if $routeParams.user != $cookieStore.get('lastfm_user')
+      $cookieStore.put('lastfm_user', $routeParams.user)
+      LastfmCharts.reset_weeks()
+    $scope.lastfm.user = $cookieStore.get('lastfm_user')
 
   $scope.go_to_weeks_list = ->
     $location.path("/lastfm/#{$scope.lastfm.user}")
@@ -37,15 +43,13 @@ playlister_app.controller 'PlaylistController', ($scope, $http, $location, $rout
     track.play_count >= $scope.track_filters.min_play_count
 
   $scope.lastfm_weeks = ->
-    $scope.lastfm.user = $routeParams.user
-    LastfmCharts.reset_weeks()
-    LastfmCharts.get_weekly_chart_list($scope.lastfm.user)
+    update_lastfm_user_from_url()
+    if LastfmCharts.weeks < 1
+      LastfmCharts.get_weekly_chart_list($scope.lastfm.user)
 
   $scope.lastfm_tracks = ->
-    $scope.lastfm.user = $routeParams.user
-    $scope.chart = new LastfmChart
-      from: $routeParams.from
-      to: $routeParams.to
+    update_lastfm_user_from_url()
+    $scope.chart = LastfmCharts.get_chart($routeParams.from, $routeParams.to)
     LastfmCharts.get_weekly_track_chart($scope.lastfm.user, $scope.chart)
     $scope.playlist.name = $scope.chart.to_s()
     $scope.playlist.description = 'Last.fm track chart for user ' +

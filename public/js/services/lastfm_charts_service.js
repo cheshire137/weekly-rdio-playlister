@@ -24,6 +24,20 @@
         return _results;
       };
 
+      LastfmCharts.prototype.get_chart = function(from, to) {
+        var chart;
+        chart = this.weeks.filter(function(chart) {
+          return chart.from === from && chart.to === to;
+        })[0];
+        if (!chart) {
+          chart = new LastfmChart({
+            from: from,
+            to: to
+          });
+        }
+        return chart;
+      };
+
       LastfmCharts.prototype.get_weekly_chart_list = function(user) {
         var on_success,
           _this = this;
@@ -63,7 +77,7 @@
             }
             return _results;
           } else {
-            return Notification.error("No tracks for the week of " + (chart.to_s()) + ".");
+            return chart.no_tracks = true;
           }
         };
         return $http({

@@ -1,11 +1,19 @@
 (function() {
-  playlister_app.controller('PlaylistController', function($scope, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) {
+  playlister_app.controller('PlaylistController', function($scope, $cookieStore, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) {
+    var update_lastfm_user_from_url;
     $scope.lastfm = {};
     $scope.weeks = LastfmCharts.weeks;
     $scope.chart = {};
     $scope.playlist = {};
     $scope.track_filters = {
       min_play_count: 2
+    };
+    update_lastfm_user_from_url = function() {
+      if ($routeParams.user !== $cookieStore.get('lastfm_user')) {
+        $cookieStore.put('lastfm_user', $routeParams.user);
+        LastfmCharts.reset_weeks();
+      }
+      return $scope.lastfm.user = $cookieStore.get('lastfm_user');
     };
     $scope.go_to_weeks_list = function() {
       return $location.path("/lastfm/" + $scope.lastfm.user);
@@ -27,16 +35,14 @@
       return track.play_count >= $scope.track_filters.min_play_count;
     };
     $scope.lastfm_weeks = function() {
-      $scope.lastfm.user = $routeParams.user;
-      LastfmCharts.reset_weeks();
-      return LastfmCharts.get_weekly_chart_list($scope.lastfm.user);
+      update_lastfm_user_from_url();
+      if (LastfmCharts.weeks < 1) {
+        return LastfmCharts.get_weekly_chart_list($scope.lastfm.user);
+      }
     };
     $scope.lastfm_tracks = function() {
-      $scope.lastfm.user = $routeParams.user;
-      $scope.chart = new LastfmChart({
-        from: $routeParams.from,
-        to: $routeParams.to
-      });
+      update_lastfm_user_from_url();
+      $scope.chart = LastfmCharts.get_chart($routeParams.from, $routeParams.to);
       LastfmCharts.get_weekly_track_chart($scope.lastfm.user, $scope.chart);
       $scope.playlist.name = $scope.chart.to_s();
       return $scope.playlist.description = 'Last.fm track chart for user ' + ("" + $scope.lastfm.user + " for ") + ("" + ($scope.chart.to_s()) + ".");
