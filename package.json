@@ -1,0 +1,14 @@
+{
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moneypenny/weekly-rdio-playlister.git"
+  },
+  "devDependencies": {
+    "karma": "~0.10.2",
+    "karma-coffee-preprocessor": "~0.1",
+    "karma-ng-scenario": "*"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/karma start spec/karma-e2e.config.js --single-run"
+  }
+}

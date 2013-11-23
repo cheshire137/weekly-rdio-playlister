@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html class='no-js' lang='en' ng-app='TestPlaylisterApp'>
+  <head>
+    <meta charset='utf-8'>
+    <title>Weekly Rdio Playlister</title>
+    <meta content='Turn your weekly Last.fm listening charts into Rdio playlists.' name='description'>
+    <meta content='Sarah Vessels' name='author'>
+    <meta content='width=device-width, initial-scale=1' name='viewport'>
+    <link href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='/base/public/css/screen.css' rel='stylesheet'>
+    <!--[if (lt IE 9) & (!IEMobile)]>
+      <script src='//html5shim.googlecode.com/svn/trunk/html5.js'></script>
+    <![endif]-->
+  </head>
+  <body>
+    <a class='github-ribbon' href='https://github.com/moneypenny/weekly-rdio-playlister'>
+      <img alt='Fork me on GitHub' src='https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png'>
+    </a>
+    <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
+      <div class='container'>
+        <div class='navbar-header'>
+          <button class='navbar-toggle' data-target='.navbar-collapse' data-toggle='collapse' type='button'>
+            <span class='sr-only'>Toggle navigation</span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+            <span class='icon-bar'></span>
+          </button>
+          <a class='navbar-brand' href='/'>Weekly Rdio Playlister</a>
+        </div>
+        <div class='navbar-collapse collapse'>
+          <ul class='nav navbar-nav'></ul>
+        </div>
+      </div>
+    </div>
+    <div class='container'>
+      <div class='notifications' ng-controller='NotificationsController'>
+        <p class='alert alert-danger clearfix' ng-repeat='error in errors'>
+          <a class='pull-right alert-link' ng-click="remove('error', error.id)">
+            <span class='glyphicon glyphicon-remove'></span>
+          </a>
+          {{error.message}}
+        </p>
+        <p class='alert alert-success clearfix' ng-repeat='notice in notices'>
+          <a class='pull-right alert-link' ng-click="remove('notice', notice.id)">
+            <span class='glyphicon glyphicon-remove'></span>
+          </a>
+          {{notice.message}}
+        </p>
+      </div>
+      <div ng-view=''></div>
+    </div>
+    <footer>
+      <div class='container'>
+        <p>
+          Built by
+          <a href='http://www.sarah-vessels.com/'>
+            Sarah Vessels
+          </a>
+          using AngularJS, Sinatra, the
+          <a href='http://www.last.fm/api'>
+            Last.fm API,
+          </a>
+          and the
+          <a href='http://www.rdio.com/developers/'>
+            Rdio API.
+          </a>
+        </p>
+        <p>
+          <a href='https://github.com/moneypenny/weekly-rdio-playlister'>
+            Source code on Github
+          </a>
+        </p>
+      </div>
+    </footer>
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+    <script src='//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.min.js'></script>
+    <script src='/base/public/js/moment.min.js'></script>
+    <script src='/base/public/js/ui-bootstrap-0.6.0.min.js'></script>
+    <script src='/base/public/js/ui-bootstrap-tpls-0.6.0.min.js'></script>
+    <script src='/base/public/js/app.js'></script>
+    <script src='/base/public/js/services/notification_service.js'></script>
+    <script src='/base/public/js/services/playlister_config_service.js'></script>
+    <script src='/base/public/js/services/lastfm_service.js'></script>
+    <script src='/base/public/js/services/lastfm_charts_service.js'></script>
+    <script src='/base/public/js/services/rdio_catalog_service.js'></script>
+    <script src='/base/public/js/services/rdio_playlist_service.js'></script>
+    <script src='/base/public/js/models/lastfm_chart.js'></script>
+    <script src='/base/public/js/models/lastfm_track.js'></script>
+    <script src='/base/public/js/controllers/playlist_controller.js'></script>
+    <script src='/base/public/js/controllers/notifications_controller.js'></script>
+    <script src='/base/public/js/routes.js'></script>
+
+    <script src='http://code.angularjs.org/1.2.0/angular-mocks.js'></script>
+    <script src='/base/spec/http_backend_mocker.js'></script>
+    <script src='/base/spec/e2e/test_playlister_app.js'></script>
+  </body>
+</html>

@@ -28,6 +28,11 @@ I built this using Ruby 2 in OS X.
 If you change any files, be sure to run `bundle exec guard` so that Haml,
 CoffeeScript, and LESS get compiled into HTML, JavaScript, and CSS.
 
+## How to Test
+
+1. `npm install`
+2. `npm test`
+
 ## License
 
 The source code is released under the GNU GPL v3.
