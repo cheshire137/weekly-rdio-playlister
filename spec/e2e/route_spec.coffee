@@ -14,7 +14,7 @@ describe 'route', ->
   describe '/lastfm/:user', ->
     it 'has a list of weeks', ->
       browser().navigateTo '/base/spec/test-index.html#/lastfm/cheshire137'
-      expect(element('.week-link').count()).toBe 2
+      expect(element('.week-link').count()).toBe 1
 
   describe '/lastfm/:user/chart/:from/:to', ->
     it 'has a list of tracks', ->

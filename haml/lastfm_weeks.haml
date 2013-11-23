@@ -2,7 +2,8 @@
   %h2.clearfix
     %a.back-link{href: '#/'}
       %span.glyphicon.glyphicon-chevron-left
-    Last.fm {{lastfm.user}}
+    Last.fm
+    %span.lastfm-user {{lastfm.user}}
     %span.divider /
     Weeks
   .row{ng: {repeat: 'i in week_range()'}}

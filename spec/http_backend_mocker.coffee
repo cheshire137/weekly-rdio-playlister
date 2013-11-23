@@ -10,7 +10,6 @@ http_backend_mocker =
       weeklychartlist:
         chart: [
           {"#text": "", from: "1381665600", to: "1382270400"}
-          {"#text": "", from: "1108900801", to: "1109505601"}
         ]
         "@attr":
           user: "cheshire137"
