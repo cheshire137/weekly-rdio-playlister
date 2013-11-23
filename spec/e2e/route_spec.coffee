@@ -18,5 +18,6 @@ describe 'route', ->
 
   describe '/lastfm/:user/chart/:from/:to', ->
     it 'exists', ->
-      browser().navigateTo '/base/spec/test-index.html#/lastfm/cheshire137/chart/1381665600/1382270400'
-      expect(browser().location().url()).toBe "/lastfm/cheshire137/chart/1381665600/1382270400"
+      path = '/lastfm/cheshire137/chart/1381665600/1382270400'
+      browser().navigateTo "/base/spec/test-index.html##{path}"
+      expect(browser().location().url()).toBe path

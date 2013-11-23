@@ -26,11 +26,11 @@
           %ul.nav.navbar-nav
     .container
       .notifications{ng: {controller: 'NotificationsController'}}
-        %p.alert.alert-danger.clearfix{ng: {repeat: 'error in errors'}}
+        %p.alert.alert-danger.clearfix.ng-cloak{ng: {repeat: 'error in errors'}}
           %a.pull-right.alert-link{ng: {click: "remove('error', error.id)"}}
             %span.glyphicon.glyphicon-remove
           {{error.message}}
-        %p.alert.alert-success.clearfix{ng: {repeat: 'notice in notices'}}
+        %p.alert.alert-success.clearfix.ng-cloak{ng: {repeat: 'notice in notices'}}
           %a.pull-right.alert-link{ng: {click: "remove('notice', notice.id)"}}
             %span.glyphicon.glyphicon-remove
           {{notice.message}}

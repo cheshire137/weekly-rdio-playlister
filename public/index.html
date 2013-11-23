@@ -34,13 +34,13 @@
     </div>
     <div class='container'>
       <div class='notifications' ng-controller='NotificationsController'>
-        <p class='alert alert-danger clearfix' ng-repeat='error in errors'>
+        <p class='alert alert-danger clearfix ng-cloak' ng-repeat='error in errors'>
           <a class='pull-right alert-link' ng-click="remove('error', error.id)">
             <span class='glyphicon glyphicon-remove'></span>
           </a>
           {{error.message}}
         </p>
-        <p class='alert alert-success clearfix' ng-repeat='notice in notices'>
+        <p class='alert alert-success clearfix ng-cloak' ng-repeat='notice in notices'>
           <a class='pull-right alert-link' ng-click="remove('notice', notice.id)">
             <span class='glyphicon glyphicon-remove'></span>
           </a>
