@@ -15,16 +15,20 @@
 
 playlister_app.factory 'RdioPlaylist', ($http, Notification) ->
   class RdioPlaylist
+    constructor: ->
+      @playlist = {}
+
     get_playlist_create_url: ->
       '/rdio_playlist_create'
 
-    create: (name, description, tracks, callback) ->
-      on_success = (data, status, headers, config) =>
-        callback data
+    create: (name, description, tracks) ->
       request_data =
         name: name
         description: description
         tracks: tracks
+      on_success = (playlist, status, headers, config) =>
+        for key, value of playlist
+          @playlist[key] = value
       on_error = (data, status, headers, config) =>
         Notification.error data
       $http(

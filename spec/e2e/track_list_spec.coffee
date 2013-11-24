@@ -20,6 +20,9 @@ describe 'track list', ->
     it 'has no info about a new playlist', ->
       expect(element('.created-playlist').count()).toBe 0
 
+    it 'there is no playlisted class on the body', ->
+      expect(element('body.playlisted').count()).toBe 0
+
     describe 'create playlist', ->
       beforeEach ->
         element('form.create-playlist input[type="submit"]').click()
@@ -50,9 +53,8 @@ describe 'track list', ->
       it 'does not highlight any track as both missing and matched', ->
         expect(element('.missing.matched').count()).toBe 0
 
-      it 'displays a notice with the track count', ->
-        notice = 'Successfully created playlist with 2 tracks!'
-        expect(element('.notifications .alert-success').text()).toContain notice
+      it 'sets the playlisted class on the body', ->
+        expect(element('body.playlisted').count()).toBe 1
 
     describe 'filter tracks by play count', ->
       beforeEach ->

@@ -20,6 +20,45 @@ a[ng-click] {
 
 body {
   padding-top: 60px;
+  -webkit-transition: background 0.5s ease-in-out;
+  -moz-transition: background 0.5s ease-in-out;
+  -ms-transition: background 0.5s ease-in-out;
+  -o-transition: background 0.5s ease-in-out;
+  transition: background 0.5s ease-in-out;
+
+  &.playlisted {
+    background-color: #0078AF;
+    color: white;
+
+    a, a:link, a:visited, a:active {
+      color: #B7E9FF;
+    }
+
+    a:hover, a:focus {
+      color: #efefef;
+    }
+
+    footer, .subtitle {
+      color: #77B7D4;
+    }
+
+    footer {
+      border-top-color: #77B7D4;
+    }
+
+    .navbar-default .navbar-brand {
+      color: #777;
+    }
+
+    .navbar-default .navbar-brand:hover,
+    .navbar-default .navbar-brand:focus {
+      color: #5e5e5e;
+    }
+
+    .page-header {
+      border-bottom-color: #77B7D4;
+    }
+  }
 }
 
 .btn-lastfm {
@@ -165,7 +204,7 @@ h1 {
 
   &.missing {
     background-color: #f2dede;
-    color: #b94a48;
+    color: #b94a48 !important;
 
     &:hover, &:focus {
       background-color: #e8baba;
@@ -178,7 +217,7 @@ h1 {
 
   &.matching {
     background-color: #d9edf7;
-    color: #3a87ad;
+    color: #3a87ad !important;
 
     &:hover, &:focus {
       background-color: #a5d2e8;
@@ -191,7 +230,7 @@ h1 {
 
   &.matched {
     background-color: #0091d4;
-    color: white;
+    color: white !important;
 
     &:hover, &:focus {
       background-color: #007fb5;

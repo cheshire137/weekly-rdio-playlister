@@ -1,7 +1,13 @@
 a.github-ribbon{position:absolute;top:0;right:0;z-index:9000}a.github-ribbon img{border:0}
 a[ng-click]{cursor:pointer}
 .back-link-container{margin-left:-29px;width:29px}
-body{padding-top:60px}
+body{padding-top:60px;-webkit-transition:background .5s ease-in-out;-moz-transition:background .5s ease-in-out;-ms-transition:background .5s ease-in-out;-o-transition:background .5s ease-in-out;transition:background .5s ease-in-out}body.playlisted{background-color:#0078AF;color:white}body.playlisted a,body.playlisted a:link,body.playlisted a:visited,body.playlisted a:active{color:#B7E9FF}
+body.playlisted a:hover,body.playlisted a:focus{color:#efefef}
+body.playlisted footer,body.playlisted .subtitle{color:#77B7D4}
+body.playlisted footer{border-top-color:#77B7D4}
+body.playlisted .navbar-default .navbar-brand{color:#777}
+body.playlisted .navbar-default .navbar-brand:hover,body.playlisted .navbar-default .navbar-brand:focus{color:#5e5e5e}
+body.playlisted .page-header{border-bottom-color:#77B7D4}
 .btn-lastfm{background-color:#c91e24;color:white}.btn-lastfm:hover,.btn-lastfm:focus{color:white;background-color:#db3d43}
 footer{padding-top:40px;padding-bottom:30px;margin-top:100px;color:#777;border-top:1px solid #e5e5e5}
 form{margin-bottom:20px}form.subtle legend{margin-bottom:5px;border-bottom:none;font-weight:700;font-size:14px}
@@ -20,11 +26,11 @@ h1 .divider{color:#999}
 .subtitle form{display:inline-block;white-space:nowrap}.subtitle form label{font-weight:300}
 .subtitle form .form-control{padding:3px 7px;height:auto}
 .track{width:23%;margin:0 1.8% 10px 0;padding:10px;box-sizing:border-box;text-align:center;display:inline-block;overflow:hidden;border-radius:10px;-webkit-transition:background .5s ease-in-out;-moz-transition:background .5s ease-in-out;-ms-transition:background .5s ease-in-out;-o-transition:background .5s ease-in-out;transition:background .5s ease-in-out}.track:hover,.track:focus{text-decoration:none;background-color:#e5e3e9}
-.track.missing{background-color:#f2dede;color:#b94a48}.track.missing:hover,.track.missing:focus{background-color:#e8baba}
+.track.missing{background-color:#f2dede;color:#b94a48 !important}.track.missing:hover,.track.missing:focus{background-color:#e8baba}
 .track.missing .track-artist-divider,.track.missing .play-count{color:#cf6d6b}
-.track.matching{background-color:#d9edf7;color:#3a87ad}.track.matching:hover,.track.matching:focus{background-color:#a5d2e8}
+.track.matching{background-color:#d9edf7;color:#3a87ad !important}.track.matching:hover,.track.matching:focus{background-color:#a5d2e8}
 .track.matching .track-artist-divider,.track.matching .play-count{color:#62aacc}
-.track.matched{background-color:#0091d4;color:white}.track.matched:hover,.track.matched:focus{background-color:#007fb5}
+.track.matched{background-color:#0091d4;color:white !important}.track.matched:hover,.track.matched:focus{background-color:#007fb5}
 .track.matched .track-artist-divider,.track.matched .play-count{color:#efefef}
 .track img{height:73px;margin-left:auto;margin-right:auto;display:block;border-radius:10px}
 .track .play-count{font-size:12px;color:#999;font-style:italic}.track .play-count:before{content:'('}

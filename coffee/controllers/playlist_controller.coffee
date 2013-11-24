@@ -17,7 +17,7 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
   $scope.lastfm = {}
   $scope.year_charts = LastfmCharts.year_charts
   $scope.chart = {}
-  $scope.playlist = {}
+  $scope.playlist = RdioPlaylist.playlist
   $scope.track_filters = {min_play_count: 2}
   $scope.chart_filters = {}
 
@@ -58,11 +58,5 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
     RdioCatalog.match_lastfm_tracks $scope.filtered_tracks, (rdio_tracks) ->
       track_ids = (track.id for track in rdio_tracks)
       track_ids_str = track_ids.join(',')
-      on_playlist_create = (playlist) ->
-        plural = if playlist.song_count == 1 then '' else 's'
-        for key, value of playlist
-          $scope.playlist[key] = value
-        Notification.notice 'Successfully created playlist with ' +
-                            "#{playlist.song_count} track#{plural}!"
       RdioPlaylist.create($scope.playlist.name, $scope.playlist.description,
-                          track_ids_str, on_playlist_create)
+                          track_ids_str)

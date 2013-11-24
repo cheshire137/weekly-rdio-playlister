@@ -4,7 +4,7 @@
     $scope.lastfm = {};
     $scope.year_charts = LastfmCharts.year_charts;
     $scope.chart = {};
-    $scope.playlist = {};
+    $scope.playlist = RdioPlaylist.playlist;
     $scope.track_filters = {
       min_play_count: 2
     };
@@ -46,7 +46,7 @@
     };
     return $scope.create_playlist = function() {
       return RdioCatalog.match_lastfm_tracks($scope.filtered_tracks, function(rdio_tracks) {
-        var on_playlist_create, track, track_ids, track_ids_str;
+        var track, track_ids, track_ids_str;
         track_ids = (function() {
           var _i, _len, _results;
           _results = [];
@@ -57,16 +57,7 @@
           return _results;
         })();
         track_ids_str = track_ids.join(',');
-        on_playlist_create = function(playlist) {
-          var key, plural, value;
-          plural = playlist.song_count === 1 ? '' : 's';
-          for (key in playlist) {
-            value = playlist[key];
-            $scope.playlist[key] = value;
-          }
-          return Notification.notice('Successfully created playlist with ' + ("" + playlist.song_count + " track" + plural + "!"));
-        };
-        return RdioPlaylist.create($scope.playlist.name, $scope.playlist.description, track_ids_str, on_playlist_create);
+        return RdioPlaylist.create($scope.playlist.name, $scope.playlist.description, track_ids_str);
       });
     };
   });
