@@ -4,6 +4,7 @@
     LastfmCharts = (function() {
       function LastfmCharts() {
         this.year_charts = [];
+        this.user = {};
       }
 
       LastfmCharts.prototype.reset_charts = function() {
@@ -52,7 +53,37 @@
         return chart;
       };
 
-      LastfmCharts.prototype.get_weekly_chart_list = function(user, callback) {
+      LastfmCharts.prototype.get_user_info = function(user_name, callback) {
+        var on_success,
+          _this = this;
+        on_success = function(data, status, headers, config) {
+          var key, value, _ref;
+          if (data.user) {
+            _ref = new LastfmUser(data.user);
+            for (key in _ref) {
+              value = _ref[key];
+              _this.user[key] = value;
+            }
+            console.log(_this.user);
+          } else if (data.error) {
+            Notification.error(data.message);
+          }
+          if (callback) {
+            return callback();
+          }
+        };
+        return $http({
+          url: Lastfm.get_user_info_url(user_name),
+          method: 'GET'
+        }).success(on_success).error(function(data, status, headers, config) {
+          Notification.error(data);
+          if (callback) {
+            return callback();
+          }
+        });
+      };
+
+      LastfmCharts.prototype.get_weekly_chart_list_after_date = function(user, cutoff_date, callback) {
         var on_success,
           _this = this;
         on_success = function(data, status, headers, config) {
@@ -62,17 +93,19 @@
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               chart_data = _ref[_i];
               week_chart = new LastfmChart(chart_data);
-              year = week_chart.year();
-              year_obj = _this.year_charts.filter(function(obj) {
-                return obj.year === year;
-              })[0];
-              if (year_obj) {
-                year_obj.charts.push(week_chart);
-              } else {
-                _this.year_charts.push({
-                  year: year,
-                  charts: [week_chart]
-                });
+              if (week_chart.to_date() >= cutoff_date) {
+                year = week_chart.year();
+                year_obj = _this.year_charts.filter(function(obj) {
+                  return obj.year === year;
+                })[0];
+                if (year_obj) {
+                  year_obj.charts.push(week_chart);
+                } else {
+                  _this.year_charts.push({
+                    year: year,
+                    charts: [week_chart]
+                  });
+                }
               }
             }
           } else if (data.error) {
@@ -90,6 +123,13 @@
           if (callback) {
             return callback();
           }
+        });
+      };
+
+      LastfmCharts.prototype.get_weekly_chart_list = function(user_name, callback) {
+        var _this = this;
+        return this.get_user_info(user_name, function() {
+          return _this.get_weekly_chart_list_after_date(user_name, _this.user.date_registered, callback);
         });
       };
 

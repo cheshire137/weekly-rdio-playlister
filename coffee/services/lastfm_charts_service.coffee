@@ -17,6 +17,7 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
   class LastfmCharts
     constructor: ->
       @year_charts = []
+      @user = {}
 
     reset_charts: ->
       for i in [0...@year_charts.length] by 1
@@ -37,19 +38,36 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
           to: to
       chart
 
-    get_weekly_chart_list: (user, callback) ->
+    get_user_info: (user_name, callback) ->
+      on_success = (data, status, headers, config) =>
+        if data.user
+          for key, value of new LastfmUser(data.user)
+            @user[key] = value
+          console.log @user
+        else if data.error
+          Notification.error data.message
+        callback() if callback
+      $http(
+        url: Lastfm.get_user_info_url(user_name)
+        method: 'GET'
+      ).success(on_success).error (data, status, headers, config) =>
+        Notification.error data
+        callback() if callback
+
+    get_weekly_chart_list_after_date: (user, cutoff_date, callback) ->
       on_success = (data, status, headers, config) =>
         if data.weeklychartlist
           for chart_data in data.weeklychartlist.chart.slice(0).reverse()
             week_chart = new LastfmChart(chart_data)
-            year = week_chart.year()
-            year_obj = @year_charts.filter((obj) -> obj.year == year)[0]
-            if year_obj
-              year_obj.charts.push week_chart
-            else
-              @year_charts.push
-                year: year
-                charts: [week_chart]
+            if week_chart.to_date() >= cutoff_date
+              year = week_chart.year()
+              year_obj = @year_charts.filter((obj) -> obj.year == year)[0]
+              if year_obj
+                year_obj.charts.push week_chart
+              else
+                @year_charts.push
+                  year: year
+                  charts: [week_chart]
         else if data.error
           Notification.error data.message
         callback() if callback
@@ -59,6 +77,11 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
       ).success(on_success).error (data, status, headers, config) =>
         Notification.error data
         callback() if callback
+
+    get_weekly_chart_list: (user_name, callback) ->
+      @get_user_info user_name, =>
+        @get_weekly_chart_list_after_date user_name, @user.date_registered,
+                                          callback
 
     get_weekly_track_chart: (user, chart, callback) ->
       on_success = (data, status, headers, config) =>
