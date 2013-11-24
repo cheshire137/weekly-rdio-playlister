@@ -16,6 +16,9 @@
       }
       return $scope.lastfm.user = $cookieStore.get('lastfm_user');
     };
+    $scope.reset_playlist = function() {
+      return RdioPlaylist.reset_playlist();
+    };
     $scope.go_to_weeks_list = function() {
       return $location.path("/lastfm/" + $scope.lastfm.user);
     };

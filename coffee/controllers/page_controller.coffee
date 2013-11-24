@@ -15,3 +15,6 @@
 
 playlister_app.controller 'PageController', ($scope, RdioPlaylist) ->
   $scope.playlist = RdioPlaylist.playlist
+
+  $scope.reset_playlist = ->
+    RdioPlaylist.reset_playlist()

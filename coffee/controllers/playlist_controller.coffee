@@ -27,6 +27,9 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
       LastfmCharts.reset_charts()
     $scope.lastfm.user = $cookieStore.get('lastfm_user')
 
+  $scope.reset_playlist = ->
+    RdioPlaylist.reset_playlist()
+
   $scope.go_to_weeks_list = ->
     $location.path("/lastfm/#{$scope.lastfm.user}")
 

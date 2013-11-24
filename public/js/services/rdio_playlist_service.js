@@ -10,6 +10,17 @@
         return '/rdio_playlist_create';
       };
 
+      RdioPlaylist.prototype.reset_playlist = function() {
+        var key, value, _ref, _results;
+        _ref = this.playlist;
+        _results = [];
+        for (key in _ref) {
+          value = _ref[key];
+          _results.push(delete this.playlist[key]);
+        }
+        return _results;
+      };
+
       RdioPlaylist.prototype.create = function(name, description, tracks) {
         var on_error, on_success, request_data,
           _this = this;

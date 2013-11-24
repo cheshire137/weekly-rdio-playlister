@@ -21,6 +21,10 @@ playlister_app.factory 'RdioPlaylist', ($http, Notification) ->
     get_playlist_create_url: ->
       '/rdio_playlist_create'
 
+    reset_playlist: ->
+      for key, value of @playlist
+        delete @playlist[key]
+
     create: (name, description, tracks) ->
       request_data =
         name: name
