@@ -20,7 +20,7 @@
       %a{href: '#/', ng: {click: 'wipe_notifications()'}}
         &larr; Choose a different Last.fm user
   .chart-weeks
-    %span{ng: {repeat: 'year_chart in filtered_years = (year_charts | filter:chart_year_filter)'}}
+    %span{class: 'year-{{year_chart.year}}', ng: {repeat: 'year_chart in filtered_years = (year_charts | filter:chart_year_filter)'}}
       {{year_chart.year}}
       %a.week-link{href: '#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}', ng: {class: "{trackless: chart.no_tracks}", repeat: 'chart in year_chart.charts'}}
         {{chart.to_s()}}

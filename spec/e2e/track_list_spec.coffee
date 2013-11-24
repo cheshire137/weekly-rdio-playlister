@@ -77,7 +77,7 @@ describe 'track list', ->
 
   describe 'week without tracks', ->
     beforeEach ->
-      browser().navigateTo '/base/spec/test-index.html#/lastfm/validuser/chart/1383480000/1384084800'
+      browser().navigateTo '/base/spec/test-index.html#/lastfm/validuser/chart/1293364800/1293969600'
 
     it 'does not have a playlist creation form', ->
       expect(element('form.create-playlist').count()).toBe 0
@@ -93,5 +93,5 @@ describe 'track list', ->
       expect(element('.no-tracks-message').text()).toContain 'validuser'
 
     it 'has message containing week description', ->
-      week = 'during November 3-10, 2013.'
+      week = 'during December 26, 2010 to January 2, 2011.'
       expect(element('.no-tracks-message').text()).toContain week

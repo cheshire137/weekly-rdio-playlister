@@ -9,8 +9,8 @@ http_backend_mocker =
     http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklychartlist&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=validuser').respond
       weeklychartlist:
         chart: [
+          {"#text": "", from: "1293364800", to: "1293969600"}
           {"#text": "", from: "1381665600", to: "1382270400"}
-          {"#text": "", from: "1383480000", to: "1384084800"}
         ]
         "@attr":
           user: "validuser"
@@ -47,12 +47,12 @@ http_backend_mocker =
       url: "http://rd.io/x/QRZlQDMx4b4/"
 
     # Week with no tracks
-    http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklytrackchart&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=validuser&from=1383480000&to=1384084800').respond
+    http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklytrackchart&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=validuser&from=1293364800&to=1293969600').respond
       weeklytrackchart:
         "#text": "\n"
         user: "validuser"
-        from: "1383480000"
-        to: "1384084800"
+        from: "1293364800"
+        to: "1293969600"
 
     # Week with tracks
     http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklytrackchart&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=validuser&from=1381665600&to=1382270400').respond
