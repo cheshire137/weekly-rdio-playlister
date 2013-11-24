@@ -115,13 +115,20 @@ h1 {
   margin-top: 10px;
   margin-bottom: 0;
 
-  form {
-    display: inline-block;
+  span + form {
     margin-left: 10px;
 
     label {
-      font-weight: 300;
       padding-left: 10px;
+    }
+  }
+
+  form {
+    display: inline-block;
+    white-space: nowrap;
+
+    label {
+      font-weight: 300;
     }
 
     .form-control {
@@ -240,6 +247,19 @@ h1 {
 }
 
 .week-link {
+  position: relative;
+  display: inline-block;
+  padding: 2px 5px;
+  margin: 0 10px 10px 0;
+  background: #F8F8F8;
+  background: -moz-linear-gradient(#F8F8F8,#F3F3F3);
+  background: -webkit-linear-gradient(#F9F9F9,#F3F3F3);
+  background: -o-linear-gradient(#F8F8F8,#F3F3F3);
+  background: -ms-linear-gradient(#F8F8F8,#F3F3F3);
+  background: linear-gradient(#F8F8F8,#F3F3F3);
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0,0,0,.2);
+
   &.trackless {
     text-decoration: line-through;
     color: #999;

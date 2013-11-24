@@ -15,15 +15,16 @@
 
 playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) ->
   $scope.lastfm = {}
-  $scope.weeks = LastfmCharts.weeks
+  $scope.year_charts = LastfmCharts.year_charts
   $scope.chart = {}
   $scope.playlist = {}
   $scope.track_filters = {min_play_count: 2}
+  $scope.chart_filters = {}
 
   update_lastfm_user_from_url = ->
     if $routeParams.user != $cookieStore.get('lastfm_user')
       $cookieStore.put('lastfm_user', $routeParams.user)
-      LastfmCharts.reset_weeks()
+      LastfmCharts.reset_charts()
     $scope.lastfm.user = $cookieStore.get('lastfm_user')
 
   $scope.go_to_weeks_list = ->
@@ -32,19 +33,16 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
   $scope.wipe_notifications = ->
     Notification.wipe_notifications()
 
-  $scope.week_range = ->
-    range = []
-    if $scope.weeks.length > 0
-      for i in [0...$scope.weeks.length] by 3
-        range.push i
-    range
+  $scope.chart_year_filter = (year_chart) ->
+    return true unless $scope.chart_filters.year_chart
+    year_chart.year == $scope.chart_filters.year_chart.year
 
   $scope.play_count_filter = (track) ->
     track.play_count >= $scope.track_filters.min_play_count
 
   $scope.lastfm_weeks = ->
     update_lastfm_user_from_url()
-    if LastfmCharts.weeks < 1
+    if LastfmCharts.year_charts < 1
       LastfmCharts.get_weekly_chart_list($scope.lastfm.user)
 
   $scope.lastfm_tracks = ->

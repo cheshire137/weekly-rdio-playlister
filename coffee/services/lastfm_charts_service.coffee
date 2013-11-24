@@ -16,14 +16,21 @@
 playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
   class LastfmCharts
     constructor: ->
-      @weeks = []
+      @year_charts = []
 
-    reset_weeks: ->
-      for i in [0...@weeks.length] by 1
-        @weeks.splice(idx, 1) for idx, week of @weeks
+    reset_charts: ->
+      for i in [0...@year_charts.length] by 1
+        @year_charts.splice(idx, 1) for idx, year of @year_charts
+
+    get_chart_from_year_charts: (from, to) ->
+      for year_chart in @year_charts
+        for chart in year_chart.charts
+          if chart.from == from && chart.to == to
+            return chart
+      return false
 
     get_chart: (from, to) ->
-      chart = @weeks.filter((chart) -> chart.from == from && chart.to == to)[0]
+      chart = @get_chart_from_year_charts(from, to)
       unless chart
         chart = new LastfmChart
           from: from
@@ -34,7 +41,15 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
       on_success = (data, status, headers, config) =>
         if data.weeklychartlist
           for chart_data in data.weeklychartlist.chart.slice(0).reverse()
-            @weeks.push(new LastfmChart(chart_data))
+            week_chart = new LastfmChart(chart_data)
+            year = week_chart.year()
+            year_obj = @year_charts.filter((obj) -> obj.year == year)[0]
+            if year_obj
+              year_obj.charts.push week_chart
+            else
+              @year_charts.push
+                year: year
+                charts: [week_chart]
         else if data.error
           Notification.error data.message
       $http(

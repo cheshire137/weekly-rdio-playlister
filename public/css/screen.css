@@ -15,7 +15,8 @@ h1 .divider{color:#999}
 .playlist .playlist-name{display:block}
 .playlist .track-count{font-size:12px;color:#999;font-style:italic}
 .playlist:hover,.playlist:focus{text-decoration:none}
-.subtitle{color:#999;font-size:16px;margin-top:10px;margin-bottom:0}.subtitle form{display:inline-block;margin-left:10px}.subtitle form label{font-weight:300;padding-left:10px}
+.subtitle{color:#999;font-size:16px;margin-top:10px;margin-bottom:0}.subtitle span+form{margin-left:10px}.subtitle span+form label{padding-left:10px}
+.subtitle form{display:inline-block;white-space:nowrap}.subtitle form label{font-weight:300}
 .subtitle form .form-control{padding:3px 7px;height:auto}
 .track{width:23%;margin:0 1.8% 10px 0;padding:10px;box-sizing:border-box;text-align:center;display:inline-block;overflow:hidden;border-radius:10px;-webkit-transition:background .5s ease-in-out;-moz-transition:background .5s ease-in-out;-ms-transition:background .5s ease-in-out;-o-transition:background .5s ease-in-out;transition:background .5s ease-in-out}.track:hover,.track:focus{text-decoration:none;background-color:#e5e3e9}
 .track.missing{background-color:#f2dede;color:#b94a48}.track.missing:hover,.track.missing:focus{background-color:#e8baba}
@@ -32,4 +33,4 @@ h1 .divider{color:#999}
 .track .artist-name{max-width:70%;display:inline-block;vertical-align:middle}
 .track .track-name{max-width:100%;display:block}
 #track_filters_min_play_count{width:4.5em}
-.week-link.trackless{text-decoration:line-through;color:#999}
+.week-link{position:relative;display:inline-block;padding:2px 5px;margin:0 10px 10px 0;background:#F8F8F8;background:-moz-linear-gradient(#f8f8f8, #f3f3f3);background:-webkit-linear-gradient(#f9f9f9, #f3f3f3);background:-o-linear-gradient(#f8f8f8, #f3f3f3);background:-ms-linear-gradient(#f8f8f8, #f3f3f3);background:linear-gradient(#f8f8f8, #f3f3f3);border-radius:4px;box-shadow:0 1px 1px rgba(0,0,0,0.2)}.week-link.trackless{text-decoration:line-through;color:#999}

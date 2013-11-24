@@ -28,6 +28,9 @@ class LastfmChart
   to_date: ->
     new Date(1000 * @to)
 
+  year: ->
+    parseInt(moment(@from_date()).format('YYYY'), 10)
+
   same_year: ->
     @from_date().getFullYear() == @to_date().getFullYear()
 

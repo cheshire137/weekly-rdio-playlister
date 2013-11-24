@@ -1,14 +1,28 @@
 <div ng-controller='PlaylistController' ng-init='lastfm_weeks()'>
-  <div class='page-header'>
-    <h1 class='clearfix'>
+  <div class='page-header clearfix'>
+    <h1 class='pull-left'>
       <a class='back-link' href='#/' ng-click='wipe_notifications()' tooltip='Choose a different Last.fm user'>
         <span class='glyphicon glyphicon-chevron-left'></span>
       </a>
-      Weekly Listening History for
-      <span class='lastfm-user'>{{lastfm.user}}</span>
     </h1>
+    <div class='pull-left'>
+      <h1>
+        Weekly Listening History for
+        <span class='lastfm-user'>{{lastfm.user}}</span>
+      </h1>
+      <h2 class='subtitle' ng-if='year_charts.length &gt; 0'>
+        <form class='form-inline'>
+          <label class='control-label' for='chart_filters_year_chart'>
+            Filter:
+          </label>
+          <select class='form-control' id='chart_filters_year_chart' ng-model='chart_filters.year_chart' ng-options='year_chart.year for year_chart in year_charts'>
+            <option value=''>All years</option>
+          </select>
+        </form>
+      </h2>
+    </div>
   </div>
-  <div ng-if='weeks.length &lt; 1'>
+  <div ng-if='year_charts.length &lt; 1'>
     <p>
       There is no weekly listening history for Last.fm user {{lastfm.user}}.
     </p>
@@ -18,11 +32,12 @@
       </a>
     </p>
   </div>
-  <div class='row' ng-repeat='i in week_range()'>
-    <div class='col-md-4' ng-repeat='chart in weeks.slice(i, i+3)'>
-      <a class='week-link' href='#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}' ng-class='{trackless: chart.no_tracks}'>
+  <div class='chart-weeks'>
+    <span ng-repeat='year_chart in filtered_years = (year_charts | filter:chart_year_filter)'>
+      {{year_chart.year}}
+      <a class='week-link' href='#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}' ng-class='{trackless: chart.no_tracks}' ng-repeat='chart in year_chart.charts'>
         {{chart.to_s()}}
       </a>
-    </div>
+    </span>
   </div>
 </div>

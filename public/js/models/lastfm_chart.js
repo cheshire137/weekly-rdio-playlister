@@ -20,6 +20,10 @@
       return new Date(1000 * this.to);
     };
 
+    LastfmChart.prototype.year = function() {
+      return parseInt(moment(this.from_date()).format('YYYY'), 10);
+    };
+
     LastfmChart.prototype.same_year = function() {
       return this.from_date().getFullYear() === this.to_date().getFullYear();
     };
