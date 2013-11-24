@@ -17,6 +17,8 @@ class LastfmUser
   constructor: (data) ->
     @user_name = data.name
     @real_name = data.realname
+    if @real_name.trim() == ''
+      @real_name = undefined
     @url = data.url
     @id = data.id
     @country = data.country
@@ -30,5 +32,8 @@ class LastfmUser
     @extra_large_image = data.image.filter((i) ->
       i.size == 'extralarge'
     )[0]['#text']
+
+  date_registered_str: ->
+    moment(@date_registered).format('MMMM D, YYYY')
 
 (exports ? this).LastfmUser = LastfmUser

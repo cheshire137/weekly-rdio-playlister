@@ -5,6 +5,9 @@
     function LastfmUser(data) {
       this.user_name = data.name;
       this.real_name = data.realname;
+      if (this.real_name.trim() === '') {
+        this.real_name = void 0;
+      }
       this.url = data.url;
       this.id = data.id;
       this.country = data.country;
@@ -25,6 +28,10 @@
         return i.size === 'extralarge';
       })[0]['#text'];
     }
+
+    LastfmUser.prototype.date_registered_str = function() {
+      return moment(this.date_registered).format('MMMM D, YYYY');
+    };
 
     return LastfmUser;
 

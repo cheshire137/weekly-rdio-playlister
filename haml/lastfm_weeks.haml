@@ -3,28 +3,40 @@
     %h1.pull-left.back-link-container
       %a.back-link{href: '#/', tooltip: 'Choose a different Last.fm user', 'tooltip-placement' => 'right', ng: {click: 'wipe_notifications()'}}
         %span.glyphicon.glyphicon-chevron-left
-    .pull-left
-      %h1
-        Weekly Listening History for
-        %span.lastfm-user {{lastfm.user}}
-      %h2.subtitle{ng: {if: 'year_charts.length > 0'}}
-        %form.form-inline
-          %label.control-label{for: 'chart_filters_year_chart'}
-            Filter:
-          %select#chart_filters_year_chart.form-control{ng: {model: 'chart_filters.year_chart', options: 'year_chart.year for year_chart in year_charts'}}
-            %option{value: ''} All years
+    .pull-left.clearfix
+      .pull-left{ng: {if: 'lastfm_user.id'}}
+        %a.lastfm-user-link{href: '{{lastfm_user.url}}', tooltip: '{{lastfm_user.user_name}}'}
+          %img.lastfm-user-image{ng: {src: '{{lastfm_user.medium_image}}'}}
+      .pull-left
+        %h1
+          Weekly Listening History for
+          %span.lastfm-user
+            %span{ng: {if: 'lastfm_user.real_name'}}
+              {{lastfm_user.real_name}}
+            %span{ng: {if: '!lastfm_user.real_name'}}
+              {{lastfm_user.user_name}}
+        %h2.subtitle{ng: {if: 'year_charts.length > 0'}}
+          %span{ng: {if: 'lastfm_user.id'}}
+            Last.fm user since
+            {{lastfm_user.date_registered_str()}}
+          %form.form-inline
+            \/
+            %label.control-label{for: 'chart_filters_year_chart'}
+              Filter:
+            %select#chart_filters_year_chart.form-control{ng: {model: 'chart_filters.year_chart', options: 'year_chart.year for year_chart in year_charts'}}
+              %option{value: ''} All years
   %div{ng: {if: 'status.loading'}}
     %p
       Loading listening history from Last.fm...
   %div{ng: {if: '!status.loading && year_charts.length < 1'}}
     %p
-      There is no weekly listening history for Last.fm user {{lastfm.user}}.
+      There is no weekly listening history for Last.fm user {{lastfm_user.user_name}}.
     %p
       %a{href: '#/', ng: {click: 'wipe_notifications()'}}
         &larr; Choose a different Last.fm user
   .chart-weeks
     %div{class: 'year-{{year_chart.year}}', ng: {repeat: 'year_chart in filtered_years = (year_charts | filter:chart_year_filter)'}}
       %h3 {{year_chart.year}}
-      %a.week-link{href: '#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}', ng: {class: "{trackless: chart.no_tracks}", repeat: 'chart in year_chart.charts'}}
+      %a.week-link{href: '#/lastfm/{{lastfm_user.user_name}}/chart/{{chart.from}}/{{chart.to}}', ng: {class: "{trackless: chart.no_tracks}", repeat: 'chart in year_chart.charts'}}
         {{chart.to_s()}}
       %hr

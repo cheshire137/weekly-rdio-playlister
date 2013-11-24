@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) ->
-  $scope.lastfm = {}
+  $scope.lastfm_user = LastfmCharts.user
   $scope.year_charts = LastfmCharts.year_charts
   $scope.chart = {}
   $scope.playlist = RdioPlaylist.playlist
@@ -26,13 +26,13 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
     if $routeParams.user != $cookieStore.get('lastfm_user')
       $cookieStore.put('lastfm_user', $routeParams.user)
       LastfmCharts.reset_charts()
-    $scope.lastfm.user = $cookieStore.get('lastfm_user')
+    $scope.lastfm_user.user_name = $cookieStore.get('lastfm_user')
 
   $scope.reset_playlist = ->
     RdioPlaylist.reset_playlist()
 
   $scope.go_to_weeks_list = ->
-    $location.path("/lastfm/#{$scope.lastfm.user}")
+    $location.path("/lastfm/#{$scope.lastfm_user.user_name}")
 
   $scope.wipe_notifications = ->
     Notification.wipe_notifications()
@@ -48,7 +48,7 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
     $scope.status.loading = true
     update_lastfm_user_from_url()
     if LastfmCharts.year_charts < 1
-      LastfmCharts.get_weekly_chart_list $scope.lastfm.user, ->
+      LastfmCharts.get_weekly_chart_list $scope.lastfm_user.user_name, ->
         $scope.status.loading = false
     else
       $scope.status.loading = false
@@ -58,11 +58,16 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
     update_lastfm_user_from_url()
     $scope.chart = LastfmCharts.get_chart($routeParams.from, $routeParams.to)
     $scope.playlist.name = $scope.chart.to_s()
-    $scope.playlist.description = 'Last.fm track chart for user ' +
-                                  "#{$scope.lastfm.user} for " +
-                                  "#{$scope.chart.to_s()}."
-    LastfmCharts.get_weekly_track_chart $scope.lastfm.user, $scope.chart, ->
-      $scope.status.loading = false
+    user_name = $scope.lastfm_user.user_name
+    if $scope.lastfm_user.real_name
+      user_name = $scope.lastfm_user.real_name
+    $scope.playlist.description = 'Last.fm track chart for ' +
+                                  "#{user_name} for #{$scope.chart.to_s()}."
+    LastfmCharts.get_weekly_track_chart(
+      $scope.lastfm_user.user_name,
+      $scope.chart,
+      -> $scope.status.loading = false
+    )
 
   $scope.create_playlist = ->
     RdioCatalog.match_lastfm_tracks $scope.filtered_tracks, (rdio_tracks) ->

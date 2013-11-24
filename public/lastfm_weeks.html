@@ -5,21 +5,40 @@
         <span class='glyphicon glyphicon-chevron-left'></span>
       </a>
     </h1>
-    <div class='pull-left'>
-      <h1>
-        Weekly Listening History for
-        <span class='lastfm-user'>{{lastfm.user}}</span>
-      </h1>
-      <h2 class='subtitle' ng-if='year_charts.length &gt; 0'>
-        <form class='form-inline'>
-          <label class='control-label' for='chart_filters_year_chart'>
-            Filter:
-          </label>
-          <select class='form-control' id='chart_filters_year_chart' ng-model='chart_filters.year_chart' ng-options='year_chart.year for year_chart in year_charts'>
-            <option value=''>All years</option>
-          </select>
-        </form>
-      </h2>
+    <div class='pull-left clearfix'>
+      <div class='pull-left' ng-if='lastfm_user.id'>
+        <a class='lastfm-user-link' href='{{lastfm_user.url}}' tooltip='{{lastfm_user.user_name}}'>
+          <img class='lastfm-user-image' ng-src='{{lastfm_user.medium_image}}'>
+        </a>
+      </div>
+      <div class='pull-left'>
+        <h1>
+          Weekly Listening History for
+          <span class='lastfm-user'>
+            <span ng-if='lastfm_user.real_name'>
+              {{lastfm_user.real_name}}
+            </span>
+            <span ng-if='!lastfm_user.real_name'>
+              {{lastfm_user.user_name}}
+            </span>
+          </span>
+        </h1>
+        <h2 class='subtitle' ng-if='year_charts.length &gt; 0'>
+          <span ng-if='lastfm_user.id'>
+            Last.fm user since
+            {{lastfm_user.date_registered_str()}}
+          </span>
+          <form class='form-inline'>
+            /
+            <label class='control-label' for='chart_filters_year_chart'>
+              Filter:
+            </label>
+            <select class='form-control' id='chart_filters_year_chart' ng-model='chart_filters.year_chart' ng-options='year_chart.year for year_chart in year_charts'>
+              <option value=''>All years</option>
+            </select>
+          </form>
+        </h2>
+      </div>
     </div>
   </div>
   <div ng-if='status.loading'>
@@ -29,7 +48,7 @@
   </div>
   <div ng-if='!status.loading &amp;&amp; year_charts.length &lt; 1'>
     <p>
-      There is no weekly listening history for Last.fm user {{lastfm.user}}.
+      There is no weekly listening history for Last.fm user {{lastfm_user.user_name}}.
     </p>
     <p>
       <a href='#/' ng-click='wipe_notifications()'>
@@ -40,7 +59,7 @@
   <div class='chart-weeks'>
     <div class='year-{{year_chart.year}}' ng-repeat='year_chart in filtered_years = (year_charts | filter:chart_year_filter)'>
       <h3>{{year_chart.year}}</h3>
-      <a class='week-link' href='#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}' ng-class='{trackless: chart.no_tracks}' ng-repeat='chart in year_chart.charts'>
+      <a class='week-link' href='#/lastfm/{{lastfm_user.user_name}}/chart/{{chart.from}}/{{chart.to}}' ng-class='{trackless: chart.no_tracks}' ng-repeat='chart in year_chart.charts'>
         {{chart.to_s()}}
       </a>
       <hr>

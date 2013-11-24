@@ -3,7 +3,7 @@
     .col-md-8
       .page-header.clearfix
         %h1.pull-left.back-link-container
-          %a.back-link{href: '#/lastfm/{{lastfm.user}}', tooltip: 'Choose a different time span', 'tooltip-placement' => 'right', ng: {click: 'wipe_notifications(); reset_playlist()'}}
+          %a.back-link{href: '#/lastfm/{{lastfm_user.user_name}}', tooltip: 'Choose a different time span', 'tooltip-placement' => 'right', ng: {click: 'wipe_notifications(); reset_playlist()'}}
             %span.glyphicon.glyphicon-chevron-left
         .pull-left
           %h1
@@ -25,10 +25,10 @@
       %div{ng: {if: '!status.loading && chart.tracks.length < 1'}}
         %p.no-tracks-message
           There is no listening history for Last.fm user
-          %strong {{lastfm.user}}
+          %strong {{lastfm_user.user_name}}
           during {{chart.to_s()}}.
         %p
-          %a{href: '#/lastfm/{{lastfm.user}}', ng: {click: 'wipe_notifications()'}}
+          %a{href: '#/lastfm/{{lastfm_user.user_name}}', ng: {click: 'wipe_notifications()'}}
             &larr; Choose a different time span
       %a.track{href: '{{track.url}}', id: '{{track.mbid}}', target: '_blank', ng: {repeat: 'track in filtered_tracks = (chart.tracks | filter:play_count_filter)', class: "{matching: track.matching, matched: track.matched, missing: track.missing}"}}
         %img{ng: {src: '{{track.large_image}}'}}

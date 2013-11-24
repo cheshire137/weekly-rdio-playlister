@@ -8,15 +8,20 @@
       }
 
       LastfmCharts.prototype.reset_charts = function() {
-        var i, idx, year, _i, _ref, _results;
+        var i, idx, key, value, year, _i, _ref, _ref1, _results;
+        _ref = this.user;
+        for (key in _ref) {
+          value = _ref[key];
+          delete this.user[key];
+        }
         _results = [];
-        for (i = _i = 0, _ref = this.year_charts.length; _i < _ref; i = _i += 1) {
+        for (i = _i = 0, _ref1 = this.year_charts.length; _i < _ref1; i = _i += 1) {
           _results.push((function() {
-            var _ref1, _results1;
-            _ref1 = this.year_charts;
+            var _ref2, _results1;
+            _ref2 = this.year_charts;
             _results1 = [];
-            for (idx in _ref1) {
-              year = _ref1[idx];
+            for (idx in _ref2) {
+              year = _ref2[idx];
               _results1.push(this.year_charts.splice(idx, 1));
             }
             return _results1;

@@ -20,6 +20,8 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
       @user = {}
 
     reset_charts: ->
+      for key, value of @user
+        delete @user[key]
       for i in [0...@year_charts.length] by 1
         @year_charts.splice(idx, 1) for idx, year of @year_charts
 

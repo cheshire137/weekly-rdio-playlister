@@ -3,7 +3,7 @@
     <div class='col-md-8'>
       <div class='page-header clearfix'>
         <h1 class='pull-left back-link-container'>
-          <a class='back-link' href='#/lastfm/{{lastfm.user}}' ng-click='wipe_notifications(); reset_playlist()' tooltip-placement='right' tooltip='Choose a different time span'>
+          <a class='back-link' href='#/lastfm/{{lastfm_user.user_name}}' ng-click='wipe_notifications(); reset_playlist()' tooltip-placement='right' tooltip='Choose a different time span'>
             <span class='glyphicon glyphicon-chevron-left'></span>
           </a>
         </h1>
@@ -37,11 +37,11 @@
       <div ng-if='!status.loading &amp;&amp; chart.tracks.length &lt; 1'>
         <p class='no-tracks-message'>
           There is no listening history for Last.fm user
-          <strong>{{lastfm.user}}</strong>
+          <strong>{{lastfm_user.user_name}}</strong>
           during {{chart.to_s()}}.
         </p>
         <p>
-          <a href='#/lastfm/{{lastfm.user}}' ng-click='wipe_notifications()'>
+          <a href='#/lastfm/{{lastfm_user.user_name}}' ng-click='wipe_notifications()'>
             &larr; Choose a different time span
           </a>
         </p>
