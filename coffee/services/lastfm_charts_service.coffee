@@ -43,9 +43,6 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
         if data.user
           for key, value of new LastfmUser(data.user)
             @user[key] = value
-          console.log @user
-        else if data.error
-          Notification.error data.message
         callback() if callback
       $http(
         url: Lastfm.get_user_info_url(user_name)

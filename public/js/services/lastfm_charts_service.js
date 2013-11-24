@@ -64,9 +64,6 @@
               value = _ref[key];
               _this.user[key] = value;
             }
-            console.log(_this.user);
-          } else if (data.error) {
-            Notification.error(data.message);
           }
           if (callback) {
             return callback();
