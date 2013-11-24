@@ -39,6 +39,12 @@ The source code is released under the GNU GPL v3.
 
 ## Screenshots
 
-![Screenshot of Weekly Rdio Playlister Last.fm login](http://github.com/moneypenny/weekly-rdio-playlister/raw/master/screenshot1.png)
+![Screenshot of Weekly Rdio Playlister](http://github.com/moneypenny/weekly-rdio-playlister/raw/master/screenshot.png)
 
-![Screenshot of Weekly Rdio Playlister After playlist creation](http://github.com/moneypenny/weekly-rdio-playlister/raw/master/screenshot.png)
+![Screenshot of Weekly Rdio Playlister](http://github.com/moneypenny/weekly-rdio-playlister/raw/master/screenshot1.png)
+
+![Screenshot of Weekly Rdio Playlister](http://github.com/moneypenny/weekly-rdio-playlister/raw/master/screenshot2.png)
+
+![Screenshot of Weekly Rdio Playlister](http://github.com/moneypenny/weekly-rdio-playlister/raw/master/screenshot3.png)
+
+![Screenshot of Weekly Rdio Playlister](http://github.com/moneypenny/weekly-rdio-playlister/raw/master/screenshot4.png)
