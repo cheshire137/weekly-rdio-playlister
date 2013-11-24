@@ -4,9 +4,9 @@
       Choose a Last.fm User
   %form.form-inline{ng: {submit: 'go_to_weeks_list()'}}
     .form-group
-      %label.sr-only{for: 'lastfm_user'}
+      %label.sr-only{for: 'lastfm_user_user_name'}
         Last.fm user name:
-      %input#lastfm_user.form-control.input-lg{type: 'text', placeholder: 'Last.fm user name', ng: {model: 'lastfm.user'}}
+      %input#lastfm_user_user_name.form-control.input-lg{type: 'text', placeholder: 'Last.fm user name', ng: {model: 'lastfm_user.user_name'}}
     %button.btn.btn-lastfm.btn-lg{type: 'submit'} Get Last.fm History
   %p
     Look up a

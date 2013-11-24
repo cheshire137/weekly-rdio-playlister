@@ -8,8 +8,8 @@ describe 'week list', ->
     it 'has two weeks', ->
       expect(element('.week-link').count()).toBe 2
 
-    it 'includes the Last.fm user name', ->
-      expect(element('.lastfm-user').text()).toEqual 'validuser'
+    it 'includes the Last.fm real name', ->
+      expect(element('.lastfm-user').text()).toContain 'Valid User'
 
     it 'has nicely formatted dates for weeks', ->
       expect(element('.week-link').text()).toContain 'October 13-20, 2013'
@@ -52,7 +52,7 @@ describe 'week list', ->
 
       describe 'choose a different Last.fm user', ->
         beforeEach ->
-          input('lastfm.user').enter('otheruser')
+          input('lastfm_user.user_name').enter('otheruser')
           element('button[type="submit"]').click()
 
         it 'has only one week', ->
@@ -70,7 +70,7 @@ describe 'week list', ->
       expect(element('.notifications .alert-danger').text()).toContain message
 
     it 'includes the Last.fm user name', ->
-      expect(element('.lastfm-user').text()).toEqual 'baduser'
+      expect(element('.lastfm-user').text()).toContain 'baduser'
 
     it 'does not have a list of weeks', ->
       expect(element('.week-link').count()).toBe 0
