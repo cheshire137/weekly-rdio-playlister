@@ -1,13 +1,7 @@
 a.github-ribbon{position:absolute;top:0;right:0;z-index:9000}a.github-ribbon img{border:0}
 a[ng-click]{cursor:pointer}
 .back-link-container{margin-left:-29px;width:29px}
-body{padding-top:60px;-webkit-transition:background .5s ease-in-out;-moz-transition:background .5s ease-in-out;-ms-transition:background .5s ease-in-out;-o-transition:background .5s ease-in-out;transition:background .5s ease-in-out}body.playlisted{background-color:#0078AF;color:white}body.playlisted a,body.playlisted a:link,body.playlisted a:visited,body.playlisted a:active{color:#B7E9FF}
-body.playlisted a:hover,body.playlisted a:focus{color:#efefef}
-body.playlisted footer,body.playlisted .subtitle{color:#77B7D4}
-body.playlisted footer{border-top-color:#77B7D4}
-body.playlisted .navbar-default .navbar-brand{color:#777}
-body.playlisted .navbar-default .navbar-brand:hover,body.playlisted .navbar-default .navbar-brand:focus{color:#5e5e5e}
-body.playlisted .page-header{border-bottom-color:#77B7D4}
+body{padding-top:60px;-webkit-transition:background .5s ease-in-out;-moz-transition:background .5s ease-in-out;-ms-transition:background .5s ease-in-out;-o-transition:background .5s ease-in-out;transition:background .5s ease-in-out}body.playlisted{background-color:#DFF5FF}
 .btn-lastfm{background-color:#c91e24;color:white}.btn-lastfm:hover,.btn-lastfm:focus{color:white;background-color:#db3d43}
 footer{padding-top:40px;padding-bottom:30px;margin-top:100px;color:#777;border-top:1px solid #e5e5e5}
 form{margin-bottom:20px}form.subtle legend{margin-bottom:5px;border-bottom:none;font-weight:700;font-size:14px}
