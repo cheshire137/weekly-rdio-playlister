@@ -9,6 +9,9 @@
       min_play_count: 2
     };
     $scope.chart_filters = {};
+    $scope.status = {
+      loading: false
+    };
     update_lastfm_user_from_url = function() {
       if ($routeParams.user !== $cookieStore.get('lastfm_user')) {
         $cookieStore.put('lastfm_user', $routeParams.user);
@@ -35,17 +38,25 @@
       return track.play_count >= $scope.track_filters.min_play_count;
     };
     $scope.lastfm_weeks = function() {
+      $scope.status.loading = true;
       update_lastfm_user_from_url();
       if (LastfmCharts.year_charts < 1) {
-        return LastfmCharts.get_weekly_chart_list($scope.lastfm.user);
+        return LastfmCharts.get_weekly_chart_list($scope.lastfm.user, function() {
+          return $scope.status.loading = false;
+        });
+      } else {
+        return $scope.status.loading = false;
       }
     };
     $scope.lastfm_tracks = function() {
+      $scope.status.loading = true;
       update_lastfm_user_from_url();
       $scope.chart = LastfmCharts.get_chart($routeParams.from, $routeParams.to);
-      LastfmCharts.get_weekly_track_chart($scope.lastfm.user, $scope.chart);
       $scope.playlist.name = $scope.chart.to_s();
-      return $scope.playlist.description = 'Last.fm track chart for user ' + ("" + $scope.lastfm.user + " for ") + ("" + ($scope.chart.to_s()) + ".");
+      $scope.playlist.description = 'Last.fm track chart for user ' + ("" + $scope.lastfm.user + " for ") + ("" + ($scope.chart.to_s()) + ".");
+      return LastfmCharts.get_weekly_track_chart($scope.lastfm.user, $scope.chart, function() {
+        return $scope.status.loading = false;
+      });
     };
     return $scope.create_playlist = function() {
       return RdioCatalog.match_lastfm_tracks($scope.filtered_tracks, function(rdio_tracks) {

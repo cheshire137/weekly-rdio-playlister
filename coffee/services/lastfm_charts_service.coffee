@@ -37,7 +37,7 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
           to: to
       chart
 
-    get_weekly_chart_list: (user) ->
+    get_weekly_chart_list: (user, callback) ->
       on_success = (data, status, headers, config) =>
         if data.weeklychartlist
           for chart_data in data.weeklychartlist.chart.slice(0).reverse()
@@ -52,23 +52,27 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
                 charts: [week_chart]
         else if data.error
           Notification.error data.message
+        callback() if callback
       $http(
         url: Lastfm.get_weekly_chart_list_url(user)
         method: 'GET'
       ).success(on_success).error (data, status, headers, config) =>
         Notification.error data
+        callback() if callback
 
-    get_weekly_track_chart: (user, chart) ->
+    get_weekly_track_chart: (user, chart, callback) ->
       on_success = (data, status, headers, config) =>
         if data.weeklytrackchart.track
           for track_data in data.weeklytrackchart.track
             chart.tracks.push(new LastfmTrack(track_data))
         else
           chart.no_tracks = true
+        callback() if callback
       $http(
         url: Lastfm.get_weekly_track_chart_url(user, chart)
         method: 'GET'
       ).success(on_success).error (data, status, headers, config) =>
         Notification.error data
+        callback() if callback
 
   new LastfmCharts()

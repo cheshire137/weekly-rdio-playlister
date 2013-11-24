@@ -52,14 +52,13 @@
         return chart;
       };
 
-      LastfmCharts.prototype.get_weekly_chart_list = function(user) {
+      LastfmCharts.prototype.get_weekly_chart_list = function(user, callback) {
         var on_success,
           _this = this;
         on_success = function(data, status, headers, config) {
-          var chart_data, week_chart, year, year_obj, _i, _len, _ref, _results;
+          var chart_data, week_chart, year, year_obj, _i, _len, _ref;
           if (data.weeklychartlist) {
             _ref = data.weeklychartlist.chart.slice(0).reverse();
-            _results = [];
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               chart_data = _ref[_i];
               week_chart = new LastfmChart(chart_data);
@@ -68,49 +67,58 @@
                 return obj.year === year;
               })[0];
               if (year_obj) {
-                _results.push(year_obj.charts.push(week_chart));
+                year_obj.charts.push(week_chart);
               } else {
-                _results.push(_this.year_charts.push({
+                _this.year_charts.push({
                   year: year,
                   charts: [week_chart]
-                }));
+                });
               }
             }
-            return _results;
           } else if (data.error) {
-            return Notification.error(data.message);
+            Notification.error(data.message);
+          }
+          if (callback) {
+            return callback();
           }
         };
         return $http({
           url: Lastfm.get_weekly_chart_list_url(user),
           method: 'GET'
         }).success(on_success).error(function(data, status, headers, config) {
-          return Notification.error(data);
+          Notification.error(data);
+          if (callback) {
+            return callback();
+          }
         });
       };
 
-      LastfmCharts.prototype.get_weekly_track_chart = function(user, chart) {
+      LastfmCharts.prototype.get_weekly_track_chart = function(user, chart, callback) {
         var on_success,
           _this = this;
         on_success = function(data, status, headers, config) {
-          var track_data, _i, _len, _ref, _results;
+          var track_data, _i, _len, _ref;
           if (data.weeklytrackchart.track) {
             _ref = data.weeklytrackchart.track;
-            _results = [];
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               track_data = _ref[_i];
-              _results.push(chart.tracks.push(new LastfmTrack(track_data)));
+              chart.tracks.push(new LastfmTrack(track_data));
             }
-            return _results;
           } else {
-            return chart.no_tracks = true;
+            chart.no_tracks = true;
+          }
+          if (callback) {
+            return callback();
           }
         };
         return $http({
           url: Lastfm.get_weekly_track_chart_url(user, chart),
           method: 'GET'
         }).success(on_success).error(function(data, status, headers, config) {
-          return Notification.error(data);
+          Notification.error(data);
+          if (callback) {
+            return callback();
+          }
         });
       };
 

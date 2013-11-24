@@ -13,7 +13,10 @@
             Filter:
           %select#chart_filters_year_chart.form-control{ng: {model: 'chart_filters.year_chart', options: 'year_chart.year for year_chart in year_charts'}}
             %option{value: ''} All years
-  %div{ng: {if: 'year_charts.length < 1'}}
+  %div{ng: {if: 'status.loading'}}
+    %p
+      Loading listening history from Last.fm...
+  %div{ng: {if: '!status.loading && year_charts.length < 1'}}
     %p
       There is no weekly listening history for Last.fm user {{lastfm.user}}.
     %p

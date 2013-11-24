@@ -13,6 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-playlister_app = angular.module('PlaylisterApp', ['ui.bootstrap', 'ngRoute', 'ngCookies'])
+playlister_app = angular.module('PlaylisterApp', ['ui.bootstrap', 'ngAnimate', 'ngRoute', 'ngCookies'])
 
 (exports ? this).playlister_app = playlister_app

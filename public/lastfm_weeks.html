@@ -22,7 +22,12 @@
       </h2>
     </div>
   </div>
-  <div ng-if='year_charts.length &lt; 1'>
+  <div ng-if='status.loading'>
+    <p>
+      Loading listening history from Last.fm...
+    </p>
+  </div>
+  <div ng-if='!status.loading &amp;&amp; year_charts.length &lt; 1'>
     <p>
       There is no weekly listening history for Last.fm user {{lastfm.user}}.
     </p>

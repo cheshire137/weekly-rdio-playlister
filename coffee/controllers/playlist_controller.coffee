@@ -20,6 +20,7 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
   $scope.playlist = RdioPlaylist.playlist
   $scope.track_filters = {min_play_count: 2}
   $scope.chart_filters = {}
+  $scope.status = {loading: false}
 
   update_lastfm_user_from_url = ->
     if $routeParams.user != $cookieStore.get('lastfm_user')
@@ -44,18 +45,24 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
     track.play_count >= $scope.track_filters.min_play_count
 
   $scope.lastfm_weeks = ->
+    $scope.status.loading = true
     update_lastfm_user_from_url()
     if LastfmCharts.year_charts < 1
-      LastfmCharts.get_weekly_chart_list($scope.lastfm.user)
+      LastfmCharts.get_weekly_chart_list $scope.lastfm.user, ->
+        $scope.status.loading = false
+    else
+      $scope.status.loading = false
 
   $scope.lastfm_tracks = ->
+    $scope.status.loading = true
     update_lastfm_user_from_url()
     $scope.chart = LastfmCharts.get_chart($routeParams.from, $routeParams.to)
-    LastfmCharts.get_weekly_track_chart($scope.lastfm.user, $scope.chart)
     $scope.playlist.name = $scope.chart.to_s()
     $scope.playlist.description = 'Last.fm track chart for user ' +
                                   "#{$scope.lastfm.user} for " +
                                   "#{$scope.chart.to_s()}."
+    LastfmCharts.get_weekly_track_chart $scope.lastfm.user, $scope.chart, ->
+      $scope.status.loading = false
 
   $scope.create_playlist = ->
     RdioCatalog.match_lastfm_tracks $scope.filtered_tracks, (rdio_tracks) ->
