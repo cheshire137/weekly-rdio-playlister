@@ -1,5 +1,6 @@
 a.github-ribbon{position:absolute;top:0;right:0;z-index:9000}a.github-ribbon img{border:0}
 a[ng-click]{cursor:pointer}
+.back-link-container{margin-left:-29px;width:29px}
 body{padding-top:60px}
 .btn-lastfm{background-color:#c91e24;color:white}.btn-lastfm:hover,.btn-lastfm:focus{color:white;background-color:#db3d43}
 footer{padding-top:40px;padding-bottom:30px;margin-top:100px;color:#777;border-top:1px solid #e5e5e5}

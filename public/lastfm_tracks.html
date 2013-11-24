@@ -2,8 +2,8 @@
   <div class='row'>
     <div class='col-md-8'>
       <div class='page-header clearfix'>
-        <h1 class='pull-left'>
-          <a class='back-link' href='#/lastfm/{{lastfm.user}}' ng-click='wipe_notifications()' tooltip='Choose a different time span'>
+        <h1 class='pull-left back-link-container'>
+          <a class='back-link' href='#/lastfm/{{lastfm.user}}' ng-click='wipe_notifications()' tooltip-placement='right' tooltip='Choose a different time span'>
             <span class='glyphicon glyphicon-chevron-left'></span>
           </a>
         </h1>
@@ -44,9 +44,13 @@
       <a class='track' href='{{track.url}}' id='{{track.mbid}}' ng-class='{matching: track.matching, matched: track.matched, missing: track.missing}' ng-repeat='track in filtered_tracks = (chart.tracks | filter:play_count_filter)' target='_blank'>
         <img ng-src='{{track.large_image}}'>
         <div class='track-info'>
-          <span class='track-name' tooltip='{{track.name}}'>{{track.name}}</span>
+          <span class='track-name' tooltip-placement='bottom' tooltip='{{track.name}}'>
+            {{track.name}}
+          </span>
           <span class='track-artist-divider'>by</span>
-          <span class='artist-name' tooltip='{{track.artist}}'>{{track.artist}}</span>
+          <span class='artist-name' tooltip-placement='bottom' tooltip='{{track.artist}}'>
+            {{track.artist}}
+          </span>
           <span class='play-count'>{{track.play_count}}x</span>
         </div>
       </a>

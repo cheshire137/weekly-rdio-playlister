@@ -1,7 +1,7 @@
 <div ng-controller='PlaylistController' ng-init='lastfm_weeks()'>
   <div class='page-header clearfix'>
-    <h1 class='pull-left'>
-      <a class='back-link' href='#/' ng-click='wipe_notifications()' tooltip='Choose a different Last.fm user'>
+    <h1 class='pull-left back-link-container'>
+      <a class='back-link' href='#/' ng-click='wipe_notifications()' tooltip-placement='right' tooltip='Choose a different Last.fm user'>
         <span class='glyphicon glyphicon-chevron-left'></span>
       </a>
     </h1>
@@ -33,11 +33,12 @@
     </p>
   </div>
   <div class='chart-weeks'>
-    <span class='year-{{year_chart.year}}' ng-repeat='year_chart in filtered_years = (year_charts | filter:chart_year_filter)'>
-      {{year_chart.year}}
+    <div class='year-{{year_chart.year}}' ng-repeat='year_chart in filtered_years = (year_charts | filter:chart_year_filter)'>
+      <h3>{{year_chart.year}}</h3>
       <a class='week-link' href='#/lastfm/{{lastfm.user}}/chart/{{chart.from}}/{{chart.to}}' ng-class='{trackless: chart.no_tracks}' ng-repeat='chart in year_chart.charts'>
         {{chart.to_s()}}
       </a>
-    </span>
+      <hr>
+    </div>
   </div>
 </div>
