@@ -62,7 +62,7 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
     $scope.playlist.name = $scope.chart.to_s()
     user_name = $scope.lastfm_user.user_name
     if $scope.lastfm_user.real_name
-      user_name = $scope.lastfm_user.real_name
+      user_name = $scope.lastfm_user.real_name + " (#{user_name})"
     $scope.playlist.description = 'Last.fm track chart for ' +
                                   "#{user_name} for #{$scope.chart.to_s()}."
     LastfmCharts.get_weekly_track_chart(
