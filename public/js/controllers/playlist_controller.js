@@ -55,15 +55,20 @@
       $scope.status.loading = true;
       update_lastfm_user_from_url();
       $scope.chart = LastfmCharts.get_chart($routeParams.from, $routeParams.to);
-      $scope.playlist.name = $scope.chart.to_s();
       user_name = $scope.lastfm_user.user_name;
       if ($scope.lastfm_user.real_name) {
         user_name = $scope.lastfm_user.real_name + (" (" + user_name + ")");
       }
       $scope.playlist.description = 'Last.fm track chart for ' + ("" + user_name + " for " + ($scope.chart.to_s()) + ".");
       return LastfmCharts.get_weekly_track_chart($scope.lastfm_user.user_name, $scope.chart, function() {
-        return $scope.status.loading = false;
+        $scope.status.loading = false;
+        return $scope.update_playlist_name();
       });
+    };
+    $scope.update_playlist_name = function() {
+      var min_play_count;
+      min_play_count = $scope.track_filters.min_play_count;
+      return $scope.playlist.name = $scope.chart.playlist_name(min_play_count);
     };
     return $scope.create_playlist = function() {
       return RdioCatalog.match_lastfm_tracks($scope.filtered_tracks, function(rdio_tracks) {

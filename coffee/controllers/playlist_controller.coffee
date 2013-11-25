@@ -59,7 +59,6 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
     $scope.status.loading = true
     update_lastfm_user_from_url()
     $scope.chart = LastfmCharts.get_chart($routeParams.from, $routeParams.to)
-    $scope.playlist.name = $scope.chart.to_s()
     user_name = $scope.lastfm_user.user_name
     if $scope.lastfm_user.real_name
       user_name = $scope.lastfm_user.real_name + " (#{user_name})"
@@ -68,8 +67,14 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
     LastfmCharts.get_weekly_track_chart(
       $scope.lastfm_user.user_name,
       $scope.chart,
-      -> $scope.status.loading = false
+      ->
+        $scope.status.loading = false
+        $scope.update_playlist_name()
     )
+
+  $scope.update_playlist_name = ->
+    min_play_count = $scope.track_filters.min_play_count
+    $scope.playlist.name = $scope.chart.playlist_name(min_play_count)
 
   $scope.create_playlist = ->
     RdioCatalog.match_lastfm_tracks $scope.filtered_tracks, (rdio_tracks) ->

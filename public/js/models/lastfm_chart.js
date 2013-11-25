@@ -20,6 +20,60 @@
       return new Date(1000 * this.to);
     };
 
+    LastfmChart.prototype.playlist_name = function(min_play_count) {
+      if (this.tracks.length < 1) {
+        return this.to_s();
+      }
+      return this.top_artists_str(min_play_count) + ' - ' + this.month_range_str();
+    };
+
+    LastfmChart.prototype.top_artists_str = function(min_play_count) {
+      var artist, artist_count, artist_counts, count, limit, top_artist_counts, track, tuples, _i, _len, _ref;
+      artist_counts = {};
+      _ref = this.tracks;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        track = _ref[_i];
+        if (!(track.play_count >= min_play_count)) {
+          continue;
+        }
+        artist = track.artist;
+        if (artist_counts.hasOwnProperty(artist)) {
+          artist_counts[artist] += track.play_count;
+        } else {
+          artist_counts[artist] = track.play_count;
+        }
+      }
+      tuples = (function() {
+        var _results;
+        _results = [];
+        for (artist in artist_counts) {
+          count = artist_counts[artist];
+          _results.push([artist, count]);
+        }
+        return _results;
+      })();
+      tuples.sort(function(a, b) {
+        if (a[1] < b[1]) {
+          return 1;
+        } else if (a[1] > b[1]) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+      limit = Math.min(3, tuples.length);
+      top_artist_counts = tuples.slice(0, limit);
+      return ((function() {
+        var _j, _len1, _results;
+        _results = [];
+        for (_j = 0, _len1 = top_artist_counts.length; _j < _len1; _j++) {
+          artist_count = top_artist_counts[_j];
+          _results.push(artist_count[0]);
+        }
+        return _results;
+      })()).join(', ');
+    };
+
     LastfmChart.prototype.year = function() {
       return parseInt(moment(this.from_date()).format('YYYY'), 10);
     };
@@ -55,6 +109,14 @@
 
     LastfmChart.prototype.to_date_utc_str = function() {
       return this.to_date().toUTCString();
+    };
+
+    LastfmChart.prototype.month_range_str = function() {
+      if (this.same_year() && this.same_month()) {
+        return moment(this.from_date()).format('MMM YYYY');
+      } else {
+        return moment(this.from_date()).format('MMM') + '-' + moment(this.to_date()).format('MMM YYYY');
+      }
     };
 
     LastfmChart.prototype.to_s = function() {

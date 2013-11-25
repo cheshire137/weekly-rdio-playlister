@@ -24,7 +24,7 @@
               <label class='control-label' for='track_filters_min_play_count'>
                 Minimum play count:
               </label>
-              <input class='form-control' id='track_filters_min_play_count' ng-model='track_filters.min_play_count' type='number'>
+              <input class='form-control' id='track_filters_min_play_count' ng-change='update_playlist_name()' ng-model='track_filters.min_play_count' type='number'>
             </form>
           </h2>
         </div>

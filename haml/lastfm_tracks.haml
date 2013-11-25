@@ -18,7 +18,7 @@
               \/
               %label.control-label{for: 'track_filters_min_play_count'}
                 Minimum play count:
-              %input#track_filters_min_play_count.form-control{type: 'number', ng: {model: 'track_filters.min_play_count'}}
+              %input#track_filters_min_play_count.form-control{type: 'number', ng: {model: 'track_filters.min_play_count', change: 'update_playlist_name()'}}
       %div{ng: {if: 'status.loading'}}
         %p
           Loading scrobbled tracks from Last.fm...
