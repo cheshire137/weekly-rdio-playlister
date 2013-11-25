@@ -5,39 +5,59 @@
         <span class='glyphicon glyphicon-chevron-left'></span>
       </a>
     </h1>
-    <div class='pull-left clearfix'>
-      <div class='pull-left' ng-if='lastfm_user.id'>
-        <a class='lastfm-user-link' href='{{lastfm_user.url}}' tooltip='{{lastfm_user.user_name}}'>
-          <img class='lastfm-user-image' ng-src='{{lastfm_user.medium_image}}'>
-        </a>
-      </div>
-      <div class='pull-left'>
-        <h1>
-          Weekly Listening History for
-          <span class='lastfm-user'>
-            <span ng-if='lastfm_user.real_name'>
-              {{lastfm_user.real_name}}
-            </span>
-            <span ng-if='!lastfm_user.real_name'>
-              {{lastfm_user.user_name}}
-            </span>
-          </span>
-        </h1>
-        <h2 class='subtitle' ng-if='year_charts.length &gt; 0'>
-          <span ng-if='lastfm_user.id'>
-            Last.fm user since
-            {{lastfm_user.date_registered_str()}}
-          </span>
-          <form class='form-inline'>
-            /
-            <label class='control-label' for='chart_filters_year_chart'>
-              Filter:
-            </label>
-            <select class='form-control' id='chart_filters_year_chart' ng-model='chart_filters.year_chart' ng-options='year_chart.year for year_chart in year_charts'>
-              <option value=''>All years</option>
-            </select>
-          </form>
-        </h2>
+    <div class='pull-left'>
+      <div class='row'>
+        <div class='col-md-8 clearfix'>
+          <div class='pull-left' ng-if='lastfm_user.id'>
+            <a class='lastfm-user-link' href='{{lastfm_user.url}}' tooltip='{{lastfm_user.user_name}}'>
+              <img class='lastfm-user-image' height='64' ng-src='{{lastfm_user.medium_image}}' width='64'>
+            </a>
+          </div>
+          <div class='pull-left'>
+            <h1>
+              <span class='nowrap'>
+                Weekly Listening History for
+              </span>
+              <span class='lastfm-user'>
+                <span ng-if='lastfm_user.real_name'>
+                  {{lastfm_user.real_name}}
+                </span>
+                <span ng-if='!lastfm_user.real_name'>
+                  {{lastfm_user.user_name}}
+                </span>
+              </span>
+            </h1>
+            <h2 class='subtitle' ng-if='year_charts.length &gt; 0'>
+              <span class='nowrap' ng-if='lastfm_user.id'>
+                Last.fm user since
+                {{lastfm_user.date_registered_str()}}
+              </span>
+              <form class='form-inline nowrap'>
+                /
+                <label class='control-label' for='chart_filters_year_chart'>
+                  Filter:
+                </label>
+                <select class='form-control' id='chart_filters_year_chart' ng-model='chart_filters.year_chart' ng-options='year_chart.year for year_chart in year_charts'>
+                  <option value=''>All years</option>
+                </select>
+              </form>
+            </h2>
+          </div>
+        </div>
+        <div class='col-md-4'>
+          <div class='neighbors' ng-if='lastfm_neighbors.length &gt; 0'>
+            <h2 class='subtitle'>
+              Similar Last.fm users:
+            </h2>
+            <p>
+              <span ng-repeat='neighbor in lastfm_neighbors'>
+                <a href='#/lastfm/{{neighbor.user_name}}'>
+                  {{neighbor.user_name}}
+                </a>
+              </span>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

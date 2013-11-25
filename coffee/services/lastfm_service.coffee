@@ -25,6 +25,10 @@ playlister_app.factory 'Lastfm', (PlaylisterConfig) ->
         url += "&#{key}=#{encodeURIComponent(value)}"
       url
 
+    get_user_neighbors_url: (user) ->
+      @get_api_url 'user.getneighbours',
+        user: user
+
     get_user_info_url: (user) ->
       @get_api_url 'user.getinfo',
         user: user

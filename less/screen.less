@@ -110,8 +110,25 @@ h1 {
   }
 }
 
+.neighbors {
+  margin-top: 20px;
+  color: #999;
+
+  p {
+    margin-top: 10px;
+  }
+
+  span + span:before {
+    content: "\00a0\00b7\00a0";
+  }
+}
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 .page-header {

@@ -15,6 +15,7 @@
 
 playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) ->
   $scope.lastfm_user = LastfmCharts.user
+  $scope.lastfm_neighbors = LastfmCharts.neighbors
   $scope.year_charts = LastfmCharts.year_charts
   $scope.chart = {}
   $scope.playlist = RdioPlaylist.playlist
@@ -50,6 +51,7 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
     if LastfmCharts.year_charts < 1
       LastfmCharts.get_weekly_chart_list $scope.lastfm_user.user_name, ->
         $scope.status.loading = false
+      LastfmCharts.get_user_neighbors $scope.lastfm_user.user_name
     else
       $scope.status.loading = false
 

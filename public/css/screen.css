@@ -13,7 +13,10 @@ h1.pull-left .back-link{margin-right:5px}
 h1 .divider{color:#999}
 .jumbotron .btn{font-size:21px;padding:14px 24px}
 .lastfm-user-link{display:block;margin:24px 10px 0 0}.lastfm-user-link img{border-radius:10px}
+.neighbors{margin-top:20px;color:#999}.neighbors p{margin-top:10px}
+.neighbors span+span:before{content:"\00a0\00b7\00a0"}
 [ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak{display:none !important}
+.nowrap{white-space:nowrap}
 .page-header{margin-top:0}
 .playlist img{display:block;margin-right:10px;border-radius:10px;float:left;max-width:33%}
 .playlist .playlist-name{display:block}

@@ -2,6 +2,7 @@
   playlister_app.controller('PlaylistController', function($scope, $cookieStore, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) {
     var update_lastfm_user_from_url;
     $scope.lastfm_user = LastfmCharts.user;
+    $scope.lastfm_neighbors = LastfmCharts.neighbors;
     $scope.year_charts = LastfmCharts.year_charts;
     $scope.chart = {};
     $scope.playlist = RdioPlaylist.playlist;
@@ -41,9 +42,10 @@
       $scope.status.loading = true;
       update_lastfm_user_from_url();
       if (LastfmCharts.year_charts < 1) {
-        return LastfmCharts.get_weekly_chart_list($scope.lastfm_user.user_name, function() {
+        LastfmCharts.get_weekly_chart_list($scope.lastfm_user.user_name, function() {
           return $scope.status.loading = false;
         });
+        return LastfmCharts.get_user_neighbors($scope.lastfm_user.user_name);
       } else {
         return $scope.status.loading = false;
       }

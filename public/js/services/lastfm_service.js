@@ -17,6 +17,12 @@
         return url;
       };
 
+      Lastfm.prototype.get_user_neighbors_url = function(user) {
+        return this.get_api_url('user.getneighbours', {
+          user: user
+        });
+      };
+
       Lastfm.prototype.get_user_info_url = function(user) {
         return this.get_api_url('user.getinfo', {
           user: user

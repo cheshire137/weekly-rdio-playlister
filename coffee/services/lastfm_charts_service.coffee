@@ -18,12 +18,15 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
     constructor: ->
       @year_charts = []
       @user = {}
+      @neighbors = []
 
     reset_charts: ->
       for key, value of @user
         delete @user[key]
       for i in [0...@year_charts.length] by 1
         @year_charts.splice(idx, 1) for idx, year of @year_charts
+      for i in [0...@neighbors.length] by 1
+        @neighbors.splice(idx, 1) for idx, neighbor of @neighbors
 
     get_chart_from_year_charts: (from, to) ->
       for year_chart in @year_charts
@@ -39,6 +42,20 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
           from: from
           to: to
       chart
+
+    get_user_neighbors: (user_name, callback) ->
+      on_success = (data, status, headers, config) =>
+        if data.neighbours
+          for i in [0...Math.min(8, data.neighbours.user.length)] by 1
+            user_data = data.neighbours.user[i]
+            @neighbors.push new LastfmNeighbor(user_data)
+        callback() if callback
+      $http(
+        url: Lastfm.get_user_neighbors_url(user_name)
+        method: 'GET'
+      ).success(on_success).error (data, status, headers, config) =>
+        Notification.error data
+        callback() if callback
 
     get_user_info: (user_name, callback) ->
       on_success = (data, status, headers, config) =>
