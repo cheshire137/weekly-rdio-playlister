@@ -13,6 +13,7 @@
     $scope.status = {
       loading: false
     };
+    $scope.charts_loaded = LastfmCharts.charts_loaded;
     update_lastfm_user_from_url = function() {
       if ($routeParams.user !== $cookieStore.get('lastfm_user')) {
         $cookieStore.put('lastfm_user', $routeParams.user);
@@ -42,10 +43,11 @@
       $scope.status.loading = true;
       update_lastfm_user_from_url();
       if (LastfmCharts.year_charts < 1) {
-        LastfmCharts.get_weekly_chart_list($scope.lastfm_user.user_name, function() {
+        LastfmCharts.get_weekly_chart_list($scope.lastfm_user.user_name);
+        LastfmCharts.get_user_neighbors($scope.lastfm_user.user_name);
+        return $scope.$watch('charts_loaded', function() {
           return $scope.status.loading = false;
         });
-        return LastfmCharts.get_user_neighbors($scope.lastfm_user.user_name);
       } else {
         return $scope.status.loading = false;
       }

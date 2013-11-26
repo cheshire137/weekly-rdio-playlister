@@ -9,6 +9,7 @@
         this.year_charts = [];
         this.user = {};
         this.neighbors = [];
+        this.charts_loaded = false;
       }
 
       LastfmCharts.prototype.on_error = function(data, status, headers, config) {
@@ -114,50 +115,61 @@
         });
       };
 
-      LastfmCharts.prototype.get_weekly_chart_list_after_date = function(user, cutoff_date, callback) {
-        var on_success,
-          _this = this;
-        on_success = function(data, status, headers, config) {
-          var chart_data, week_chart, year, year_obj, _i, _len, _ref;
-          if (data.weeklychartlist) {
-            _ref = data.weeklychartlist.chart.slice(0).reverse();
-            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-              chart_data = _ref[_i];
-              week_chart = new LastfmChart(chart_data);
-              if (week_chart.to_date() >= cutoff_date) {
-                year = week_chart.year();
-                year_obj = _this.year_charts.filter(function(obj) {
-                  return obj.year === year;
-                })[0];
-                if (year_obj) {
-                  year_obj.charts.push(week_chart);
-                } else {
-                  _this.year_charts.push({
-                    year: year,
-                    charts: [week_chart]
-                  });
-                }
-              }
-            }
-          } else if (data.error) {
-            Notification.error(data.message);
-          }
-          if (callback) {
-            return callback();
-          }
-        };
-        return $http.get(Lastfm.get_weekly_chart_list_url(user)).success(on_success).error(function(data, status, headers, config) {
-          Notification.error(data);
-          if (callback) {
-            return callback();
-          }
+      LastfmCharts.prototype.get_charts_after_cutoff_date = function(charts_data, cutoff_date) {
+        var charts;
+        charts = charts_data.map(function(data) {
+          return new LastfmChart(data);
+        });
+        return charts.filter(function(chart) {
+          return chart.to_date() >= cutoff_date;
         });
       };
 
-      LastfmCharts.prototype.get_weekly_chart_list = function(user_name, callback) {
+      LastfmCharts.prototype.initialize_year_charts = function(charts) {
+        var week_chart, year, year_chart, _i, _len, _results;
+        _results = [];
+        for (_i = 0, _len = charts.length; _i < _len; _i++) {
+          week_chart = charts[_i];
+          year = week_chart.year();
+          year_chart = this.year_charts.filter(function(obj) {
+            return obj.year === year;
+          })[0];
+          if (year_chart) {
+            _results.push(year_chart.charts.push(week_chart));
+          } else {
+            _results.push(this.year_charts.push({
+              year: year,
+              charts: [week_chart]
+            }));
+          }
+        }
+        return _results;
+      };
+
+      LastfmCharts.prototype.get_weekly_chart_list_after_date = function(user, cutoff_date) {
+        var on_success,
+          _this = this;
+        on_success = function(data, status, headers, config) {
+          var charts, charts_data;
+          if (data.weeklychartlist) {
+            charts_data = data.weeklychartlist.chart.slice(0).reverse();
+            charts = _this.get_charts_after_cutoff_date(charts_data, cutoff_date);
+            _this.initialize_year_charts(charts);
+          } else if (data.error) {
+            Notification.error(data.message);
+          }
+          return _this.charts_loaded = true;
+        };
+        return $http.get(Lastfm.get_weekly_chart_list_url(user)).success(on_success).error(function(data, status, headers, config) {
+          Notification.error(data);
+          return _this.charts_loaded = true;
+        });
+      };
+
+      LastfmCharts.prototype.get_weekly_chart_list = function(user_name) {
         var _this = this;
         return this.get_user_info(user_name, function() {
-          return _this.get_weekly_chart_list_after_date(user_name, _this.user.date_registered, callback);
+          return _this.get_weekly_chart_list_after_date(user_name, _this.user.date_registered);
         });
       };
 

@@ -22,6 +22,7 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
   $scope.track_filters = {min_play_count: 2}
   $scope.chart_filters = {}
   $scope.status = {loading: false}
+  $scope.charts_loaded = LastfmCharts.charts_loaded
 
   update_lastfm_user_from_url = ->
     if $routeParams.user != $cookieStore.get('lastfm_user')
@@ -49,9 +50,10 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
     $scope.status.loading = true
     update_lastfm_user_from_url()
     if LastfmCharts.year_charts < 1
-      LastfmCharts.get_weekly_chart_list $scope.lastfm_user.user_name, ->
-        $scope.status.loading = false
+      LastfmCharts.get_weekly_chart_list $scope.lastfm_user.user_name
       LastfmCharts.get_user_neighbors $scope.lastfm_user.user_name
+      $scope.$watch 'charts_loaded', ->
+        $scope.status.loading = false
     else
       $scope.status.loading = false
 

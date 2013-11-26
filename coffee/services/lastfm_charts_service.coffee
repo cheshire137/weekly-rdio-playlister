@@ -19,6 +19,7 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
       @year_charts = []
       @user = {}
       @neighbors = []
+      @charts_loaded = false
 
     on_error: (data, status, headers, config) =>
       Notification.error data
@@ -67,33 +68,39 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
               Notification.error data
               callback() if callback
 
-    get_weekly_chart_list_after_date: (user, cutoff_date, callback) ->
+    get_charts_after_cutoff_date: (charts_data, cutoff_date) ->
+      charts = charts_data.map (data) -> new LastfmChart(data)
+      charts.filter (chart) -> chart.to_date() >= cutoff_date
+
+    initialize_year_charts: (charts) ->
+      for week_chart in charts
+        year = week_chart.year()
+        year_chart = @year_charts.filter((obj) -> obj.year == year)[0]
+        if year_chart
+          year_chart.charts.push week_chart
+        else
+          @year_charts.push
+            year: year
+            charts: [week_chart]
+
+    get_weekly_chart_list_after_date: (user, cutoff_date) ->
       on_success = (data, status, headers, config) =>
         if data.weeklychartlist
-          for chart_data in data.weeklychartlist.chart.slice(0).reverse()
-            week_chart = new LastfmChart(chart_data)
-            if week_chart.to_date() >= cutoff_date
-              year = week_chart.year()
-              year_obj = @year_charts.filter((obj) -> obj.year == year)[0]
-              if year_obj
-                year_obj.charts.push week_chart
-              else
-                @year_charts.push
-                  year: year
-                  charts: [week_chart]
+          charts_data = data.weeklychartlist.chart.slice(0).reverse()
+          charts = @get_charts_after_cutoff_date(charts_data, cutoff_date)
+          @initialize_year_charts charts
         else if data.error
           Notification.error data.message
-        callback() if callback
+        @charts_loaded = true
       $http.get(Lastfm.get_weekly_chart_list_url(user)).
             success(on_success).
             error (data, status, headers, config) =>
               Notification.error data
-              callback() if callback
+              @charts_loaded = true
 
-    get_weekly_chart_list: (user_name, callback) ->
+    get_weekly_chart_list: (user_name) ->
       @get_user_info user_name, =>
-        @get_weekly_chart_list_after_date user_name, @user.date_registered,
-                                          callback
+        @get_weekly_chart_list_after_date user_name, @user.date_registered
 
     get_weekly_track_chart: (user, chart) ->
       on_success = (data, status, headers, config) =>
