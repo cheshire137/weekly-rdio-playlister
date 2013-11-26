@@ -64,13 +64,11 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
       user_name = $scope.lastfm_user.real_name + " (#{user_name})"
     $scope.playlist.description = 'Last.fm track chart for ' +
                                   "#{user_name} for #{$scope.chart.to_s()}."
-    LastfmCharts.get_weekly_track_chart(
-      $scope.lastfm_user.user_name,
-      $scope.chart,
-      ->
-        $scope.status.loading = false
-        $scope.update_playlist_name()
-    )
+    LastfmCharts.get_weekly_track_chart($scope.lastfm_user.user_name,
+                                        $scope.chart)
+    $scope.$watch 'chart.loaded', ->
+      $scope.status.loading = false
+      $scope.update_playlist_name()
 
   $scope.update_playlist_name = ->
     min_play_count = $scope.track_filters.min_play_count

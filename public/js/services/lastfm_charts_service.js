@@ -1,12 +1,19 @@
 (function() {
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
   playlister_app.factory('LastfmCharts', function($http, Notification, Lastfm) {
     var LastfmCharts;
     LastfmCharts = (function() {
       function LastfmCharts() {
+        this.on_error = __bind(this.on_error, this);
         this.year_charts = [];
         this.user = {};
         this.neighbors = [];
       }
+
+      LastfmCharts.prototype.on_error = function(data, status, headers, config) {
+        return Notification.error(data);
+      };
 
       LastfmCharts.prototype.reset_charts = function() {
         var i, idx, key, neighbor, value, year, _i, _j, _ref, _ref1, _ref2, _ref3, _results;
@@ -66,30 +73,21 @@
         return chart;
       };
 
-      LastfmCharts.prototype.get_user_neighbors = function(user_name, callback) {
+      LastfmCharts.prototype.get_user_neighbors = function(user_name) {
         var on_success,
           _this = this;
         on_success = function(data, status, headers, config) {
-          var i, user_data, _i, _ref;
+          var i, user_data, _i, _ref, _results;
           if (data.neighbours) {
+            _results = [];
             for (i = _i = 0, _ref = Math.min(8, data.neighbours.user.length); _i < _ref; i = _i += 1) {
               user_data = data.neighbours.user[i];
-              _this.neighbors.push(new LastfmNeighbor(user_data));
+              _results.push(_this.neighbors.push(new LastfmNeighbor(user_data)));
             }
-          }
-          if (callback) {
-            return callback();
+            return _results;
           }
         };
-        return $http({
-          url: Lastfm.get_user_neighbors_url(user_name),
-          method: 'GET'
-        }).success(on_success).error(function(data, status, headers, config) {
-          Notification.error(data);
-          if (callback) {
-            return callback();
-          }
-        });
+        return $http.get(Lastfm.get_user_neighbors_url(user_name)).success(on_success).error(this.on_error);
       };
 
       LastfmCharts.prototype.get_user_info = function(user_name, callback) {
@@ -108,10 +106,7 @@
             return callback();
           }
         };
-        return $http({
-          url: Lastfm.get_user_info_url(user_name),
-          method: 'GET'
-        }).success(on_success).error(function(data, status, headers, config) {
+        return $http.get(Lastfm.get_user_info_url(user_name)).success(on_success).error(function(data, status, headers, config) {
           Notification.error(data);
           if (callback) {
             return callback();
@@ -151,10 +146,7 @@
             return callback();
           }
         };
-        return $http({
-          url: Lastfm.get_weekly_chart_list_url(user),
-          method: 'GET'
-        }).success(on_success).error(function(data, status, headers, config) {
+        return $http.get(Lastfm.get_weekly_chart_list_url(user)).success(on_success).error(function(data, status, headers, config) {
           Notification.error(data);
           if (callback) {
             return callback();
@@ -169,7 +161,7 @@
         });
       };
 
-      LastfmCharts.prototype.get_weekly_track_chart = function(user, chart, callback) {
+      LastfmCharts.prototype.get_weekly_track_chart = function(user, chart) {
         var on_success,
           _this = this;
         on_success = function(data, status, headers, config) {
@@ -183,19 +175,9 @@
           } else {
             chart.no_tracks = true;
           }
-          if (callback) {
-            return callback();
-          }
+          return chart.loaded = true;
         };
-        return $http({
-          url: Lastfm.get_weekly_track_chart_url(user, chart),
-          method: 'GET'
-        }).success(on_success).error(function(data, status, headers, config) {
-          Notification.error(data);
-          if (callback) {
-            return callback();
-          }
-        });
+        return $http.get(Lastfm.get_weekly_track_chart_url(user, chart)).success(on_success).error(this.on_error);
       };
 
       return LastfmCharts;

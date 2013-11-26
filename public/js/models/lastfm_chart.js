@@ -6,6 +6,7 @@
       this.from = data.from;
       this.to = data.to;
       this.tracks = [];
+      this.loaded = false;
     }
 
     LastfmChart.prototype.track_count = function() {

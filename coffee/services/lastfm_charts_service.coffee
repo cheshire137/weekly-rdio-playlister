@@ -20,6 +20,9 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
       @user = {}
       @neighbors = []
 
+    on_error: (data, status, headers, config) =>
+      Notification.error data
+
     reset_charts: ->
       for key, value of @user
         delete @user[key]
@@ -43,19 +46,14 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
           to: to
       chart
 
-    get_user_neighbors: (user_name, callback) ->
+    get_user_neighbors: (user_name) ->
       on_success = (data, status, headers, config) =>
         if data.neighbours
           for i in [0...Math.min(8, data.neighbours.user.length)] by 1
             user_data = data.neighbours.user[i]
             @neighbors.push new LastfmNeighbor(user_data)
-        callback() if callback
-      $http(
-        url: Lastfm.get_user_neighbors_url(user_name)
-        method: 'GET'
-      ).success(on_success).error (data, status, headers, config) =>
-        Notification.error data
-        callback() if callback
+      $http.get(Lastfm.get_user_neighbors_url(user_name)).
+            success(on_success).error(@on_error)
 
     get_user_info: (user_name, callback) ->
       on_success = (data, status, headers, config) =>
@@ -63,12 +61,11 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
           for key, value of new LastfmUser(data.user)
             @user[key] = value
         callback() if callback
-      $http(
-        url: Lastfm.get_user_info_url(user_name)
-        method: 'GET'
-      ).success(on_success).error (data, status, headers, config) =>
-        Notification.error data
-        callback() if callback
+      $http.get(Lastfm.get_user_info_url(user_name)).
+            success(on_success).
+            error (data, status, headers, config) =>
+              Notification.error data
+              callback() if callback
 
     get_weekly_chart_list_after_date: (user, cutoff_date, callback) ->
       on_success = (data, status, headers, config) =>
@@ -87,31 +84,26 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
         else if data.error
           Notification.error data.message
         callback() if callback
-      $http(
-        url: Lastfm.get_weekly_chart_list_url(user)
-        method: 'GET'
-      ).success(on_success).error (data, status, headers, config) =>
-        Notification.error data
-        callback() if callback
+      $http.get(Lastfm.get_weekly_chart_list_url(user)).
+            success(on_success).
+            error (data, status, headers, config) =>
+              Notification.error data
+              callback() if callback
 
     get_weekly_chart_list: (user_name, callback) ->
       @get_user_info user_name, =>
         @get_weekly_chart_list_after_date user_name, @user.date_registered,
                                           callback
 
-    get_weekly_track_chart: (user, chart, callback) ->
+    get_weekly_track_chart: (user, chart) ->
       on_success = (data, status, headers, config) =>
         if data.weeklytrackchart.track
           for track_data in data.weeklytrackchart.track
             chart.tracks.push(new LastfmTrack(track_data))
         else
           chart.no_tracks = true
-        callback() if callback
-      $http(
-        url: Lastfm.get_weekly_track_chart_url(user, chart)
-        method: 'GET'
-      ).success(on_success).error (data, status, headers, config) =>
-        Notification.error data
-        callback() if callback
+        chart.loaded = true
+      $http.get(Lastfm.get_weekly_track_chart_url(user, chart)).
+            success(on_success).error(@on_error)
 
   new LastfmCharts()

@@ -60,7 +60,8 @@
         user_name = $scope.lastfm_user.real_name + (" (" + user_name + ")");
       }
       $scope.playlist.description = 'Last.fm track chart for ' + ("" + user_name + " for " + ($scope.chart.to_s()) + ".");
-      return LastfmCharts.get_weekly_track_chart($scope.lastfm_user.user_name, $scope.chart, function() {
+      LastfmCharts.get_weekly_track_chart($scope.lastfm_user.user_name, $scope.chart);
+      return $scope.$watch('chart.loaded', function() {
         $scope.status.loading = false;
         return $scope.update_playlist_name();
       });

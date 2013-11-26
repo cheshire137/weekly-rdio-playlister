@@ -18,6 +18,7 @@ class LastfmChart
     @from = data.from
     @to = data.to
     @tracks = []
+    @loaded = false
 
   track_count: ->
     @tracks.length
