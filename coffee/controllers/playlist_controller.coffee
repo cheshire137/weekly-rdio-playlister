@@ -38,9 +38,6 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
   $scope.reset_playlist = ->
     RdioPlaylist.reset_playlist()
 
-  $scope.go_to_weeks_list = ->
-    $location.path("/lastfm/#{$scope.lastfm_user.user_name}")
-
   $scope.wipe_notifications = ->
     Notification.wipe_notifications()
 

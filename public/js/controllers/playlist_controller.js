@@ -29,9 +29,6 @@
     $scope.reset_playlist = function() {
       return RdioPlaylist.reset_playlist();
     };
-    $scope.go_to_weeks_list = function() {
-      return $location.path("/lastfm/" + $scope.lastfm_user.user_name);
-    };
     $scope.wipe_notifications = function() {
       return Notification.wipe_notifications();
     };
