@@ -37,10 +37,17 @@
       return track.play_count >= $scope.track_filters.min_play_count;
     };
     $scope.lastfm_weeks = function() {
+      var user_name;
       update_lastfm_user_from_url();
       if (LastfmCharts.year_charts < 1) {
-        LastfmCharts.get_weekly_chart_list($scope.lastfm_user.user_name);
-        return LastfmCharts.get_user_neighbors($scope.lastfm_user.user_name);
+        user_name = $scope.lastfm_user.user_name;
+        LastfmCharts.get_user_info(user_name);
+        $scope.$watch('lastfm_user.date_registered', function() {
+          var cutoff_date;
+          cutoff_date = $scope.lastfm_user.date_registered;
+          return LastfmCharts.get_weekly_chart_list_after_date(user_name, cutoff_date);
+        });
+        return LastfmCharts.get_user_neighbors(user_name);
       }
     };
     $scope.lastfm_tracks = function() {

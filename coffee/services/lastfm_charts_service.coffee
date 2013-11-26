@@ -58,17 +58,13 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
       $http.get(Lastfm.get_user_neighbors_url(user_name)).
             success(on_success).error(@on_error)
 
-    get_user_info: (user_name, callback) ->
+    get_user_info: (user_name) ->
       on_success = (data, status, headers, config) =>
         if data.user
           for key, value of new LastfmUser(data.user)
             @user[key] = value
-        callback() if callback
       $http.get(Lastfm.get_user_info_url(user_name)).
-            success(on_success).
-            error (data, status, headers, config) =>
-              Notification.error data
-              callback() if callback
+            success(on_success).error(@on_error)
 
     get_charts_after_cutoff_date: (charts_data, cutoff_date) ->
       charts = charts_data.map (data) -> new LastfmChart(data)
@@ -99,10 +95,6 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
             error (data, status, headers, config) =>
               Notification.error data
               @load_status.charts = true
-
-    get_weekly_chart_list: (user_name) ->
-      @get_user_info user_name, =>
-        @get_weekly_chart_list_after_date user_name, @user.date_registered
 
     get_weekly_track_chart: (user, chart) ->
       on_success = (data, status, headers, config) =>

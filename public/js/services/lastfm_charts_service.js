@@ -94,28 +94,22 @@
         return $http.get(Lastfm.get_user_neighbors_url(user_name)).success(on_success).error(this.on_error);
       };
 
-      LastfmCharts.prototype.get_user_info = function(user_name, callback) {
+      LastfmCharts.prototype.get_user_info = function(user_name) {
         var on_success,
           _this = this;
         on_success = function(data, status, headers, config) {
-          var key, value, _ref;
+          var key, value, _ref, _results;
           if (data.user) {
             _ref = new LastfmUser(data.user);
+            _results = [];
             for (key in _ref) {
               value = _ref[key];
-              _this.user[key] = value;
+              _results.push(_this.user[key] = value);
             }
-          }
-          if (callback) {
-            return callback();
+            return _results;
           }
         };
-        return $http.get(Lastfm.get_user_info_url(user_name)).success(on_success).error(function(data, status, headers, config) {
-          Notification.error(data);
-          if (callback) {
-            return callback();
-          }
-        });
+        return $http.get(Lastfm.get_user_info_url(user_name)).success(on_success).error(this.on_error);
       };
 
       LastfmCharts.prototype.get_charts_after_cutoff_date = function(charts_data, cutoff_date) {
@@ -166,13 +160,6 @@
         return $http.get(Lastfm.get_weekly_chart_list_url(user)).success(on_success).error(function(data, status, headers, config) {
           Notification.error(data);
           return _this.load_status.charts = true;
-        });
-      };
-
-      LastfmCharts.prototype.get_weekly_chart_list = function(user_name) {
-        var _this = this;
-        return this.get_user_info(user_name, function() {
-          return _this.get_weekly_chart_list_after_date(user_name, _this.user.date_registered);
         });
       };
 

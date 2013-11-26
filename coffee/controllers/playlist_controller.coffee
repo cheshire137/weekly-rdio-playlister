@@ -48,8 +48,12 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
   $scope.lastfm_weeks = ->
     update_lastfm_user_from_url()
     if LastfmCharts.year_charts < 1
-      LastfmCharts.get_weekly_chart_list $scope.lastfm_user.user_name
-      LastfmCharts.get_user_neighbors $scope.lastfm_user.user_name
+      user_name = $scope.lastfm_user.user_name
+      LastfmCharts.get_user_info user_name
+      $scope.$watch 'lastfm_user.date_registered', ->
+        cutoff_date = $scope.lastfm_user.date_registered
+        LastfmCharts.get_weekly_chart_list_after_date user_name, cutoff_date
+      LastfmCharts.get_user_neighbors user_name
 
   $scope.lastfm_tracks = ->
     update_lastfm_user_from_url()
