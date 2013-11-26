@@ -15,13 +15,9 @@
 
 playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) ->
   $scope.lastfm_user = LastfmCharts.user
-  $scope.lastfm_neighbors = LastfmCharts.neighbors
-  $scope.year_charts = LastfmCharts.year_charts
   $scope.chart = {}
   $scope.playlist = RdioPlaylist.playlist
   $scope.track_filters = {min_play_count: 2}
-  $scope.chart_filters = {}
-  $scope.load_status = LastfmCharts.load_status
 
   update_lastfm_user_from_url = ->
     if $routeParams.user != $cookieStore.get('lastfm_user')
@@ -41,22 +37,8 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
   $scope.wipe_notifications = ->
     Notification.wipe_notifications()
 
-  $scope.chart_year_filter = (year_chart) ->
-    return true unless $scope.chart_filters.year_chart
-    year_chart.year == $scope.chart_filters.year_chart.year
-
   $scope.play_count_filter = (track) ->
     track.play_count >= $scope.track_filters.min_play_count
-
-  $scope.lastfm_weeks = ->
-    update_lastfm_user_from_url()
-    unless LastfmCharts.load_status.charts
-      user_name = $scope.lastfm_user.user_name
-      LastfmCharts.get_user_info user_name
-      $scope.$watch 'lastfm_user.date_registered', ->
-        cutoff_date = $scope.lastfm_user.date_registered
-        LastfmCharts.get_weekly_chart_list_after_date user_name, cutoff_date
-      LastfmCharts.get_user_neighbors user_name
 
   $scope.lastfm_tracks = ->
     update_lastfm_user_from_url()

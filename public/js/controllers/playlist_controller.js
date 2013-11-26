@@ -2,15 +2,11 @@
   playlister_app.controller('PlaylistController', function($scope, $cookieStore, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) {
     var get_playlist_description, update_lastfm_user_from_url;
     $scope.lastfm_user = LastfmCharts.user;
-    $scope.lastfm_neighbors = LastfmCharts.neighbors;
-    $scope.year_charts = LastfmCharts.year_charts;
     $scope.chart = {};
     $scope.playlist = RdioPlaylist.playlist;
     $scope.track_filters = {
       min_play_count: 2
     };
-    $scope.chart_filters = {};
-    $scope.load_status = LastfmCharts.load_status;
     update_lastfm_user_from_url = function() {
       if ($routeParams.user !== $cookieStore.get('lastfm_user')) {
         $cookieStore.put('lastfm_user', $routeParams.user);
@@ -32,28 +28,8 @@
     $scope.wipe_notifications = function() {
       return Notification.wipe_notifications();
     };
-    $scope.chart_year_filter = function(year_chart) {
-      if (!$scope.chart_filters.year_chart) {
-        return true;
-      }
-      return year_chart.year === $scope.chart_filters.year_chart.year;
-    };
     $scope.play_count_filter = function(track) {
       return track.play_count >= $scope.track_filters.min_play_count;
-    };
-    $scope.lastfm_weeks = function() {
-      var user_name;
-      update_lastfm_user_from_url();
-      if (!LastfmCharts.load_status.charts) {
-        user_name = $scope.lastfm_user.user_name;
-        LastfmCharts.get_user_info(user_name);
-        $scope.$watch('lastfm_user.date_registered', function() {
-          var cutoff_date;
-          cutoff_date = $scope.lastfm_user.date_registered;
-          return LastfmCharts.get_weekly_chart_list_after_date(user_name, cutoff_date);
-        });
-        return LastfmCharts.get_user_neighbors(user_name);
-      }
     };
     $scope.lastfm_tracks = function() {
       update_lastfm_user_from_url();
