@@ -9,7 +9,9 @@
         this.year_charts = [];
         this.user = {};
         this.neighbors = [];
-        this.charts_loaded = false;
+        this.load_status = {
+          charts: false
+        };
       }
 
       LastfmCharts.prototype.on_error = function(data, status, headers, config) {
@@ -18,6 +20,7 @@
 
       LastfmCharts.prototype.reset_charts = function() {
         var i, idx, key, neighbor, value, year, _i, _j, _ref, _ref1, _ref2, _ref3, _results;
+        this.charts_loaded = false;
         _ref = this.user;
         for (key in _ref) {
           value = _ref[key];
@@ -158,11 +161,11 @@
           } else if (data.error) {
             Notification.error(data.message);
           }
-          return _this.charts_loaded = true;
+          return _this.load_status.charts = true;
         };
         return $http.get(Lastfm.get_weekly_chart_list_url(user)).success(on_success).error(function(data, status, headers, config) {
           Notification.error(data);
-          return _this.charts_loaded = true;
+          return _this.load_status.charts = true;
         });
       };
 

@@ -29,12 +29,12 @@
           </h2>
         </div>
       </div>
-      <div ng-if='status.loading'>
+      <div ng-if='!chart.loaded'>
         <p>
           Loading scrobbled tracks from Last.fm...
         </p>
       </div>
-      <div ng-if='!status.loading &amp;&amp; chart.tracks.length &lt; 1'>
+      <div ng-if='chart.loaded &amp;&amp; chart.tracks.length &lt; 1'>
         <p class='no-tracks-message'>
           There is no listening history for Last.fm user
           <strong>{{lastfm_user.user_name}}</strong>

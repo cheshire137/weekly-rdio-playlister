@@ -19,10 +19,10 @@
               %label.control-label{for: 'track_filters_min_play_count'}
                 Minimum play count:
               %input#track_filters_min_play_count.form-control{type: 'number', ng: {model: 'track_filters.min_play_count', change: 'update_playlist_name()'}}
-      %div{ng: {if: 'status.loading'}}
+      %div{ng: {if: '!chart.loaded'}}
         %p
           Loading scrobbled tracks from Last.fm...
-      %div{ng: {if: '!status.loading && chart.tracks.length < 1'}}
+      %div{ng: {if: 'chart.loaded && chart.tracks.length < 1'}}
         %p.no-tracks-message
           There is no listening history for Last.fm user
           %strong {{lastfm_user.user_name}}

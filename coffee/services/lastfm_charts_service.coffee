@@ -19,12 +19,14 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
       @year_charts = []
       @user = {}
       @neighbors = []
-      @charts_loaded = false
+      @load_status =
+        charts: false
 
     on_error: (data, status, headers, config) =>
       Notification.error data
 
     reset_charts: ->
+      @charts_loaded = false
       for key, value of @user
         delete @user[key]
       for i in [0...@year_charts.length] by 1
@@ -91,12 +93,12 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
           @initialize_year_charts charts
         else if data.error
           Notification.error data.message
-        @charts_loaded = true
+        @load_status.charts = true
       $http.get(Lastfm.get_weekly_chart_list_url(user)).
             success(on_success).
             error (data, status, headers, config) =>
               Notification.error data
-              @charts_loaded = true
+              @load_status.charts = true
 
     get_weekly_chart_list: (user_name) ->
       @get_user_info user_name, =>

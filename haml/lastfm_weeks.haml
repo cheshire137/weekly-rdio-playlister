@@ -36,10 +36,10 @@
               %span{ng: {repeat: 'neighbor in lastfm_neighbors'}}
                 %a{href: '#/lastfm/{{neighbor.user_name}}'}
                   {{neighbor.user_name}}
-  %div{ng: {if: 'status.loading'}}
+  %div{ng: {if: '!load_status.charts'}}
     %p
       Loading listening history from Last.fm...
-  %div{ng: {if: '!status.loading && year_charts.length < 1'}}
+  %div{ng: {if: 'load_status.charts && year_charts.length < 1'}}
     %p
       There is no weekly listening history for Last.fm user {{lastfm_user.user_name}}.
     %p

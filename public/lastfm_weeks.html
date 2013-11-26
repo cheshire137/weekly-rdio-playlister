@@ -61,12 +61,12 @@
       </div>
     </div>
   </div>
-  <div ng-if='status.loading'>
+  <div ng-if='!load_status.charts'>
     <p>
       Loading listening history from Last.fm...
     </p>
   </div>
-  <div ng-if='!status.loading &amp;&amp; year_charts.length &lt; 1'>
+  <div ng-if='load_status.charts &amp;&amp; year_charts.length &lt; 1'>
     <p>
       There is no weekly listening history for Last.fm user {{lastfm_user.user_name}}.
     </p>
