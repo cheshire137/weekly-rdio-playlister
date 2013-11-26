@@ -3,10 +3,9 @@
 
   LastfmChart = (function() {
     function LastfmChart(data) {
+      this.tracks = [];
       this.from = data.from;
       this.to = data.to;
-      this.tracks = [];
-      this.loaded = false;
     }
 
     LastfmChart.prototype.track_count = function() {

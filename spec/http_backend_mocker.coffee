@@ -33,6 +33,65 @@ http_backend_mocker =
       message: "No user with that name was found"
       links: []
 
+    http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getneighbours&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=validuser').respond
+      neighbours:
+        user: [
+          name: "fabuloususer"
+          realname: "Fabulous User"
+          url: "http://www.last.fm/user/fabuloususer"
+          image: [
+            {
+              "#text": "http://userserve-ak.last.fm/serve/34/02468.jpg"
+              size: "small"
+            }
+            {
+              "#text": "http://userserve-ak.last.fm/serve/64/02468.jpg"
+              size: "medium"
+            }
+            {
+              "#text": "http://userserve-ak.last.fm/serve/126/02468.jpg"
+              size: "large"
+            }
+            {
+              "#text": "http://userserve-ak.last.fm/serve/252/02468.jpg"
+              size: "extralarge"
+            }
+          ]
+          match: "0.99724614620209"
+        ]
+
+    http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getneighbours&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=otheruser').respond
+      neighbours:
+        user: [
+          name: "neatouser"
+          realname: "Neato User"
+          url: "http://www.last.fm/user/neatouser"
+          image: [
+            {
+              "#text": "http://userserve-ak.last.fm/serve/34/13579.jpg"
+              size: "small"
+            }
+            {
+              "#text": "http://userserve-ak.last.fm/serve/64/13579.jpg"
+              size: "medium"
+            }
+            {
+              "#text": "http://userserve-ak.last.fm/serve/126/13579.jpg"
+              size: "large"
+            }
+            {
+              "#text": "http://userserve-ak.last.fm/serve/252/13579.jpg"
+              size: "extralarge"
+            }
+          ]
+          match: "0.99724614620209"
+        ]
+
+    http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getneighbours&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=baduser').respond
+      error: 6
+      message: "No user with that name was found"
+      links: []
+
     http_backend.when('GET', 'http://ws.audioscrobbler.com/2.0/?method=user.getinfo&api_key=443e72efdc41032a9069d3b0d0e02d2a&format=json&user=validuser').respond
         user:
           name: "validuser"

@@ -8,9 +8,11 @@
         this.on_error = __bind(this.on_error, this);
         this.year_charts = [];
         this.user = {};
+        this.chart = {};
         this.neighbors = [];
         this.load_status = {
-          charts: false
+          charts: false,
+          chart: false
         };
       }
 
@@ -65,8 +67,8 @@
         return false;
       };
 
-      LastfmCharts.prototype.get_chart = function(from, to) {
-        var chart;
+      LastfmCharts.prototype.load_chart = function(from, to) {
+        var chart, key, value, _results;
         chart = this.get_chart_from_year_charts(from, to);
         if (!chart) {
           chart = new LastfmChart({
@@ -74,7 +76,12 @@
             to: to
           });
         }
-        return chart;
+        _results = [];
+        for (key in chart) {
+          value = chart[key];
+          _results.push(this.chart[key] = value);
+        }
+        return _results;
       };
 
       LastfmCharts.prototype.get_user_neighbors = function(user_name) {
@@ -163,7 +170,7 @@
         });
       };
 
-      LastfmCharts.prototype.get_weekly_track_chart = function(user, chart) {
+      LastfmCharts.prototype.get_weekly_track_chart = function(user) {
         var on_success,
           _this = this;
         on_success = function(data, status, headers, config) {
@@ -172,14 +179,17 @@
             _ref = data.weeklytrackchart.track;
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               track_data = _ref[_i];
-              chart.tracks.push(new LastfmTrack(track_data));
+              _this.chart.tracks.push(new LastfmTrack(track_data));
             }
-          } else {
-            chart.no_tracks = true;
+          } else if (data.error) {
+            Notification.error(data.message);
           }
-          return chart.loaded = true;
+          return _this.load_status.chart = true;
         };
-        return $http.get(Lastfm.get_weekly_track_chart_url(user, chart)).success(on_success).error(this.on_error);
+        return $http.get(Lastfm.get_weekly_track_chart_url(user, this.chart)).success(on_success).error(function(data, status, headers, config) {
+          Notification.error(data);
+          return _this.load_status.chart = true;
+        });
       };
 
       return LastfmCharts;

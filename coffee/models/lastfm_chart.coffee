@@ -15,10 +15,9 @@
 
 class LastfmChart
   constructor: (data) ->
+    @tracks = []
     @from = data.from
     @to = data.to
-    @tracks = []
-    @loaded = false
 
   track_count: ->
     @tracks.length

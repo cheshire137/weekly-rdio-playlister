@@ -18,9 +18,11 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
     constructor: ->
       @year_charts = []
       @user = {}
+      @chart = {}
       @neighbors = []
       @load_status =
         charts: false
+        chart: false
 
     on_error: (data, status, headers, config) =>
       Notification.error data
@@ -41,13 +43,14 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
             return chart
       return false
 
-    get_chart: (from, to) ->
+    load_chart: (from, to) ->
       chart = @get_chart_from_year_charts(from, to)
       unless chart
         chart = new LastfmChart
           from: from
           to: to
-      chart
+      for key, value of chart
+        @chart[key] = value
 
     get_user_neighbors: (user_name) ->
       on_success = (data, status, headers, config) =>
@@ -96,15 +99,18 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
               Notification.error data
               @load_status.charts = true
 
-    get_weekly_track_chart: (user, chart) ->
+    get_weekly_track_chart: (user) ->
       on_success = (data, status, headers, config) =>
         if data.weeklytrackchart.track
           for track_data in data.weeklytrackchart.track
-            chart.tracks.push(new LastfmTrack(track_data))
-        else
-          chart.no_tracks = true
-        chart.loaded = true
-      $http.get(Lastfm.get_weekly_track_chart_url(user, chart)).
-            success(on_success).error(@on_error)
+            @chart.tracks.push(new LastfmTrack(track_data))
+        else if data.error
+          Notification.error data.message
+        @load_status.chart = true
+      $http.get(Lastfm.get_weekly_track_chart_url(user, @chart)).
+            success(on_success).
+            error (data, status, headers, config) =>
+              Notification.error data
+              @load_status.chart = true
 
   new LastfmCharts()

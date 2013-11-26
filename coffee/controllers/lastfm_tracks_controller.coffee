@@ -13,17 +13,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) ->
+playlister_app.controller 'LastfmTracksController', ($scope, $routeParams, $cookieStore, $location, Notification, RdioPlaylist, RdioCatalog, LastfmCharts) ->
   $scope.lastfm_user = LastfmCharts.user
-  $scope.chart = {}
+  $scope.chart = LastfmCharts.chart
   $scope.playlist = RdioPlaylist.playlist
+  $scope.load_status = LastfmCharts.load_status
   $scope.track_filters = {min_play_count: 2}
-
-  update_lastfm_user_from_url = ->
-    if $routeParams.user != $cookieStore.get('lastfm_user')
-      $cookieStore.put('lastfm_user', $routeParams.user)
-      LastfmCharts.reset_charts()
-    $scope.lastfm_user.user_name = $cookieStore.get('lastfm_user')
 
   get_playlist_description = ->
     user_name = $scope.lastfm_user.user_name
@@ -31,27 +26,26 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
       user_name = $scope.lastfm_user.real_name + " (#{user_name})"
     "Last.fm track chart for #{user_name} for #{$scope.chart.to_s()}."
 
-  $scope.reset_playlist = ->
-    RdioPlaylist.reset_playlist()
+  set_playlist_name = ->
+    min_play_count = $scope.track_filters.min_play_count
+    $scope.playlist.name = $scope.chart.playlist_name(min_play_count)
 
-  $scope.wipe_notifications = ->
-    Notification.wipe_notifications()
+  $scope.init = ->
+    if $routeParams.user != $cookieStore.get('lastfm_user')
+      $cookieStore.put('lastfm_user', $routeParams.user)
+      LastfmCharts.reset_charts()
+    $scope.lastfm_user.user_name = $cookieStore.get('lastfm_user')
+    LastfmCharts.load_chart($routeParams.from, $routeParams.to)
+    $scope.$watch 'chart.to', ->
+      $scope.playlist.description = get_playlist_description()
+      LastfmCharts.get_weekly_track_chart($scope.lastfm_user.user_name)
+    $scope.$watch 'load_status.chart', ->
+      set_playlist_name()
+    $scope.$watch 'track_filters.min_play_count', ->
+      set_playlist_name()
 
   $scope.play_count_filter = (track) ->
     track.play_count >= $scope.track_filters.min_play_count
-
-  $scope.lastfm_tracks = ->
-    update_lastfm_user_from_url()
-    $scope.chart = LastfmCharts.get_chart($routeParams.from, $routeParams.to)
-    $scope.playlist.description = get_playlist_description()
-    LastfmCharts.get_weekly_track_chart($scope.lastfm_user.user_name,
-                                        $scope.chart)
-    $scope.$watch 'chart.loaded', ->
-      $scope.update_playlist_name()
-
-  $scope.update_playlist_name = ->
-    min_play_count = $scope.track_filters.min_play_count
-    $scope.playlist.name = $scope.chart.playlist_name(min_play_count)
 
   $scope.create_playlist = ->
     RdioCatalog.match_lastfm_tracks $scope.filtered_tracks, (rdio_tracks) ->
@@ -59,3 +53,9 @@ playlister_app.controller 'PlaylistController', ($scope, $cookieStore, $http, $l
       track_ids_str = track_ids.join(',')
       RdioPlaylist.create($scope.playlist.name, $scope.playlist.description,
                           track_ids_str)
+
+  $scope.reset_playlist = ->
+    RdioPlaylist.reset_playlist()
+
+  $scope.wipe_notifications = ->
+    Notification.wipe_notifications()

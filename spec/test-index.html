@@ -13,9 +13,6 @@
     <![endif]-->
   </head>
   <body ng-class='{playlisted: playlist.id}' ng-controller='PageController'>
-    <a class='github-ribbon' href='https://github.com/moneypenny/weekly-rdio-playlister'>
-      <img alt='Fork me on GitHub' src='https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png'>
-    </a>
     <div class='navbar navbar-default navbar-fixed-top' role='navigation'>
       <div class='container'>
         <div class='navbar-header'>
@@ -34,13 +31,13 @@
     </div>
     <div class='container'>
       <div class='notifications' ng-controller='NotificationsController'>
-        <p class='alert alert-danger clearfix' ng-repeat='error in errors'>
+        <p class='alert alert-danger clearfix ng-cloak' ng-repeat='error in errors'>
           <a class='pull-right alert-link' ng-click="remove('error', error.id)">
             <span class='glyphicon glyphicon-remove'></span>
           </a>
           {{error.message}}
         </p>
-        <p class='alert alert-success clearfix' ng-repeat='notice in notices'>
+        <p class='alert alert-success clearfix ng-cloak' ng-repeat='notice in notices'>
           <a class='pull-right alert-link' ng-click="remove('notice', notice.id)">
             <span class='glyphicon glyphicon-remove'></span>
           </a>
@@ -93,9 +90,9 @@
     <script src='/base/public/js/models/lastfm_neighbor.js'></script>
     <script src='/base/public/js/models/lastfm_track.js'></script>
     <script src='/base/public/js/controllers/page_controller.js'></script>
-    <script src='/base/public/js/controllers/playlist_controller.js'></script>
     <script src='/base/public/js/controllers/lastfm_user_controller.js'></script>
     <script src='/base/public/js/controllers/lastfm_weeks_controller.js'></script>
+    <script src='/base/public/js/controllers/lastfm_tracks_controller.js'></script>
     <script src='/base/public/js/controllers/notifications_controller.js'></script>
     <script src='/base/public/js/routes.js'></script>
 

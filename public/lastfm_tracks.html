@@ -1,4 +1,4 @@
-<div ng-controller='PlaylistController' ng-init='lastfm_tracks()'>
+<div ng-controller='LastfmTracksController' ng-init='init()'>
   <div class='row'>
     <div class='col-md-8'>
       <div class='page-header clearfix'>
@@ -29,12 +29,12 @@
           </h2>
         </div>
       </div>
-      <div ng-if='!chart.loaded'>
+      <div ng-if='!load_status.chart'>
         <p>
           Loading scrobbled tracks from Last.fm...
         </p>
       </div>
-      <div ng-if='chart.loaded &amp;&amp; chart.tracks.length &lt; 1'>
+      <div ng-if='load_status.chart &amp;&amp; chart.tracks.length &lt; 1'>
         <p class='no-tracks-message'>
           There is no listening history for Last.fm user
           <strong>{{lastfm_user.user_name}}</strong>
