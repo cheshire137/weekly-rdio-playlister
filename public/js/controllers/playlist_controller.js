@@ -1,6 +1,6 @@
 (function() {
   playlister_app.controller('PlaylistController', function($scope, $cookieStore, $http, $location, $routeParams, LastfmCharts, RdioPlaylist, RdioCatalog, Notification, PlaylisterConfig) {
-    var update_lastfm_user_from_url;
+    var get_playlist_description, update_lastfm_user_from_url;
     $scope.lastfm_user = LastfmCharts.user;
     $scope.lastfm_neighbors = LastfmCharts.neighbors;
     $scope.year_charts = LastfmCharts.year_charts;
@@ -17,6 +17,14 @@
         LastfmCharts.reset_charts();
       }
       return $scope.lastfm_user.user_name = $cookieStore.get('lastfm_user');
+    };
+    get_playlist_description = function() {
+      var user_name;
+      user_name = $scope.lastfm_user.user_name;
+      if ($scope.lastfm_user.real_name) {
+        user_name = $scope.lastfm_user.real_name + (" (" + user_name + ")");
+      }
+      return "Last.fm track chart for " + user_name + " for " + ($scope.chart.to_s()) + ".";
     };
     $scope.reset_playlist = function() {
       return RdioPlaylist.reset_playlist();
@@ -39,7 +47,7 @@
     $scope.lastfm_weeks = function() {
       var user_name;
       update_lastfm_user_from_url();
-      if (LastfmCharts.year_charts < 1) {
+      if (!LastfmCharts.load_status.charts) {
         user_name = $scope.lastfm_user.user_name;
         LastfmCharts.get_user_info(user_name);
         $scope.$watch('lastfm_user.date_registered', function() {
@@ -51,14 +59,9 @@
       }
     };
     $scope.lastfm_tracks = function() {
-      var user_name;
       update_lastfm_user_from_url();
       $scope.chart = LastfmCharts.get_chart($routeParams.from, $routeParams.to);
-      user_name = $scope.lastfm_user.user_name;
-      if ($scope.lastfm_user.real_name) {
-        user_name = $scope.lastfm_user.real_name + (" (" + user_name + ")");
-      }
-      $scope.playlist.description = 'Last.fm track chart for ' + ("" + user_name + " for " + ($scope.chart.to_s()) + ".");
+      $scope.playlist.description = get_playlist_description();
       LastfmCharts.get_weekly_track_chart($scope.lastfm_user.user_name, $scope.chart);
       return $scope.$watch('chart.loaded', function() {
         return $scope.update_playlist_name();

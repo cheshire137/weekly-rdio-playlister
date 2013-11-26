@@ -26,7 +26,7 @@ playlister_app.factory 'LastfmCharts', ($http, Notification, Lastfm) ->
       Notification.error data
 
     reset_charts: ->
-      @charts_loaded = false
+      @load_status.charts = false
       for key, value of @user
         delete @user[key]
       for i in [0...@year_charts.length] by 1

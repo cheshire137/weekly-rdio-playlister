@@ -20,7 +20,7 @@
 
       LastfmCharts.prototype.reset_charts = function() {
         var i, idx, key, neighbor, value, year, _i, _j, _ref, _ref1, _ref2, _ref3, _results;
-        this.charts_loaded = false;
+        this.load_status.charts = false;
         _ref = this.user;
         for (key in _ref) {
           value = _ref[key];
