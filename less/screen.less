@@ -14,8 +14,7 @@ a[ng-click] {
 }
 
 .back-link-container {
-  margin-left: -29px;
-  width: 29px;
+  display: none;
 }
 
 body {
@@ -127,10 +126,6 @@ h1 {
   display: none !important;
 }
 
-.nowrap {
-  white-space: nowrap;
-}
-
 .page-header {
   margin-top: 0;
 }
@@ -166,19 +161,20 @@ h1 {
   margin-bottom: 0;
 
   span + form {
-    margin-left: 10px;
-
     label {
       padding-left: 10px;
     }
   }
 
   form {
-    display: inline-block;
-    white-space: nowrap;
+    margin-top: 5px;
 
     label {
       font-weight: 300;
+    }
+
+    .label-and-prefix {
+      display: none;
     }
 
     .form-control {
@@ -313,5 +309,34 @@ h1 {
   &.trackless {
     text-decoration: line-through;
     color: #999;
+  }
+}
+
+@media (min-width: 830px) {
+  .back-link-container {
+    display: block;
+    margin-left: -29px;
+    width: 29px;
+    float: left;
+  }
+
+  .subtitle {
+    span + form {
+      margin-left: 10px;
+    }
+
+    form {
+      margin-top: 0;
+      display: inline-block;
+      white-space: nowrap;
+
+      .label-and-prefix {
+        display: inline-block;
+      }
+    }
+  }
+
+  .nowrap {
+    white-space: nowrap;
   }
 }

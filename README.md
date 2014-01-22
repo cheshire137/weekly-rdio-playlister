@@ -23,10 +23,8 @@ I built this using Ruby 2 in OS X.
 5. `cp env.sh.sample env.sh`
 6. Modify env.sh and fill in your Rdio API key and secret.
 7. `source env.sh`
-8. `thin start` to start the server at `http://localhost:3000`.
-
-If you change any files, be sure to run `bundle exec guard` so that Haml,
-CoffeeScript, and LESS get compiled into HTML, JavaScript, and CSS.
+8. `foreman start` to start the server at `http://localhost:3000` and run Guard so that Haml, CoffeeScript, and LESS get compiled into HTML, JavaScript,
+and CSS.
 
 ## How to Test
 

@@ -1,6 +1,6 @@
 <div ng-controller='LastfmWeeksController' ng-init='init()'>
   <div class='page-header clearfix'>
-    <h1 class='pull-left back-link-container'>
+    <h1 class='back-link-container'>
       <a class='back-link' href='#/' ng-click='wipe_notifications()' tooltip-placement='right' tooltip='Choose a different Last.fm user'>
         <span class='glyphicon glyphicon-chevron-left'></span>
       </a>
@@ -33,10 +33,12 @@
                 {{lastfm_user.date_registered_str()}}
               </span>
               <form class='form-inline nowrap'>
-                /
-                <label class='control-label' for='chart_filters_year_chart'>
-                  Filter:
-                </label>
+                <div class='label-and-prefix'>
+                  /
+                  <label class='control-label' for='chart_filters_year_chart'>
+                    Filter:
+                  </label>
+                </div>
                 <select class='form-control' id='chart_filters_year_chart' ng-model='chart_filters.year_chart' ng-options='year_chart.year for year_chart in year_charts'>
                   <option value=''>All years</option>
                 </select>
