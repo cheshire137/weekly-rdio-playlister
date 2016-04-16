@@ -16,7 +16,7 @@ time. "That was the winter of Blue Foundation", "I had just found SBTRKT", and
 
 I built this using Ruby 2 in OS X.
 
-1. `git clone git@github.com:moneypenny/weekly-rdio-playlister.git`
+1. `git clone git@github.com:cheshire137/weekly-rdio-playlister.git`
 2. `cd weekly-rdio-playlister`
 3. `bundle` to install necessary gems.
 4. [Register for an Rdio API account](https://secure.mashery.com/login/rdio.mashery.com/).
@@ -37,12 +37,12 @@ The source code is released under the GNU GPL v3.
 
 ## Screenshots
 
-![Screenshot of Weekly Rdio Playlister](http://github.com/moneypenny/weekly-rdio-playlister/raw/master/screenshot.png)
+![Screenshot of Weekly Rdio Playlister](http://github.com/cheshire137/weekly-rdio-playlister/raw/master/screenshot.png)
 
-![Screenshot of Weekly Rdio Playlister](http://github.com/moneypenny/weekly-rdio-playlister/raw/master/screenshot1.png)
+![Screenshot of Weekly Rdio Playlister](http://github.com/cheshire137/weekly-rdio-playlister/raw/master/screenshot1.png)
 
-![Screenshot of Weekly Rdio Playlister](http://github.com/moneypenny/weekly-rdio-playlister/raw/master/screenshot2.png)
+![Screenshot of Weekly Rdio Playlister](http://github.com/cheshire137/weekly-rdio-playlister/raw/master/screenshot2.png)
 
-![Screenshot of Weekly Rdio Playlister](http://github.com/moneypenny/weekly-rdio-playlister/raw/master/screenshot3.png)
+![Screenshot of Weekly Rdio Playlister](http://github.com/cheshire137/weekly-rdio-playlister/raw/master/screenshot3.png)
 
-![Screenshot of Weekly Rdio Playlister](http://github.com/moneypenny/weekly-rdio-playlister/raw/master/screenshot4.png)
+![Screenshot of Weekly Rdio Playlister](http://github.com/cheshire137/weekly-rdio-playlister/raw/master/screenshot4.png)
