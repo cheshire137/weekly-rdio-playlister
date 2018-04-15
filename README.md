@@ -8,10 +8,6 @@ what artists I had just discovered, and what I was into during a particular
 time. "That was the winter of Blue Foundation", "I had just found SBTRKT", and
 "Wow, lots of game soundtracks" come to mind.
 
-## Try It Out
-
-**[Try Weekly Rdio Playlister on Heroku](http://weekly-rdio-playlister.herokuapp.com/)**
-
 ## How to Run It Yourself
 
 I built this using Ruby 2 in OS X.
